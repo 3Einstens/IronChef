@@ -22,19 +22,20 @@ Everyone loves foods, but not many people cook. Having a healthy diet is a key o
     - Challenged Recipes
     - Recipes Likes
     
-- Reipe page (See wireframe page 2 and 3)
-  - Food photo
-  - Ingrdients
-  - cooking steps including
-  - Challenge Button
-  - Recipe challenges
-  - Good button
-  - reviews
+- Recipe challenge page (See wireframe page 2)
+  - Photo of Original Recipe or most liked Recipe in this challenge.
+  - list of challenged recipes (photos)
   - etc
 
-- Challenge requests UI.
-  - Select friends
-  - Send challenges
+- Each Reipe page (See wireframe page 3)
+  - Food photo
+  - Ingrdients
+  - Cooking steps including photos
+  - Challenge Button
+  - Like button
+  - Share button
+  - Write reviews
+  - etc
 
 - Write recipe UI
   - take final photo
@@ -42,6 +43,10 @@ Everyone loves foods, but not many people cook. Having a healthy diet is a key o
   - ingridents
   - steps to cook
   - etc
+
+- Challenge requests UI.
+  - Select friends
+  - Send challenges
 
 - Login Screen for posting Recipie or writing review, etc.
   - To browse the publicly available recipies, authentication is not required.

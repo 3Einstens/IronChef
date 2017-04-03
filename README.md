@@ -1,6 +1,8 @@
 # CookMeNow
 
-## Team name: **3Einstens**, Team members: **Hideki, Karthik and Raghu**
+## Team 
+- name: **3Einstens**, 
+- members: **Hideki, Karthik and Raghu**
 
 ## Description
 **Cook Me Now is `Ice Bucket Challenge` for Recipe.**

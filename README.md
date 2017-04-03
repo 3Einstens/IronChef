@@ -1,4 +1,4 @@
-# CookMeNow
+# Cook Me Now
 
 ## Team 
 - Team name: **3Einstens**, 

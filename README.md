@@ -7,13 +7,12 @@
 ## Description
 **Cook Me Now is `Ice Bucket Challenge` for Recipe.**
 
-Everyone loves foods, but not many people cook. Having a healthy diet is a key of having wonderful life. Cook Me Now helps everyone to enjoy cooking by using essence of gamification. Rule could be similar with Ice Bucket Challenge. If you recieve recipe challenge from your friends, you *SHOULD* accept it, cook it, and post your recipe on the net. Then you could challenge 3 your friends to cook!
-
+Everyone loves foods, but not many people cook. Having a healthy diet is a key of having a wonderful life. `Cook Me Now` helps everyone to enjoy the cooking by applying the essence of the gamification. Rule could be similar with Ice Bucket Challenge. If you recieve a recipe challenge from your friends, you *SHOULD* accept it, cook it, and post your recipe on the net. Then you could challenge some your friends for their recipes!
 
 ## User Stories
 ### The following functionality are required to be implemented:
 
-- List of Recipes (Home screen)
+- List of Recipes (See wireframe page 1)
   - Publicly shared Recipes 
     - Ordered by most challenged Recipe?
     - Search feature
@@ -21,10 +20,9 @@ Everyone loves foods, but not many people cook. Having a healthy diet is a key o
   - My Recipes
     - Own Recipes
     - Challenged Recipes
-    - Bookmarked Recipes
     - Recipes Likes
     
-- Reipe page (This page could be multiple pages)
+- Reipe page (See wireframe page 2 and 3)
   - Food photo
   - Ingrdients
   - cooking steps including

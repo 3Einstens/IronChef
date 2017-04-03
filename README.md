@@ -9,7 +9,7 @@ Everyone love foods, but not many people cook. Having a healthy diet is a key of
 
 
 ## User Stories
-# The following functionality are required to be implemented:
+### The following functionality are required to be implemented:
 
 
 - List of Recipes (Home screen)

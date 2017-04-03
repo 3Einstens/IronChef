@@ -49,4 +49,4 @@ Everyone loves foods, but not many people cook. Having a healthy diet is a key o
   - To browse the publicly available recipies, authentication is not required.
   
 ## Wireframe
-- https://github.com/rhp1671/3Einstens/blob/master/wireframes.pdf
+- https://github.com/rhp1671/3Einstens/raw/master/wireframes.pdf

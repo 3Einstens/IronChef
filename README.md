@@ -52,4 +52,5 @@ Everyone loves foods, but not many people cook. Having a healthy diet is a key t
   - To browse the publicly available recipes, authentication is not required.
   
 ## Wireframe
+<img src='https://github.com/3Einstens/IronChef/blob/master/homescreen.gif?raw=true' title='Wireframe' width='' alt='Wireframe' />
 - https://github.com/rhp1671/3Einstens/raw/master/wireframes.pdf

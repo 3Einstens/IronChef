@@ -12,7 +12,7 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
-        debug{
+        debug {
             buildConfigField "String", "PARSE_APP_ID", PARSE_APP_ID
             buildConfigField "String", "PARSE_SERVER_URL", PARSE_SERVER_URL
         }
@@ -31,15 +31,15 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:design:25.3.1'
-    testCompile 'junit:junit:4.12'
-
 
     // Parse
     // http://parseplatform.org/
+    // for logging API calls to LogCat
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile 'com.android.support:design:25.3.1'
     compile 'com.parse.bolts:bolts-android:1.4.0'
     compile 'com.parse:parse-android:1.14.1'
-    compile 'com.parse:parseinterceptors:0.0.2' // for logging API calls to LogCat
+    compile 'com.parse:parseinterceptors:0.0.2'
+    testCompile 'junit:junit:4.12'
 }

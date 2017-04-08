@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">IronChef</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_compose">ComposeActivity</string>
+    <string name="title_activity_recipe_detail">RecipeDetailActivity</string>
+    <string name="title_activity_recipe_challenge">RecipeChallengeActivity</string>
 </resources>

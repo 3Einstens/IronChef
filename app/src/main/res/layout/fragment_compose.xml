@@ -1,12 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.einstens3.ironchef.fragments.ComposeActivityFragment"
-    tools:showIn="@layout/activity_compose">
+    android:fillViewport="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.einstens3.ironchef.fragments.ComposeFragment"
+        tools:showIn="@layout/activity_compose">
+
+        <ImageView
+            android:id="@+id/ivUploadPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
+            app:srcCompat="@android:color/darker_gray"/>
+
+        <ImageButton
+            android:id="@+id/ibUploadPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_alignBottom="@+id/ivUploadPhoto"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            app:srcCompat="@android:drawable/ic_menu_camera"
+            />
+
+        <EditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/ivUploadPhoto"
+            android:ems="10"
+            android:hint="Recipe title"
+            android:inputType="text"
+            android:text=""/>
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/etTitle"
+            android:hint="Description"
+            android:inputType="textMultiLine"/>
+
+        <EditText
+            android:id="@+id/etCategories"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/etDescription"
+            android:hint="Italian"
+            android:inputType="textMultiLine"/>
+
+        <EditText
+            android:id="@+id/etIngredients"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/etCategories"
+            android:hint="1 tablespoon sugar"
+            android:inputType="textMultiLine"/>
 
 
-</android.support.constraint.ConstraintLayout>
+        <TextView
+            android:id="@+id/lblPrepTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/etPrepTime"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/etIngredients"
+            android:text="Prep Time"/>
+
+        <EditText
+            android:id="@+id/etPrepTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etIngredients"
+            android:layout_toRightOf="@+id/lblPrepTime"
+            android:hint="40"
+            android:inputType="numberDecimal"
+            android:text=""
+            />
+
+        <TextView
+            android:id="@+id/lblServing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/etPrepTime"
+            android:layout_below="@+id/etIngredients"
+            android:layout_toEndOf="@+id/etPrepTime"
+            android:layout_toRightOf="@+id/etPrepTime"
+            android:text="Serving"/>
+
+        <EditText
+            android:id="@+id/etServing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/etPrepTime"
+            android:layout_below="@+id/etIngredients"
+            android:layout_toEndOf="@+id/lblServing"
+            android:layout_toRightOf="@+id/lblServing"
+            android:hint="4"
+            android:inputType="numberDecimal"
+            android:text=""/>
+
+        <TextView
+            android:id="@+id/lblStep"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/lblPrepTime"
+            android:text="Steps"/>
+
+
+        <ImageButton
+            android:id="@+id/ibStep1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/lblStep"
+            app:srcCompat="@android:drawable/ic_menu_camera"/>
+
+        <EditText
+            android:id="@+id/etStep1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/lblStep"
+            android:layout_toRightOf="@+id/ibStep1"
+            android:layout_alignTop="@+id/ibStep1"
+            android:layout_alignBottom="@+id/ibStep1"
+            android:hint="step1"
+            android:inputType=""
+            android:text=""/>
+
+        <ImageButton
+            android:id="@+id/ibStep2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/ibStep1"
+            android:layout_alignRight="@+id/ibStep1"
+            android:layout_below="@+id/ibStep1"
+            app:srcCompat="@android:drawable/ic_menu_camera"/>
+
+        <EditText
+            android:id="@+id/etStep2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_toRightOf="@+id/ibStep2"
+            android:layout_alignTop="@+id/ibStep2"
+            android:layout_alignBottom="@+id/ibStep2"
+            android:hint="step2"/>
+
+        <ImageButton
+            android:id="@+id/ibStep3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@+id/ibStep2"
+            android:layout_alignRight="@+id/ibStep2"
+            android:layout_below="@+id/ibStep2"
+            app:srcCompat="@android:drawable/ic_menu_camera"/>
+
+        <EditText
+            android:id="@+id/etStep3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/etStep2"
+            android:layout_toRightOf="@+id/ibStep3"
+            android:layout_alignTop="@+id/ibStep3"
+            android:layout_alignBottom="@+id/ibStep3"
+            android:hint="step3"/>
+
+        <View
+            android:id="@+id/vBorder"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@+id/ibStep3"
+            android:layout_marginBottom="20dp"
+            />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/vBorder"
+            android:text="Cancel"/>
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/btnCancel"
+            android:layout_alignBottom="@+id/btnCancel"
+            android:layout_below="@+id/vBorder"
+            android:layout_toLeftOf="@+id/btnPublish"
+            android:layout_toStartOf="@+id/btnPublish"
+            android:text="Save"/>
+
+        <Button
+            android:id="@+id/btnPublish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/btnCancel"
+            android:layout_alignBottom="@+id/btnCancel"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/vBorder"
+            android:text="Publish"/>
+
+
+
+
+    </RelativeLayout>
+</ScrollView>

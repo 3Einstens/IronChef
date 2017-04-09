@@ -19,13 +19,13 @@ public class Recipe extends ParseObject {
      * - Author: ParseUser
      * - Description: String
      * - Ingredients: List<String>
-     * - Directions: List<Direction>
      * - Photo: ParseFile
      * - Category - Set<String>
-     * - Equipment - Set<String>
      * - Serving: Int
-     * - Cooking time: Int (min)
+     * - Cooking time: Int (min)  - PrepTime
      * - ChallengeTo:  Recipe
+     * - draft: boolean
+     * - private boolean
      */
 
     public Recipe() {
@@ -38,8 +38,8 @@ public class Recipe extends ParseObject {
         return getString("name");
     }
 
-    public void setName(String name) {
-        put("name", name);
+    public void setName(String value) {
+        put("name", value);
     }
 
     //  standardName: String - Standard Recipe Name for grouping same foods
@@ -48,8 +48,8 @@ public class Recipe extends ParseObject {
         return getString("standardName");
     }
 
-    public void setStandardName(String standardName) {
-        put("standardName", standardName);
+    public void setStandardName(String value) {
+        put("standardName", value);
     }
 
     // author: ParseUser - Recipe Author (owner)
@@ -58,8 +58,8 @@ public class Recipe extends ParseObject {
         return (ParseUser) getParseUser("author");
     }
 
-    public void setAuthor(ParseUser author) {
-        put("author", author);
+    public void setAuthor(ParseUser value) {
+        put("author", value);
     }
 
     // description: String - Recipe description
@@ -68,8 +68,8 @@ public class Recipe extends ParseObject {
         return getString("description");
     }
 
-    public void setDescription(String description) {
-        put("description", description);
+    public void setDescription(String value) {
+        put("description", value);
     }
 
     // ingredients: List<String> - list of ingredients
@@ -78,8 +78,8 @@ public class Recipe extends ParseObject {
         return getList("ingredients");
     }
 
-    public void setIngredients(List<String> ingredients) {
-        put("ingredients", ingredients);
+    public void setIngredients(List<String> value) {
+        put("ingredients", value);
     }
 
     // photo: ParseFile - Recipe's main photo
@@ -88,8 +88,8 @@ public class Recipe extends ParseObject {
         return getParseFile("photo");
     }
 
-    public void setPhoto(ParseFile photo) {
-        put("photo", photo);
+    public void setPhoto(ParseFile value) {
+        put("photo", value);
     }
 
     // categories: List<String> - List of categories that the recipe belongs to
@@ -98,8 +98,8 @@ public class Recipe extends ParseObject {
         return getList("categories");
     }
 
-    public void setCategories(List<String> categories) {
-        put("categories", categories);
+    public void setCategories(List<String> value) {
+        put("categories", value);
     }
 
 
@@ -109,8 +109,8 @@ public class Recipe extends ParseObject {
         return getLong("serving");
     }
 
-    public void setServing(long serving) {
-        put("serving", serving);
+    public void setServing(long value) {
+        put("serving", value);
     }
 
     // cookingTime: long - total cooking time
@@ -119,8 +119,8 @@ public class Recipe extends ParseObject {
         return getLong("cookingTime");
     }
 
-    public void setCookingTime(long cookingTime) {
-        put("cookingTime", cookingTime);
+    public void setCookingTime(long value) {
+        put("cookingTime", value);
     }
 
     // challengeTo: Recipe - null in case this is original recipe
@@ -130,28 +130,98 @@ public class Recipe extends ParseObject {
         return (Recipe) getParseObject("challengeTo");
     }
 
-    public void setChallengeTo(Recipe challengeTo) {
-        put("challengeTo", challengeTo);
+    public void setChallengeTo(Recipe value) {
+        put("challengeTo", value);
+    }
+
+    // NOTE - For Sprint 1, Steps are fixed number of steps
+
+    public String getStep1Text() {
+        return getString("step1.text");
+    }
+
+    public void setStep1Text(String value) {
+        put("step1text", value);
+    }
+
+    public ParseFile getStep1Photo() {
+        return getParseFile("step1photo");
+    }
+
+    public void setStep1Photo(ParseFile value) {
+        put("step1photo", value);
+    }
+
+    public String getStep2Text() {
+        return getString("step2text");
+    }
+
+    public void setStep2Text(String value) {
+        put("step2text", value);
+    }
+
+    public ParseFile getStep2Photo() {
+        return getParseFile("step2photo");
+    }
+
+    public void setStep2Photo(ParseFile value) {
+        put("step2photo", value);
+    }
+
+    public String getStep3Text() {
+        return getString("step3text");
+    }
+
+    public void setStep3Text(String value) {
+        put("step3text", value);
+    }
+
+    public ParseFile getStep3Photo() {
+        return getParseFile("step3photo");
+    }
+
+    public void setStep3Photo(ParseFile value) {
+        put("step3photo", value);
+    }
+
+    public boolean isDraft() {
+        return getBoolean("draft");
+    }
+
+    public void setDraft(boolean value) {
+        put("draft", value);
     }
 
 
-    // stepPhotos: List<ParseFile> - List of step photo. Num of stepPhotos and stepTexts should be same.
-
-    public List<ParseFile> getStepPhotos() {
-        return getList("stepPhotos");
+    public boolean isPublic() {
+        return getBoolean("public");
     }
 
-    public void setStepPhotos(List<ParseFile> stepPhotos) {
-        put("stepPhotos", stepPhotos);
+    public void setPublic(boolean value) {
+        put("public", value);
     }
 
-    // stepTexts: List<String> - List of step text. Num of stepPhotos and stepTexts should be same.
 
-    public List<String> getStepTexts() {
-        return getList("stepTexts");
-    }
+//    // Might use later
+//
+//    // stepPhotos: List<ParseFile> - List of step photo. Num of stepPhotos and stepTexts should be same.
+//
+//    public List<ParseFile> getStepPhotos() {
+//        return getList("stepPhotos");
+//    }
+//
+//    public void setStepPhotos(List<ParseFile> stepPhotos) {
+//        put("stepPhotos", stepPhotos);
+//    }
+//
+//    // stepTexts: List<String> - List of step text. Num of stepPhotos and stepTexts should be same.
+//
+//    public List<String> getStepTexts() {
+//        return getList("stepTexts");
+//    }
+//
+//    public void setStepTexts(List<String> stepTexts) {
+//        put("stepTexts", stepTexts);
+//    }
 
-    public void setStepTexts(List<String> stepTexts) {
-        put("stepTexts", stepTexts);
-    }
 }

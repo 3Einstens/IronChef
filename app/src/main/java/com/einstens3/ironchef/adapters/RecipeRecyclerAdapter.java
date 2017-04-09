@@ -1,4 +1,4 @@
-package com.einstens3.ironchef;
+package com.einstens3.ironchef.adapters;
 
 /**
  * Created by raprasad on 4/8/17.
@@ -15,19 +15,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.einstens3.ironchef.R;
+import com.einstens3.ironchef.models.EdamamRecipe;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 /**
  * Created by raprasad on 4/2/17.
  */
-
-
-import com.einstens3.ironchef.models.EdamamRecipe;
 
 
 /**

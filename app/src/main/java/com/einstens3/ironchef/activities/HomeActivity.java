@@ -8,10 +8,14 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.einstens3.ironchef.R;
+import com.parse.ParseUser;
 
 public class HomeActivity extends AppCompatActivity {
+
+    private ParseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,9 +28,18 @@ public class HomeActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showComposeUI();
+                if(currentUser!=null)
+                    showComposeUI();
+                else
+                    Toast.makeText(HomeActivity.this, "To post the recipe, please login!", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentUser = ParseUser.getCurrentUser();
     }
 
     @Override

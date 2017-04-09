@@ -13,16 +13,20 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.einstens3.ironchef.R;
+import com.einstens3.ironchef.Utilities.RecipeQuery;
 import com.einstens3.ironchef.adapters.RecipeRecyclerAdapter;
 import com.einstens3.ironchef.Utilities.EndlessRecyclerViewScrollListener;
 import com.einstens3.ironchef.Utilities.NetworkClient;
 import com.einstens3.ironchef.models.EdamamRecipe;
+import com.einstens3.ironchef.models.Recipe;
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.parse.ParseException;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +43,7 @@ public class HomeFragment extends Fragment {
     private GridLayoutManager gridLayoutManager;
 
     public HomeFragment() {
+        queryAllRecipe();
     }
 
     @Override
@@ -124,6 +129,23 @@ public class HomeFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mArrayList = new ArrayList<>();
         mArrayAdapter = new RecipeRecyclerAdapter(getActivity(), mArrayList);
+    }
+
+
+    private void queryAllRecipe(){
+        new RecipeQuery().queryAllRecipes(new RecipeQuery.QueryRecipesCallback() {
+            @Override
+            public void success(List<Recipe> recipes) {
+                for(Recipe r:recipes){
+                    Log.i("RECIPE", "Recipe.name -> "+r.getName());
+                }
+            }
+
+            @Override
+            public void error(ParseException e) {
+                Log.e("ERROR", "Query Error", e);
+            }
+        });
     }
 }
 

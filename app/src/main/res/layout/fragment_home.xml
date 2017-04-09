@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.einstens3.ironchef.fragments.HomeActivityFragment"
+    tools:context="com.einstens3.ironchef.fragments.HomeFragment"
     tools:showIn="@layout/activity_home">
 
 

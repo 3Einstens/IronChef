@@ -28,7 +28,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import cz.msebera.android.httpclient.Header;
 
-public class HomeActivityFragment extends Fragment {
+public class HomeFragment extends Fragment {
     @BindView(R.id.rvRecipies)
     RecyclerView rvRecipies;
     @BindView(R.id.swipeContainer)
@@ -38,7 +38,7 @@ public class HomeActivityFragment extends Fragment {
     private EndlessRecyclerViewScrollListener scrollListener;
     private GridLayoutManager gridLayoutManager;
 
-    public HomeActivityFragment() {
+    public HomeFragment() {
     }
 
     @Override

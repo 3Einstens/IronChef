@@ -1,3 +1,5 @@
 <resources>
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="cv_text_margin_image">30dp</dimen>
+    <dimen name="cv_image_margin">8dp</dimen>
 </resources>

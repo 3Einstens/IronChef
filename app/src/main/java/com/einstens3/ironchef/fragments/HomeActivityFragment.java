@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.einstens3.ironchef.R;
-import com.einstens3.ironchef.RecipeRecyclerAdapter;
+import com.einstens3.ironchef.adapters.RecipeRecyclerAdapter;
 import com.einstens3.ironchef.Utilities.EndlessRecyclerViewScrollListener;
 import com.einstens3.ironchef.Utilities.NetworkClient;
 import com.einstens3.ironchef.models.EdamamRecipe;

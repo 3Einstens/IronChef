@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.widget.EditText;
 
 import com.einstens3.ironchef.R;
+import com.parse.ParseUser;
 
 public class ComposeActivity extends AppCompatActivity {
 
-    EditText lblTitle;
+    private ParseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +28,12 @@ public class ComposeActivity extends AppCompatActivity {
 //            }
 //        });
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        currentUser = ParseUser.getCurrentUser();
     }
 
     @Override

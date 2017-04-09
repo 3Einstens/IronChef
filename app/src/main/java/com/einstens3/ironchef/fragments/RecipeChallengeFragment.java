@@ -11,9 +11,9 @@ import com.einstens3.ironchef.R;
 /**
  * A placeholder fragment containing a simple view.
  */
-public class RecipeChallengeActivityFragment extends Fragment {
+public class RecipeChallengeFragment extends Fragment {
 
-    public RecipeChallengeActivityFragment() {
+    public RecipeChallengeFragment() {
     }
 
     @Override

@@ -23,6 +23,7 @@ import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.ParseException;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
@@ -156,6 +157,7 @@ public class ComposeFragment extends Fragment {
                 Recipe recipe = new Recipe();
                 recipe.setDraft(false);
                 recipe.setPublic(false);
+                recipe.setAuthor(ParseUser.getCurrentUser());
                 recipe.setName(getText(etTitle));
                 recipe.setDescription(getText(etDescription));
                 recipe.setCookingTime(getLong(etPrepTime));

@@ -1,25 +1,17 @@
 package com.einstens3.ironchef.activities;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
 
 import com.einstens3.ironchef.R;
-import com.einstens3.ironchef.Utilities.FabricateRecipeData;
-import com.einstens3.ironchef.models.Recipe;
-import com.parse.GetCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
+import com.einstens3.ironchef.fragments.RecipeDetailFragment;
 
 public class RecipeDetailActivity extends AppCompatActivity {
     private static final String TAG = RecipeDetailActivity.class.getSimpleName();
 
-    private String recipeID;
-    private Recipe recipe;
+    //private String recipeID;
+    //private Recipe recipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,54 +20,44 @@ public class RecipeDetailActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                try {
-                    FabricateRecipeData.createHardCodedRecipe(RecipeDetailActivity.this);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(RecipeDetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-
-//                FabricateRecipe.createHardCodedRecipe(RecipeDetailActivity.this, new FabricateRecipe.CreateRecipeCallback(){
-//                    @Override
-//                    public void success(Recipe recipe) {
-//                        recipeID = recipe.getObjectId();
-//                        Log.e(TAG, "Succeeded to save the Recipe. ID -> " + recipeID);
-//                        Toast.makeText(RecipeDetailActivity.this, "Succeeded to save the Recipe. ID -> " + recipeID, Toast.LENGTH_LONG).show();
-//                        fetchRecipe();
-//                    }
+//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+//        fab.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                try {
+////                    FabricateRecipeData.createHardCodedRecipe(RecipeDetailActivity.this);
+////                } catch (Exception e) {
+////                    e.printStackTrace();
+////                    Toast.makeText(RecipeDetailActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
+////                }
 //
-//                    @Override
-//                    public void error(ParseException e) {
-//                        Log.e(TAG, "Failed to fetch the Recipe: ID" + recipeID, e);
-//                        Toast.makeText(RecipeDetailActivity.this, "Failed to fetch the Recipe: ID" + recipeID, Toast.LENGTH_LONG).show();
-//                    }
-//                });
-            }
-        });
-    }
+////                FabricateRecipe.createHardCodedRecipe(RecipeDetailActivity.this, new FabricateRecipe.CreateRecipeCallback() {
+////                    @Override
+////                    public void success(Recipe recipe) {
+////                        String recipeID = recipe.getObjectId();
+////                        Log.e(TAG, "Succeeded to save the Recipe. ID -> " + recipeID);
+////                        Toast.makeText(RecipeDetailActivity.this, "Succeeded to save the Recipe. ID -> " + recipeID, Toast.LENGTH_LONG).show();
+////                        // fetchRecipe();
+////                    }
+////
+////                    @Override
+////                    public void error(ParseException e) {
+////                        Log.e(TAG, "Failed to create the Recipe: " + e.getMessage(), e);
+////                        Toast.makeText(RecipeDetailActivity.this, "Failed to create the Recipe: " + e.getMessage(), Toast.LENGTH_LONG).show();
+////                    }
+////                });
+//            }
+//        });
 
-    private void fetchRecipe(){
-        if(recipeID == null){
-            Toast.makeText(RecipeDetailActivity.this, "Recipe ID is null.", Toast.LENGTH_LONG).show();
-            return;
+
+        // Create RecipeDetailFragment and set Recipe.objectId
+        String objectId = getIntent().getStringExtra("objectId");
+        if (findViewById(R.id.fragment_container) != null) {
+            if (savedInstanceState != null) {
+                return;
+            }
+            RecipeDetailFragment fragment = RecipeDetailFragment.newInstance(objectId);
+            getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
         }
-
-        ParseQuery<Recipe> query = ParseQuery.getQuery(Recipe.class);
-        query.getInBackground(recipeID, new GetCallback<Recipe>() {
-            @Override
-            public void done(Recipe object, ParseException e) {
-                if(e == null){
-                    recipe = object;
-                    Log.e(TAG, recipe.toString());
-                }else{
-                    Log.e(TAG, "Failed to fetch the Recipe: ID" + recipeID, e);
-                    Toast.makeText(RecipeDetailActivity.this, "Failed to fetch the Recipe: ID" + recipeID, Toast.LENGTH_LONG).show();
-                }
-            }
-        });
     }
 }

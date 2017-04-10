@@ -17,8 +17,8 @@ public class RecipeQuery {
     }
 
     public void queryRecipe(String recipeID, final QueryRecipeCallback callback) {
-        if (recipeID == null)
-            throw new IllegalArgumentException("recipeID is null");
+        //if (recipeID == null)
+        //    throw new IllegalArgumentException("recipeID is null");
 
         ParseQuery<Recipe> query = ParseQuery.getQuery(Recipe.class);
         query.getInBackground(recipeID, new GetCallback<Recipe>() {

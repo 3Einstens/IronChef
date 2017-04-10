@@ -5,6 +5,7 @@ package com.einstens3.ironchef.adapters;
  */
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
@@ -15,10 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
 import com.einstens3.ironchef.R;
-import com.einstens3.ironchef.models.EdamamRecipe;
+import com.einstens3.ironchef.activities.RecipeDetailActivity;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.ParseException;
 
@@ -26,8 +27,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.einstens3.ironchef.R.id.ivPhoto;
 
 /**
  * Created by raprasad on 4/2/17.
@@ -56,13 +55,14 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             super(view);
             ButterKnife.bind(this, view);
 
-            ivRecipe.setOnClickListener(new View.OnClickListener() {
+            // NOTE: handle click event with item view
+            //       make ivRecipe not clickable to cascade click even to parent view.
+            ivRecipe.setClickable(false);
+            view.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View view) {
-                    Recipe r = mRecipe.get(mPosition);
-                    if (r != null) {
-                        //TO DO
-                    }
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), "" + mPosition, Toast.LENGTH_LONG).show();
+                    showRecipeDetailUI(v.getContext(), mPosition);
                 }
             });
         }
@@ -144,6 +144,16 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public int getItemViewType(int position) {
         //Recipe r = mRecipe.get(position);
         return 0;
+    }
+
+    /**
+     * Show Recipe Detail UI with Recipe.objectID.
+     */
+    private void showRecipeDetailUI(Context context, int index) {
+        Recipe recipe = mRecipe.get(index);
+        Intent intent = new Intent(context, RecipeDetailActivity.class);
+        intent.putExtra("objectId", recipe.getObjectId());
+        context.startActivity(intent);
     }
 }
 

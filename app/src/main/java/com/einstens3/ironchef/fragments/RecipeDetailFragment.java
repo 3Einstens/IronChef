@@ -18,12 +18,17 @@ import com.einstens3.ironchef.Utilities.StringUtils;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.ParseException;
 
+import static android.os.Build.ID;
+
 /**
  * A placeholder fragment containing a simple view.
  */
 public class RecipeDetailFragment extends Fragment {
     private static final String TAG = RecipeDetailFragment.class.getSimpleName();
-    private static final String ID = "eqsYIVD78S";
+    private static final String ARG_PARAM_RECIPE_OBJECT_ID = "objectId";
+    //private static final String ID = "eqsYIVD78S";
+
+    String objectId;
 
     View view;
     ImageView ivPhoto;
@@ -36,6 +41,22 @@ public class RecipeDetailFragment extends Fragment {
     ListView lvIngredients;
 
     public RecipeDetailFragment() {
+    }
+
+    public static RecipeDetailFragment newInstance(String objectId) {
+        RecipeDetailFragment fragment = new RecipeDetailFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM_RECIPE_OBJECT_ID, objectId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            objectId = getArguments().getString(ARG_PARAM_RECIPE_OBJECT_ID);
+        }
     }
 
     @Override
@@ -60,17 +81,26 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     private void updateControlStates() {
-        new RecipeQuery().queryRecipe(ID, new RecipeQuery.QueryRecipeCallback() {
+        new RecipeQuery().queryRecipe(objectId, new RecipeQuery.QueryRecipeCallback() {
             @Override
             public void success(Recipe recipe) {
                 try {
-                    tvTitle.setText(recipe.getName());
-                    tvDescription.setText(recipe.getDescription());
-                    tvAuthor.setText(recipe.getAuthor().fetchIfNeeded().getUsername());
-                    tvCookingTime.setText(String.valueOf(recipe.getCookingTime()));
-                    tvServing.setText(String.valueOf(recipe.getServing()));
-                    tvCategory.setText(StringUtils.fromList(recipe.getCategories()));
-                    ivPhoto.setImageURI(Uri.fromFile(recipe.getPhoto().getFile()));
+                    if (recipe.getName() != null)
+                        tvTitle.setText(recipe.getName());
+                    if (recipe.getDescription() != null)
+                        tvDescription.setText(recipe.getDescription());
+                    if (recipe.getAuthor() != null)
+                        tvAuthor.setText(recipe.getAuthor().fetchIfNeeded().getUsername());
+                    else
+                        tvAuthor.setText("anonymous");
+                    if (recipe.getCookingTime() != 0)
+                        tvCookingTime.setText(String.valueOf(recipe.getCookingTime()));
+                    if (recipe.getServing() != 0)
+                        tvServing.setText(String.valueOf(recipe.getServing()));
+                    if (recipe.getCategories() != null)
+                        tvCategory.setText(StringUtils.fromList(recipe.getCategories()));
+                    if (recipe.getPhoto() != null)
+                        ivPhoto.setImageURI(Uri.fromFile(recipe.getPhoto().getFile()));
                 } catch (ParseException e) {
                     Log.e(TAG, "Parse Error", e);
                     Toast.makeText(getContext(), "Parse Error: " + e.getMessage(), Toast.LENGTH_LONG).show();

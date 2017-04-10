@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.einstens3.ironchef.fragments.RecipeDetailFragment"
-    tools:showIn="@layout/activity_recipe_detail">
+    >
 
 
     <ImageView
@@ -45,7 +45,7 @@
         android:layout_below="@+id/tvTitle"
         android:layout_toEndOf="@+id/lblAuthor"
         android:layout_toRightOf="@+id/lblAuthor"
-        android:text="ROGUE34"
+        tools:text="ROGUE34"
         android:textColor="@color/black"
         android:textStyle="bold"/>
 

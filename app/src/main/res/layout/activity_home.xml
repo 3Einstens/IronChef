@@ -7,7 +7,12 @@
     android:layout_height="match_parent"
     tools:context="com.einstens3.ironchef.activities.HomeActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/appBarLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
@@ -21,7 +26,25 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_home"/>
+  <!--  <include layout="@layout/content_home"/> -->
+
+    <com.astuetz.PagerSlidingTabStrip
+        android:layout_below="@id/appBarLayout"
+        android:id="@+id/tabs"
+        app:pstsShouldExpand="true"
+        app:pstsTextAllCaps="true"
+        app:pstsIndicatorColor="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:textColor="@color/colorAccent"/>
+
+    <android.support.v4.view.ViewPager
+        android:layout_below="@+id/tabs"
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white" />
+    </RelativeLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"

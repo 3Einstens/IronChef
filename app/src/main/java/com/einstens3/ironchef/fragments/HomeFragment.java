@@ -37,7 +37,7 @@ public class HomeFragment extends Fragment {
     RecyclerView rvRecipies;
     @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
-    protected ArrayList<EdamamRecipe> mArrayList;
+    protected ArrayList<Recipe> mArrayList;
     protected RecipeRecyclerAdapter mArrayAdapter;
     private EndlessRecyclerViewScrollListener scrollListener;
     private GridLayoutManager gridLayoutManager;
@@ -54,8 +54,8 @@ public class HomeFragment extends Fragment {
         rvRecipies.setAdapter(mArrayAdapter);
         gridLayoutManager = new GridLayoutManager(getActivity(), 2);
         rvRecipies.setLayoutManager(gridLayoutManager);
-        RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-        rvRecipies.addItemDecoration(itemDecoration);
+        //RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
+        //rvRecipies.addItemDecoration(itemDecoration);
         swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
         swipeContainer.post(new Runnable() {
             @Override
@@ -89,13 +89,14 @@ public class HomeFragment extends Fragment {
         // Adds the scroll listener to RecyclerView
         rvRecipies.addOnScrollListener(scrollListener);
         makeNetworkCall(0);
+
         return v;
     }
 
     public void makeNetworkCall(final int pageNo) {
+      //  queryAllRecipe();
 
-
-        NetworkClient.getRecipe("samosa", pageNo * 20, (pageNo * 20) + 20, new JsonHttpResponseHandler() {
+        NetworkClient.getRecipe("rigatoni", pageNo * 20, (pageNo * 20) + 20, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 super.onSuccess(statusCode, headers, response);
@@ -136,14 +137,14 @@ public class HomeFragment extends Fragment {
         new RecipeQuery().queryAllRecipes(new RecipeQuery.QueryRecipesCallback() {
             @Override
             public void success(List<Recipe> recipes) {
-                for(Recipe r:recipes){
-                    Log.i("RECIPE", "Recipe.name -> "+r.getName());
-                }
+                mArrayList = mArrayAdapter.swap(new ArrayList(recipes));
+                swipeContainer.setRefreshing(false);
             }
 
             @Override
             public void error(ParseException e) {
                 Log.e("ERROR", "Query Error", e);
+                swipeContainer.setRefreshing(false);
             }
         });
     }

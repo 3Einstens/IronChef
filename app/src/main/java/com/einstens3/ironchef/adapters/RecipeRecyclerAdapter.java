@@ -5,9 +5,11 @@ package com.einstens3.ironchef.adapters;
  */
 
 import android.content.Context;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,11 +19,15 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.models.EdamamRecipe;
+import com.einstens3.ironchef.models.Recipe;
+import com.parse.ParseException;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.einstens3.ironchef.R.id.ivPhoto;
 
 /**
  * Created by raprasad on 4/2/17.
@@ -35,7 +41,7 @@ import butterknife.ButterKnife;
 public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
-    private ArrayList<EdamamRecipe> mRecipe;
+    private ArrayList<Recipe> mRecipe;
     public static final String TAG = RecipeRecyclerAdapter.class.getName();
 
 
@@ -53,7 +59,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ivRecipe.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    EdamamRecipe r = mRecipe.get(mPosition);
+                    Recipe r = mRecipe.get(mPosition);
                     if (r != null) {
                         //TO DO
                     }
@@ -61,18 +67,23 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             });
         }
 
-        public void renderRecipe(EdamamRecipe r) {
+        public void renderRecipe(Recipe r) {
             ivRecipe.setImageResource(0);
             if (r != null) {
                 tvRecipeDescription.setText(r.getName());
-                Glide.with(ivRecipe.getContext())
-                        .load(r.getProfileImage()).into(ivRecipe);
+                try {
+                    ivRecipe.setImageURI(Uri.fromFile(r.getPhoto().getFile()));
+                } catch (ParseException e){
+                    Log.d(TAG, "parse exception: " + e.getMessage());
+                }
+              /*  Glide.with(ivRecipe.getContext())
+                        .load(r.getProfileImage()).into(ivRecipe);*/
             }
         }
     }
 
 
-    public RecipeRecyclerAdapter(Context context, ArrayList<EdamamRecipe> recipes) {
+    public RecipeRecyclerAdapter(Context context, ArrayList<Recipe> recipes) {
         this.mRecipe = recipes;
         this.mContext = context;
     }
@@ -99,19 +110,19 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    public ArrayList<EdamamRecipe> add(ArrayList<EdamamRecipe> user) {
-        mRecipe.addAll(user);
+    public ArrayList<Recipe> add(ArrayList<Recipe> recipe) {
+        mRecipe.addAll(recipe);
         notifyDataSetChanged();
         return mRecipe;
     }
 
-    public ArrayList<EdamamRecipe> addRecipe(EdamamRecipe recipe) {
+    public ArrayList<Recipe> addRecipe(Recipe recipe) {
         mRecipe.add(0, recipe);
         notifyDataSetChanged();
         return mRecipe;
     }
 
-    public ArrayList<EdamamRecipe> swap(ArrayList<EdamamRecipe> recipes) {
+    public ArrayList<Recipe> swap(ArrayList<Recipe> recipes) {
         mRecipe.clear();
         mRecipe.addAll(recipes);
         notifyDataSetChanged();

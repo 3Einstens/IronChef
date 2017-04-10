@@ -86,7 +86,7 @@ public class HomeFragment extends Fragment {
     }
 
     public void makeNetworkCall(final int pageNo) {
-      //  queryAllRecipe();
+        queryAllRecipe();
 
 //        NetworkClient.getRecipe("rigatoni", pageNo * 20, (pageNo * 20) + 20, new JsonHttpResponseHandler() {
 //            @Override

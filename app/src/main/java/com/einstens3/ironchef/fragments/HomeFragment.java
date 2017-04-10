@@ -1,10 +1,9 @@
 package com.einstens3.ironchef.fragments;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -13,24 +12,17 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.einstens3.ironchef.R;
+import com.einstens3.ironchef.Utilities.EndlessRecyclerViewScrollListener;
 import com.einstens3.ironchef.Utilities.RecipeQuery;
 import com.einstens3.ironchef.adapters.RecipeRecyclerAdapter;
-import com.einstens3.ironchef.Utilities.EndlessRecyclerViewScrollListener;
-import com.einstens3.ironchef.Utilities.NetworkClient;
-import com.einstens3.ironchef.models.EdamamRecipe;
 import com.einstens3.ironchef.models.Recipe;
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.parse.ParseException;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import cz.msebera.android.httpclient.Header;
 
 public class HomeFragment extends Fragment {
     @BindView(R.id.rvRecipies)
@@ -96,33 +88,33 @@ public class HomeFragment extends Fragment {
     public void makeNetworkCall(final int pageNo) {
       //  queryAllRecipe();
 
-        NetworkClient.getRecipe("rigatoni", pageNo * 20, (pageNo * 20) + 20, new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-                super.onSuccess(statusCode, headers, response);
-                try {
-                    JSONArray arrayList = response.getJSONArray("hits");
-                    ArrayList a = EdamamRecipe.fromJSONArray(arrayList);
-                    if (pageNo == 0) {
-                        mArrayList = mArrayAdapter.swap(a);
-                    } else {
-                        mArrayList = mArrayAdapter.add(a);
-                    }
-                    Log.d("debug", response.toString());
-                } catch (Exception ex) {
-
-                }
-                swipeContainer.setRefreshing(false);
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                super.onFailure(statusCode, headers, throwable, errorResponse);
-                Log.d("debug", errorResponse.toString());
-                swipeContainer.setRefreshing(false);
-                // fragmentListener.onLoading(false);
-            }
-        });
+//        NetworkClient.getRecipe("rigatoni", pageNo * 20, (pageNo * 20) + 20, new JsonHttpResponseHandler() {
+//            @Override
+//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
+//                super.onSuccess(statusCode, headers, response);
+//                try {
+//                    JSONArray arrayList = response.getJSONArray("hits");
+//                    ArrayList a = EdamamRecipe.fromJSONArray(arrayList);
+//                    if (pageNo == 0) {
+//                        mArrayList = mArrayAdapter.swap(a);
+//                    } else {
+//                        mArrayList = mArrayAdapter.add(a);
+//                    }
+//                    Log.d("debug", response.toString());
+//                } catch (Exception ex) {
+//
+//                }
+//                swipeContainer.setRefreshing(false);
+//            }
+//
+//            @Override
+//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
+//                super.onFailure(statusCode, headers, throwable, errorResponse);
+//                Log.d("debug", errorResponse.toString());
+//                swipeContainer.setRefreshing(false);
+//                // fragmentListener.onLoading(false);
+//            }
+//        });
     }
 
     @Override

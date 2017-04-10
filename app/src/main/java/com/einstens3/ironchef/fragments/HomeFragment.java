@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +34,7 @@ public class HomeFragment extends Fragment {
     protected RecipeRecyclerAdapter mArrayAdapter;
     private EndlessRecyclerViewScrollListener scrollListener;
     private GridLayoutManager gridLayoutManager;
-
+    private StaggeredGridLayoutManager mLayoutManager;
     public HomeFragment() {
         queryAllRecipe();
     }
@@ -44,8 +45,9 @@ public class HomeFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, v);
         rvRecipies.setAdapter(mArrayAdapter);
-        gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-        rvRecipies.setLayoutManager(gridLayoutManager);
+       // gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        rvRecipies.setLayoutManager(mLayoutManager);
         //RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
         //rvRecipies.addItemDecoration(itemDecoration);
         swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
@@ -63,7 +65,7 @@ public class HomeFragment extends Fragment {
         });
 
 
-        scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
+        scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list

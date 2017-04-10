@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.activities.RecipeDetailActivity;
@@ -61,7 +60,6 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(v.getContext(), "" + mPosition, Toast.LENGTH_LONG).show();
                     showRecipeDetailUI(v.getContext(), mPosition);
                 }
             });
@@ -150,9 +148,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
      * Show Recipe Detail UI with Recipe.objectID.
      */
     private void showRecipeDetailUI(Context context, int index) {
-        Recipe recipe = mRecipe.get(index);
         Intent intent = new Intent(context, RecipeDetailActivity.class);
-        intent.putExtra("objectId", recipe.getObjectId());
+        intent.putExtra("objectId", mRecipe.get(index).getObjectId());
         context.startActivity(intent);
     }
 }

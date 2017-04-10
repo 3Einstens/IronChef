@@ -8,11 +8,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.Utilities.RecipeQuery;
+import com.einstens3.ironchef.Utilities.StringUtils;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.ParseException;
 
@@ -28,6 +30,10 @@ public class RecipeDetailFragment extends Fragment {
     TextView tvTitle;
     TextView tvDescription;
     TextView tvAuthor;
+    TextView tvCategory;
+    TextView tvCookingTime;
+    TextView tvServing;
+    ListView lvIngredients;
 
     public RecipeDetailFragment() {
     }
@@ -41,11 +47,16 @@ public class RecipeDetailFragment extends Fragment {
         setEventHandlers();
         return this.view;
     }
+
     private void bindControls() {
         ivPhoto = (ImageView) view.findViewById(R.id.ivPhoto);
         tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         tvAuthor = (TextView) view.findViewById(R.id.tvAuthor);
         tvDescription = (TextView) view.findViewById(R.id.tvDescription);
+        tvCategory = (TextView) view.findViewById(R.id.tvCategory);
+        tvCookingTime = (TextView) view.findViewById(R.id.tvCookingTime);
+        tvServing = (TextView) view.findViewById(R.id.tvServing);
+        lvIngredients = (ListView) view.findViewById(R.id.lvIngredients);
     }
 
     private void updateControlStates() {
@@ -56,6 +67,9 @@ public class RecipeDetailFragment extends Fragment {
                     tvTitle.setText(recipe.getName());
                     tvDescription.setText(recipe.getDescription());
                     tvAuthor.setText(recipe.getAuthor().fetchIfNeeded().getUsername());
+                    tvCookingTime.setText(String.valueOf(recipe.getCookingTime()));
+                    tvServing.setText(String.valueOf(recipe.getServing()));
+                    tvCategory.setText(StringUtils.fromList(recipe.getCategories()));
                     ivPhoto.setImageURI(Uri.fromFile(recipe.getPhoto().getFile()));
                 } catch (ParseException e) {
                     Log.e(TAG, "Parse Error", e);
@@ -72,6 +86,5 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     private void setEventHandlers() {
-
     }
 }

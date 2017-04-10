@@ -12,12 +12,14 @@ public class IronChefApplication extends Application {
     public void onCreate() {
         super.onCreate();
 
+        // -------------------------------------------
+        //  Parse configuration
+        // -------------------------------------------
+
         // Parse log level
         Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG);
-
         // Register parse models
         ParseObject.registerSubclass(Recipe.class);
-
         // Initialize parse
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(BuildConfig.PARSE_APP_ID)

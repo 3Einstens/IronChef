@@ -2,7 +2,7 @@
 
 ## Team 
 - Team name: **3Einstens**, 
-- Team members: **Hideki, Karthik and Raghu**
+- Team members: **Hideki, Kartik and Raghu**
 
 ## Description
 **IronChef is `Ice Bucket Challenge` for Recipe.**

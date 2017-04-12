@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import android.widget.Toast;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.Utilities.RecipeQuery;
 import com.einstens3.ironchef.Utilities.StringUtils;
+import com.einstens3.ironchef.models.Like;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.ParseException;
 
@@ -29,6 +31,7 @@ public class RecipeDetailFragment extends Fragment {
     //private static final String ID = "eqsYIVD78S";
 
     String objectId;
+    Recipe recipe;
 
     View view;
     ImageView ivPhoto;
@@ -39,6 +42,7 @@ public class RecipeDetailFragment extends Fragment {
     TextView tvCookingTime;
     TextView tvServing;
     ListView lvIngredients;
+    ImageButton ivLike;
 
     public RecipeDetailFragment() {
     }
@@ -78,12 +82,14 @@ public class RecipeDetailFragment extends Fragment {
         tvCookingTime = (TextView) view.findViewById(R.id.tvCookingTime);
         tvServing = (TextView) view.findViewById(R.id.tvServing);
         lvIngredients = (ListView) view.findViewById(R.id.lvIngredients);
+        ivLike = (ImageButton)view.findViewById(R.id.ivLike);
     }
 
     private void updateControlStates() {
         new RecipeQuery().queryRecipe(objectId, new RecipeQuery.QueryRecipeCallback() {
             @Override
             public void success(Recipe recipe) {
+                RecipeDetailFragment.this.recipe = recipe;
                 try {
                     if (recipe.getName() != null)
                         tvTitle.setText(recipe.getName());
@@ -116,5 +122,11 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     private void setEventHandlers() {
+        ivLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Like.likeRecipe(RecipeDetailFragment.this.recipe);
+            }
+        });
     }
 }

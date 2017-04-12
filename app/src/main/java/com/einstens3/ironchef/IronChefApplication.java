@@ -2,6 +2,7 @@ package com.einstens3.ironchef;
 
 import android.app.Application;
 
+import com.einstens3.ironchef.models.Like;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -20,6 +21,7 @@ public class IronChefApplication extends Application {
         Parse.setLogLevel(Parse.LOG_LEVEL_DEBUG);
         // Register parse models
         ParseObject.registerSubclass(Recipe.class);
+        ParseObject.registerSubclass(Like.class);
         // Initialize parse
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(BuildConfig.PARSE_APP_ID)

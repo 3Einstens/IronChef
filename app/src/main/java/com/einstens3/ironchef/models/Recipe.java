@@ -136,6 +136,13 @@ public class Recipe extends ParseObject {
 
     // NOTE - For Sprint 1, Steps are fixed number of steps
 
+//    class Step extends ParseObject{
+//        String text;
+//        ParseFile photo;
+//
+//    }
+//    public List<Step> getSteps();
+
     public String getStep1Text() {
         return getString("step1.text");
     }

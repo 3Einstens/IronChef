@@ -68,6 +68,16 @@
         android:textColor="@color/black"
         tools:text="Italian"/>
 
+    <ImageButton
+        android:id="@+id/ivLike"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvTitle"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_like"
+        android:text="LIKE"/>
+
     <TextView
         android:id="@+id/tvDescription"
         android:layout_width="wrap_content"

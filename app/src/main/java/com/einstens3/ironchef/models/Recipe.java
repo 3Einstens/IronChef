@@ -229,6 +229,13 @@ public class Recipe extends ParseObject {
         return Like.doesUserLikeRecipe(this);
     }
 
+    /**
+     * Toggle Like state for current user
+     * @return the state after toggled
+     */
+    public boolean toggleLike(){
+        return Like.toggleLike(this);
+    }
 
 //    // Might use later
 //

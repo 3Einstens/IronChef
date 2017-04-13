@@ -208,6 +208,9 @@ public class Recipe extends ParseObject {
         put("public", value);
     }
 
+    public int countLikes(){
+        return Like.countLikesForRecipe(this);
+    }
 
 //    // Might use later
 //

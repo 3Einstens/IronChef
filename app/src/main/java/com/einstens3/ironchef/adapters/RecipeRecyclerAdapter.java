@@ -69,6 +69,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ivRecipe.setImageResource(0);
             if (r != null) {
                 tvRecipeDescription.setText(r.getName());
+                Log.e(TAG, "Like = " + r.countLikes());
                 try {
                     ivRecipe.setImageURI(Uri.fromFile(r.getPhoto().getFile()));
                 } catch (ParseException e){

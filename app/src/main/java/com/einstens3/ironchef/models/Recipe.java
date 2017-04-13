@@ -208,9 +208,27 @@ public class Recipe extends ParseObject {
         put("public", value);
     }
 
-    public int countLikes(){
+    /**
+     * Get the count of likes
+     */
+    public int countLikes() {
         return Like.countLikesForRecipe(this);
     }
+
+    /**
+     * List of Likes. Get each user from Like.
+     */
+    public List<Like> likes() {
+        return Like.likes(this);
+    }
+
+    /**
+     * Does current usre like this recipe?
+     */
+    public boolean doesUserLikeRecipe() {
+        return Like.doesUserLikeRecipe(this);
+    }
+
 
 //    // Might use later
 //

@@ -3,6 +3,9 @@ package com.einstens3.ironchef.fragments;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.Utilities.RecipeQuery;
 import com.einstens3.ironchef.Utilities.StringUtils;
@@ -43,6 +47,39 @@ public class RecipeDetailFragment extends Fragment {
     TextView tvServing;
     ListView lvIngredients;
     ImageButton ivLike;
+    ViewPager viewPager;
+    PagerSlidingTabStrip pagerSlidingTabStrip;
+
+    public class RecipieDetailPagerAdapter extends FragmentPagerAdapter {
+        final int PAGE_COUNT = 3;
+        private String tabTitles[] = {"Ingridents", "Recipe", "Direction"};
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0){
+                return new IngridientFragment();
+            } else  if (position == 1){
+                return new IngridientFragment();
+            } else {
+                return new IngridientFragment();
+            }
+
+        }
+
+        @Override
+        public int getCount() {
+            return PAGE_COUNT;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabTitles[position];
+        }
+
+        public RecipieDetailPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+    }
 
     public RecipeDetailFragment() {
     }
@@ -81,8 +118,12 @@ public class RecipeDetailFragment extends Fragment {
         tvCategory = (TextView) view.findViewById(R.id.tvCategory);
         tvCookingTime = (TextView) view.findViewById(R.id.tvCookingTime);
         tvServing = (TextView) view.findViewById(R.id.tvServing);
-        lvIngredients = (ListView) view.findViewById(R.id.lvIngredients);
+        //lvIngredients = (ListView) view.findViewById(R.id.lvIngredients);
         ivLike = (ImageButton)view.findViewById(R.id.ivLike);
+        viewPager = (ViewPager) view.findViewById(R.id.recipeDetailviewpager);
+        pagerSlidingTabStrip = (PagerSlidingTabStrip) view.findViewById(R.id.pstRecipeDetailTabs);
+        viewPager.setAdapter(new RecipieDetailPagerAdapter(getFragmentManager()));
+        pagerSlidingTabStrip.setViewPager(viewPager);
     }
 
     private void updateControlStates() {

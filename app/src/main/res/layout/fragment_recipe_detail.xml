@@ -26,47 +26,74 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="24sp"
-        android:textStyle="bold"
+        android:paddingTop="10dp"
         tools:text="Beefy Backed Raviloli"/>
 
-    <TextView
-        android:id="@+id/lblAuthor"
-        android:layout_width="wrap_content"
+
+    <LinearLayout
+        android:id="@+id/llAuthorCategory"
+        android:paddingTop="5dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_below="@+id/tvTitle"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Recipe by:"/>
+        android:layout_alignParentStart="true">
 
-    <TextView
-        android:id="@+id/tvAuthor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTitle"
-        android:layout_toEndOf="@+id/lblAuthor"
-        android:layout_toRightOf="@+id/lblAuthor"
-        tools:text="ROGUE34"
-        android:textColor="@color/black"
-        android:textStyle="bold"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1">
 
-    <TextView
-        android:id="@+id/lblCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTitle"
-        android:layout_toEndOf="@+id/tvAuthor"
-        android:layout_toRightOf="@+id/tvAuthor"
-        android:text="Category"/>
+            <TextView
+                android:id="@+id/lblAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right"
+                android:layout_weight="1"
+                android:text="Recipe by:"/>
 
-    <TextView
-        android:id="@+id/tvCategory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvTitle"
-        android:layout_toEndOf="@+id/lblCategory"
-        android:layout_toRightOf="@+id/lblCategory"
-        android:textColor="@color/black"
-        tools:text="Italian"/>
+            <TextView
+                android:id="@+id/tvAuthor"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="ROGUE34"
+                android:paddingLeft="5dp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <TextView
+                android:id="@+id/lblCategory"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category:"/>
+
+            <TextView
+                android:id="@+id/tvCategory"
+                android:layout_weight="1"
+                android:gravity="left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                tools:text="Italian"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 
     <ImageButton
         android:id="@+id/ivLike"
@@ -80,50 +107,106 @@
 
     <TextView
         android:id="@+id/tvDescription"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/lblAuthor"
+        android:layout_below="@+id/llAuthorCategory"
         tools:text="A terrific blend of sweet, tangy, fruity, and zesty. An old family recipe that never fails to please. This is an easy, fail-safe recipe that anyone can make or adjust according to their own likes."/>
 
-    <TextView
-        android:id="@+id/lblCookingTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Ready In"
-        android:layout_below="@+id/tvDescription"/>
 
-    <TextView
-        android:id="@+id/tvCookingTime"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDescription"
-        android:layout_toEndOf="@+id/lblCookingTime"
-        android:layout_toRightOf="@+id/lblCookingTime"
-        android:textColor="@color/black"
-        tools:text="1h 25m"/>
+        android:id="@+id/llRDCookingServing"
+        android:orientation="horizontal"
+        android:layout_below="@+id/tvDescription">
 
-    <TextView
-        android:id="@+id/lblServing"
-        android:layout_width="wrap_content"
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:paddingLeft="10dp"
+            android:src="@drawable/watch"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:paddingLeft="10dp"
+            android:gravity="center"
+            >
+
+            <TextView
+                android:id="@+id/lblCookingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center|right"
+                android:text="Ready In:" />
+
+            <TextView
+                android:id="@+id/tvCookingTime"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:textColor="@color/black"
+                tools:text="1h 25m" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/lblServing"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|right"
+                android:text="Servings:" />
+
+            <TextView
+                android:id="@+id/tvServing"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:textColor="@color/black"
+                tools:text="8" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+    <com.astuetz.PagerSlidingTabStrip
+        android:layout_below="@id/llRDCookingServing"
+        android:id="@+id/pstRecipeDetailTabs"
+        app:pstsShouldExpand="true"
+        app:pstsTextAllCaps="true"
+        app:pstsIndicatorColor="@color/colorAccent"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:textColor="@color/colorAccent"/>
+
+    <android.support.v4.view.ViewPager
+        android:layout_below="@+id/pstRecipeDetailTabs"
+        android:id="@+id/recipeDetailviewpager"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDescription"
-        android:layout_toEndOf="@+id/tvCookingTime"
-        android:layout_toRightOf="@+id/tvCookingTime"
-        android:text="Servings"/>
+        android:background="@android:color/white" />
 
-    <TextView
-        android:id="@+id/tvServing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/tvDescription"
-        android:layout_toEndOf="@+id/lblServing"
-        android:layout_toRightOf="@+id/lblServing"
-        android:textColor="@color/black"
-        tools:text="8"/>
 
-    <TextView
+
+
+    <!--TextView
         android:id="@+id/lblIngredients"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -131,7 +214,8 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/lblCookingTime"
+        android:paddingTop="10dp"
+        android:layout_below="@+id/llRDCookingServing"
         android:text="Ingredients"
         android:textStyle="bold"/>
 
@@ -143,6 +227,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
+        android:paddingTop="10dp"
         android:layout_alignParentStart="true"/>
 
     <TextView
@@ -165,6 +250,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentStart="true"/-->
 
 </RelativeLayout>

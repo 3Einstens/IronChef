@@ -208,6 +208,10 @@ public class Recipe extends ParseObject {
         put("public", value);
     }
 
+    // ----------------------------------------------------------------
+    // Like related features
+    // ----------------------------------------------------------------
+
     /**
      * Get the count of likes
      */
@@ -237,26 +241,17 @@ public class Recipe extends ParseObject {
         return Like.toggleLike(this);
     }
 
-//    // Might use later
-//
-//    // stepPhotos: List<ParseFile> - List of step photo. Num of stepPhotos and stepTexts should be same.
-//
-//    public List<ParseFile> getStepPhotos() {
-//        return getList("stepPhotos");
-//    }
-//
-//    public void setStepPhotos(List<ParseFile> stepPhotos) {
-//        put("stepPhotos", stepPhotos);
-//    }
-//
-//    // stepTexts: List<String> - List of step text. Num of stepPhotos and stepTexts should be same.
-//
-//    public List<String> getStepTexts() {
-//        return getList("stepTexts");
-//    }
-//
-//    public void setStepTexts(List<String> stepTexts) {
-//        put("stepTexts", stepTexts);
-//    }
+    /**
+     * Like the recipe by the current user
+     */
+    public void like() {
+        Like.likeRecipe(this);
+    }
 
+    /**
+     * Unlike the recipe by the current user
+     */
+    public void unlike() {
+        Like.unlikeRecipe(this);
+    }
 }

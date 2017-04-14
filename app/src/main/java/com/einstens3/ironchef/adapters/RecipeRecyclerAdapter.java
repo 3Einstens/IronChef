@@ -48,6 +48,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         ImageView ivRecipe;
         @BindView(R.id.tvDescription)
         TextView tvRecipeDescription;
+        @BindView(R.id.tvLike)
+        TextView tvLike;
         private int mPosition;
 
         public BasicViewHolder(View view) {
@@ -75,6 +77,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 } catch (ParseException e){
                     Log.d(TAG, "parse exception: " + e.getMessage());
                 }
+
+                 tvLike.setText(Integer.toString(r.countLikes()) );
               /*  Glide.with(ivRecipe.getContext())
                         .load(r.getProfileImage()).into(ivRecipe);*/
             }

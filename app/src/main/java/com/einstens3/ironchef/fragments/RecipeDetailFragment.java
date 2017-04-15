@@ -137,10 +137,6 @@ public class RecipeDetailFragment extends Fragment {
         //lvIngredients = (ListView) view.findViewById(R.id.lvIngredients);
         ivLike = (ImageButton)view.findViewById(R.id.ivLike);
         btnAccept  = (Button)view.findViewById(R.id.btnAccept);
-        viewPager = (ViewPager) view.findViewById(R.id.recipeDetailviewpager);
-        pagerSlidingTabStrip = (PagerSlidingTabStrip) view.findViewById(R.id.pstRecipeDetailTabs);
-        viewPager.setAdapter(new RecipieDetailPagerAdapter(getFragmentManager()));
-        pagerSlidingTabStrip.setViewPager(viewPager);
     }
 
     private void updateControlStates() {

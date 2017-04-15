@@ -26,6 +26,8 @@ import com.einstens3.ironchef.models.Like;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.ParseException;
 
+import java.util.ArrayList;
+
 import static android.os.Build.ID;
 
 /**
@@ -53,17 +55,26 @@ public class RecipeDetailFragment extends Fragment {
     ViewPager viewPager;
     PagerSlidingTabStrip pagerSlidingTabStrip;
 
+    ArrayList<String> stepList = null;
+
     public class RecipieDetailPagerAdapter extends FragmentPagerAdapter {
-        final int PAGE_COUNT = 3;
-        private String tabTitles[] = {"Ingridents", "Recipe", "Direction"};
+        final int PAGE_COUNT = 2;
+        private String tabTitles[] = { "Recipe", "Direction"};
         @Override
         public Fragment getItem(int position) {
             if (position == 0){
-                return new IngridientFragment();
+                  RecipeDetailRecipeListFragment recipeDetailRecipeListFragment
+                          = RecipeDetailRecipeListFragment.newInstance(stepList);
+                return recipeDetailRecipeListFragment;
+
             } else  if (position == 1){
-                return new IngridientFragment();
+                RecipeDetailRecipeListFragment recipeDetailRecipeListFragment
+                        = RecipeDetailRecipeListFragment.newInstance(stepList);
+                return recipeDetailRecipeListFragment;
             } else {
-                return new IngridientFragment();
+                RecipeDetailRecipeListFragment recipeDetailRecipeListFragment
+                        = RecipeDetailRecipeListFragment.newInstance(stepList);
+                return recipeDetailRecipeListFragment;
             }
 
         }
@@ -101,6 +112,7 @@ public class RecipeDetailFragment extends Fragment {
         if (getArguments() != null) {
             objectId = getArguments().getString(ARG_PARAM_RECIPE_OBJECT_ID);
         }
+        stepList = new ArrayList<>();
     }
 
     @Override
@@ -110,6 +122,7 @@ public class RecipeDetailFragment extends Fragment {
         bindControls();
         updateControlStates();
         setEventHandlers();
+
         return this.view;
     }
 
@@ -152,6 +165,19 @@ public class RecipeDetailFragment extends Fragment {
                         tvCategory.setText(StringUtils.fromList(recipe.getCategories()));
                     if (recipe.getPhoto() != null)
                         ivPhoto.setImageURI(Uri.fromFile(recipe.getPhoto().getFile()));
+
+                    if(recipe.getStep1Text() != null) {
+                        String text = recipe.getStep1Text();
+                        stepList.add(recipe.getStep1Text());
+                    }
+                    if(recipe.getStep2Text() != null) stepList.add(recipe.getStep2Text());
+                    if(recipe.getStep3Text() != null) stepList.add(recipe.getStep2Text());
+
+                    viewPager = (ViewPager) view.findViewById(R.id.recipeDetailviewpager);
+                    pagerSlidingTabStrip = (PagerSlidingTabStrip) view.findViewById(R.id.pstRecipeDetailTabs);
+                    viewPager.setAdapter(new RecipieDetailPagerAdapter(getFragmentManager()));
+                    pagerSlidingTabStrip.setViewPager(viewPager);
+
                 } catch (ParseException e) {
                     Log.e(TAG, "Parse Error", e);
                     Toast.makeText(getContext(), "Parse Error: " + e.getMessage(), Toast.LENGTH_LONG).show();

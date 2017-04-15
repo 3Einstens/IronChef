@@ -144,7 +144,7 @@ public class Recipe extends ParseObject {
 //    public List<Step> getSteps();
 
     public String getStep1Text() {
-        return getString("step1.text");
+        return getString("step1text");
     }
 
     public void setStep1Text(String value) {

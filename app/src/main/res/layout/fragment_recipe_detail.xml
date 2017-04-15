@@ -105,6 +105,15 @@
         android:src="@drawable/ic_like"
         android:text="LIKE"/>
 
+    <Button
+        android:id="@+id/btnAccept"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tvTitle"
+        android:layout_toLeftOf="@+id/ivLike"
+        android:layout_toStartOf="@+id/ivLike"
+        android:text="Accept"/>
+
     <TextView
         android:id="@+id/tvDescription"
         android:paddingTop="5dp"

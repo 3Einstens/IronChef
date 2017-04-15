@@ -12,24 +12,21 @@ import com.parse.ParseUser;
 import java.util.List;
 import java.util.Locale;
 
-import static android.content.ContentValues.TAG;
 import static com.parse.ParseQuery.getQuery;
 
 @ParseClassName("Like")
 public class Like extends ParseObject {
-    /**
-     * - fromUser: ParseUser
-     * - toRecipe: Recipe
-     */
-
     // ------------------------------------
     //  Constants
     // ------------------------------------
+
+    public static final String TAG = Like.class.getSimpleName();
+
     public static final String KEY_FROM_USER = "fromUser";
     public static final String KEY_TO_RECIPE = "toRecipe";
 
     // ------------------------------------
-    //  Static inconvenient methods
+    //  Static convenient methods
     // ------------------------------------
 
     /**
@@ -203,7 +200,7 @@ public class Like extends ParseObject {
     public String toString() {
         return String.format(Locale.ENGLISH, "%s{%s: %s, %s: %s}",
                 Like.class.getSimpleName(),
-                KEY_FROM_USER, getFromUser().getUsername(),
-                KEY_TO_RECIPE, getToRecipe().getName());
+                KEY_FROM_USER, getFromUser() == null ? "null" : getFromUser().getObjectId(),
+                KEY_TO_RECIPE, getToRecipe() == null ? "null" : getToRecipe().getObjectId());
     }
 }

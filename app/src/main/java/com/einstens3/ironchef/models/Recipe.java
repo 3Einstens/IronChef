@@ -254,4 +254,24 @@ public class Recipe extends ParseObject {
     public void unlike() {
         Like.unlikeRecipe(this);
     }
+
+    // ----------------------------------------------------------------
+    // Challenge related features
+    // ----------------------------------------------------------------
+
+
+    /**
+     * Get the number of challenges
+     */
+    public int countChallenges() {
+        return Challenge.countChallengesForRecipe(this);
+    }
+
+    /**
+     * Accept challenge to this recipe by the current user
+     */
+    public void acceptChallenge(){
+        Challenge.acceptChallenge(this);
+    }
+
 }

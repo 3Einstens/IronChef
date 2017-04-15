@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.activities.RecipeDetailActivity;
 import com.einstens3.ironchef.models.Recipe;
@@ -26,6 +27,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
+import static com.einstens3.ironchef.R.id.tvLike;
 
 /**
  * Created by raprasad on 4/2/17.
@@ -41,6 +45,9 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private Context mContext;
     private ArrayList<Recipe> mRecipe;
     public static final String TAG = RecipeRecyclerAdapter.class.getName();
+    public static final int HOME_RECIPE = 0;
+    public static final int MYLIST_RECIPE = 1;
+    private int mRecipeType;
 
 
     public class BasicViewHolder extends RecyclerView.ViewHolder {
@@ -48,8 +55,6 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         ImageView ivRecipe;
         @BindView(R.id.tvDescription)
         TextView tvRecipeDescription;
-        @BindView(R.id.tvLike)
-        TextView tvLike;
         private int mPosition;
 
         public BasicViewHolder(View view) {
@@ -67,18 +72,18 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             });
         }
 
+
         public void renderRecipe(Recipe r) {
             ivRecipe.setImageResource(0);
             if (r != null) {
                 tvRecipeDescription.setText(r.getName());
-                Log.e(TAG, "Like = " + r.countLikes());
+             //   Log.e(TAG, "Like = " + r.countLikes());
                 try {
                     ivRecipe.setImageURI(Uri.fromFile(r.getPhoto().getFile()));
                 } catch (ParseException e){
                     Log.d(TAG, "parse exception: " + e.getMessage());
                 }
-
-                 tvLike.setText(Integer.toString(r.countLikes()) );
+               //  tvLike.setText(Integer.toString(r.countLikes()) );
               /*  Glide.with(ivRecipe.getContext())
                         .load(r.getProfileImage()).into(ivRecipe);*/
             }
@@ -86,10 +91,49 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
 
-    public RecipeRecyclerAdapter(Context context, ArrayList<Recipe> recipes) {
+    public class HomeViewHolder extends BasicViewHolder {
+
+        @BindView(R.id.tvLike)
+        TextView tvLike;
+
+        public HomeViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+
+
+        public void renderRecipe(Recipe r) {
+                super.renderRecipe(r);
+                tvLike.setText(Integer.toString(0));
+            }
+        }
+
+
+
+    public class MyListViewHolder extends BasicViewHolder {
+        @BindView(R.id.tvBanner)
+        TextView tvBanner;
+
+        public MyListViewHolder(View view) {
+            super(view);
+            ButterKnife.bind(this, view);
+        }
+
+        public void renderRecipe(Recipe r) {
+           super.renderRecipe(r);
+            if (r != null) {
+                tvBanner.setText("Pending!");
+            }
+        }
+    }
+
+
+    public RecipeRecyclerAdapter(Context context, ArrayList<Recipe> recipes, int recipeType) {
         this.mRecipe = recipes;
         this.mContext = context;
+        mRecipeType = recipeType;
     }
+
 
     @Override
     public int getItemCount() {
@@ -99,8 +143,16 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipie_cv, parent, false);
-        return new BasicViewHolder(view);
+        View view;
+        RecyclerView.ViewHolder viewHolder;
+        if (mRecipeType == HOME_RECIPE){
+           view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipie_cv, parent, false);
+            viewHolder = new HomeViewHolder(view);
+        } else {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mylist_cv, parent, false);
+            viewHolder = new MyListViewHolder(view);
+        }
+        return viewHolder;
     }
 
     @Override

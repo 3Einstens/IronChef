@@ -29,6 +29,16 @@
         <item name="android:textAppearance">@android:style/TextAppearance.Small</item>
     </style>
 
+    <style name="titleBold">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.DeviceDefault.Large</item>
+    </style>
+
+    <style name="titleBanner" parent="titleBold">
+        <item name="android:textAppearance">@android:style/TextAppearance.DeviceDefault.Medium</item>
+    </style>
+
 
 
 </resources>

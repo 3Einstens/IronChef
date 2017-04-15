@@ -32,9 +32,9 @@ public class HomeFragment extends Fragment {
     SwipeRefreshLayout swipeContainer;
     protected ArrayList<Recipe> mArrayList;
     protected RecipeRecyclerAdapter mArrayAdapter;
-    private EndlessRecyclerViewScrollListener scrollListener;
-    private GridLayoutManager gridLayoutManager;
-    private StaggeredGridLayoutManager mLayoutManager;
+    protected EndlessRecyclerViewScrollListener scrollListener;
+    protected GridLayoutManager gridLayoutManager;
+    protected StaggeredGridLayoutManager mLayoutManager;
     public HomeFragment() {
         queryAllRecipe();
     }
@@ -123,7 +123,7 @@ public class HomeFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mArrayList = new ArrayList<>();
-        mArrayAdapter = new RecipeRecyclerAdapter(getActivity(), mArrayList);
+        mArrayAdapter = new RecipeRecyclerAdapter(getActivity(), mArrayList, RecipeRecyclerAdapter.HOME_RECIPE);
     }
 
 

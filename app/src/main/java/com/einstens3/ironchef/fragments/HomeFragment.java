@@ -30,13 +30,14 @@ public class HomeFragment extends Fragment {
     RecyclerView rvRecipies;
     @BindView(R.id.swipeContainer)
     SwipeRefreshLayout swipeContainer;
+    protected final String TAG = HomeFragment.class.getName();
     protected ArrayList<Recipe> mArrayList;
     protected RecipeRecyclerAdapter mArrayAdapter;
     protected EndlessRecyclerViewScrollListener scrollListener;
     protected GridLayoutManager gridLayoutManager;
     protected StaggeredGridLayoutManager mLayoutManager;
     public HomeFragment() {
-        queryAllRecipe();
+
     }
 
     @Override

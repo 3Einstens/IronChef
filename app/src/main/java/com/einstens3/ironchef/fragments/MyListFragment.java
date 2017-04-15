@@ -4,8 +4,11 @@ package com.einstens3.ironchef.fragments;
  * Created by raprasad on 4/9/17.
  */
 
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 
+import com.einstens3.ironchef.activities.HomeActivity;
 import com.parse.ParseException;
 
 import android.os.Bundle;
@@ -19,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.Utilities.EndlessRecyclerViewScrollListener;
@@ -34,6 +38,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static android.os.Build.VERSION_CODES.M;
+import static com.einstens3.ironchef.Utilities.RecipeQuery.queryMyRecipes;
 
 public class MyListFragment extends  HomeFragment {
 
@@ -41,7 +46,7 @@ public class MyListFragment extends  HomeFragment {
 
 
     public MyListFragment() {
-        queryAllRecipe();
+
     }
 
 
@@ -88,13 +93,18 @@ public class MyListFragment extends  HomeFragment {
         };
         // Adds the scroll listener to RecyclerView
         rvRecipies.addOnScrollListener(scrollListener);
-        makeNetworkCall(0);
+
 
         return v;
     }
 
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+       queryAllRecipe();
 
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -105,7 +115,8 @@ public class MyListFragment extends  HomeFragment {
 
 
     private void queryAllRecipe(){
-        new RecipeQuery().queryAllRecipes(new RecipeQuery.QueryRecipesCallback() {
+        new MyListTask().execute();
+    /*    new RecipeQuery().queryAllRecipes(new RecipeQuery.QueryRecipesCallback() {
             @Override
             public void success(List<Recipe> recipes) {
                 mArrayList = mArrayAdapter.swap(new ArrayList(recipes));
@@ -117,8 +128,48 @@ public class MyListFragment extends  HomeFragment {
                 Log.e("ERROR", "Query Error", e);
                 swipeContainer.setRefreshing(false);
             }
-        });
+        });*/
     }
+
+
+
+    private class MyListTask extends AsyncTask<String, Void, List<Recipe>> {
+
+
+        protected void onPreExecute() {
+            // Runs on the UI thread before doInBackground
+            // Good for toggling visibility of a progress indicator
+
+           swipeContainer.setVisibility(ProgressBar.VISIBLE);
+        }
+
+        protected List<Recipe> doInBackground(String... strings) {
+            // Some long-running task like downloading an image.
+            List<Recipe> recipes = null;
+            RecipeQuery q = new RecipeQuery();
+            try {
+              recipes  = q.queryMyRecipes();
+            } catch (ParseException e){
+                Log.e(TAG, e.getMessage());
+            }
+
+            return recipes;
+
+        }
+
+
+        protected void onPostExecute(List<Recipe> recipes) {
+            // This method is executed in the UIThread
+            // with access to the result of the long running task
+
+            // Hide the progress bar
+            if (recipes != null) {
+                mArrayList = mArrayAdapter.swap(new ArrayList(recipes));
+            }
+            swipeContainer.setVisibility(ProgressBar.INVISIBLE);
+        }
+    }
+
 }
 
 

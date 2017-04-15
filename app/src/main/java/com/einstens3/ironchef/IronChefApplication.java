@@ -2,6 +2,7 @@ package com.einstens3.ironchef;
 
 import android.app.Application;
 
+import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Like;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.Parse;
@@ -22,6 +23,7 @@ public class IronChefApplication extends Application {
         // Register parse models
         ParseObject.registerSubclass(Recipe.class);
         ParseObject.registerSubclass(Like.class);
+        ParseObject.registerSubclass(Challenge.class);
         // Initialize parse
         Parse.initialize(new Parse.Configuration.Builder(this)
                 .applicationId(BuildConfig.PARSE_APP_ID)

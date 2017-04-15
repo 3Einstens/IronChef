@@ -107,9 +107,9 @@ public class Challenge extends ParseObject {
     public String toString() {
         return String.format(Locale.ENGLISH, "%s{%s: %s, %s: %s, %s: %s, %s: %s}",
                 Challenge.class.getSimpleName(),
-                KEY_FROM_USER, getFromUser().getUsername(),
-                KEY_TO_RECIPE, getToRecipe().getName(),
-                KEY_MY_RECIPE, getMyRecipe().getName(),
+                KEY_FROM_USER, getFromUser() == null ? "null" : getFromUser().getObjectId(),
+                KEY_TO_RECIPE, getToRecipe() == null ? "null" : getToRecipe().getObjectId(),
+                KEY_MY_RECIPE, getMyRecipe() == null ? "null" : getMyRecipe().getObjectId(),
                 KEY_STATE, getStateString());
     }
 }

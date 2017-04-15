@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,6 +21,7 @@ import com.astuetz.PagerSlidingTabStrip;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.Utilities.RecipeQuery;
 import com.einstens3.ironchef.Utilities.StringUtils;
+import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Like;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.ParseException;
@@ -47,6 +49,7 @@ public class RecipeDetailFragment extends Fragment {
     TextView tvServing;
     ListView lvIngredients;
     ImageButton ivLike;
+    Button btnAccept;
     ViewPager viewPager;
     PagerSlidingTabStrip pagerSlidingTabStrip;
 
@@ -120,6 +123,7 @@ public class RecipeDetailFragment extends Fragment {
         tvServing = (TextView) view.findViewById(R.id.tvServing);
         //lvIngredients = (ListView) view.findViewById(R.id.lvIngredients);
         ivLike = (ImageButton)view.findViewById(R.id.ivLike);
+        btnAccept  = (Button)view.findViewById(R.id.btnAccept);
         viewPager = (ViewPager) view.findViewById(R.id.recipeDetailviewpager);
         pagerSlidingTabStrip = (PagerSlidingTabStrip) view.findViewById(R.id.pstRecipeDetailTabs);
         viewPager.setAdapter(new RecipieDetailPagerAdapter(getFragmentManager()));
@@ -167,6 +171,14 @@ public class RecipeDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Like.likeRecipe(RecipeDetailFragment.this.recipe);
+                Toast.makeText(getContext(), "Liked Recipe", Toast.LENGTH_LONG).show();
+            }
+        });
+        btnAccept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Challenge.acceptChallenge(RecipeDetailFragment.this.recipe);
+                Toast.makeText(getContext(), "Challenge Accepted", Toast.LENGTH_LONG).show();
             }
         });
     }

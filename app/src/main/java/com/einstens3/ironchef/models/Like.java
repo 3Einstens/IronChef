@@ -200,7 +200,7 @@ public class Like extends ParseObject {
     public String toString() {
         return String.format(Locale.ENGLISH, "%s{%s: %s, %s: %s}",
                 Like.class.getSimpleName(),
-                KEY_FROM_USER, getFromUser().getUsername(),
-                KEY_TO_RECIPE, getToRecipe().getName());
+                KEY_FROM_USER, getFromUser() == null ? "null" : getFromUser().getObjectId(),
+                KEY_TO_RECIPE, getToRecipe() == null ? "null" : getToRecipe().getObjectId());
     }
 }

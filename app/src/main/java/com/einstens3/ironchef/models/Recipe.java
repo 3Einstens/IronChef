@@ -333,4 +333,13 @@ public class Recipe extends ParseObject {
     public void queryChallenges(FindCallback<Challenge> callback) {
         getChallengesRelation().getQuery().findInBackground(callback);
     }
+
+    // ----------------------------------------------------------------
+    // Other
+    // ----------------------------------------------------------------
+    public boolean isOwnRecipe() {
+        if (getAuthor() == null)
+            return false;
+        return ParseUser.getCurrentUser().getObjectId().equals(getAuthor().getObjectId());
+    }
 }

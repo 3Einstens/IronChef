@@ -185,7 +185,7 @@ public class ComposeFragment extends Fragment {
                     public void done(ParseException e) {
                         if(e == null){
                             Log.e(TAG, "Succeeded to save the Recipe");
-                            Toast.makeText(getContext(),"Recipie Saved",Toast.LENGTH_SHORT).show();
+                  //          Toast.makeText(getContext(),"Recipie Saved",Toast.LENGTH_SHORT).show();
                         }
                         else
                             Log.e(TAG, "Failed to save the Recipe:" + e,e);

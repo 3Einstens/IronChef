@@ -101,6 +101,8 @@ public class HomeFragment extends Fragment {
 
 
     protected void queryAllRecipe(){
+        // search example:
+        //new RecipeQuery().queryRecipesByKeyword("Rigatoni", new RecipeQuery.QueryRecipesCallback() {
         new RecipeQuery().queryAllRecipes(new RecipeQuery.QueryRecipesCallback() {
             @Override
             public void success(List<Recipe> recipes) {

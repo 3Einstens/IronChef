@@ -1,8 +1,10 @@
 package com.einstens3.ironchef.models;
 
+import com.parse.CountCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import java.util.List;
@@ -27,10 +29,28 @@ public class Recipe extends ParseObject {
      * - draft: boolean
      * - private boolean
      */
+    // ------------------------------------
+    //  Constants
+    // ------------------------------------
+    public static final String TAG = Recipe.class.getSimpleName();
 
+    public static final String KEY_AUTHOR = "author";
+    public static final String KEY_CHALLENGES = "challenges";
+    public static final String KEY_LIKES = "likes";
+
+    // ------------------------------------
+    //  Static convenient methods
+    // ------------------------------------
+
+    // ------------------------------------
+    //  Constructors
+    // ------------------------------------
     public Recipe() {
     }
 
+    // ------------------------------------
+    //  Getters/Setters
+    // ------------------------------------
 
     // name: String - Recipe Name  Name could be unique
 
@@ -55,11 +75,11 @@ public class Recipe extends ParseObject {
     // author: ParseUser - Recipe Author (owner)
 
     public ParseUser getAuthor() {
-        return (ParseUser) getParseUser("author");
+        return (ParseUser) getParseUser(KEY_AUTHOR);
     }
 
     public void setAuthor(ParseUser value) {
-        put("author", value);
+        put(KEY_AUTHOR, value);
     }
 
     // description: String - Recipe description
@@ -212,66 +232,47 @@ public class Recipe extends ParseObject {
     // Like related features
     // ----------------------------------------------------------------
 
-    /**
-     * Get the count of likes
-     */
-    public int countLikes() {
-        return Like.countLikesForRecipe(this);
-    }
-
-    /**
-     * List of Likes. Get each user from Like.
-     */
-    public List<Like> likes() {
-        return Like.likes(this);
-    }
-
-    /**
-     * Does current usre like this recipe?
-     */
-    public boolean doesUserLikeRecipe() {
-        return Like.doesUserLikeRecipe(this);
-    }
-
-    /**
-     * Toggle Like state for current user
-     * @return the state after toggled
-     */
-    public boolean toggleLike(){
-        return Like.toggleLike(this);
-    }
-
-    /**
-     * Like the recipe by the current user
-     */
     public void like() {
-        Like.likeRecipe(this);
+        addLike(ParseUser.getCurrentUser());
     }
 
-    /**
-     * Unlike the recipe by the current user
-     */
     public void unlike() {
-        Like.unlikeRecipe(this);
+        addLike(ParseUser.getCurrentUser());
+    }
+
+    public void countLikes(CountCallback callback) {
+        getLikesRelation().getQuery().countInBackground(callback);
+    }
+
+    public ParseRelation<ParseUser> getLikesRelation() {
+        return getRelation(KEY_LIKES);
+    }
+
+    public void addLike(ParseUser value) {
+        getLikesRelation().add(value);
+        saveInBackground();
+    }
+
+    public void removeLike(ParseUser value) {
+        getLikesRelation().remove(value);
+        saveInBackground();
     }
 
     // ----------------------------------------------------------------
     // Challenge related features
     // ----------------------------------------------------------------
 
-
-    /**
-     * Get the number of challenges
-     */
-    public int countChallenges() {
-        return Challenge.countChallengesForRecipe(this);
+    public ParseRelation<Challenge> getChallengesRelation(){
+        return getRelation(KEY_CHALLENGES);
     }
 
-    /**
-     * Accept challenge to this recipe by the current user
-     */
-    public void acceptChallenge(){
-        Challenge.acceptChallenge(this);
+    public void addChallenge(Challenge value){
+        getChallengesRelation().add(value);
+        saveInBackground();
     }
 
+    public void removeChallenge(Challenge value){
+        getChallengesRelation().remove(value);
+        saveInBackground();
+    }
 }

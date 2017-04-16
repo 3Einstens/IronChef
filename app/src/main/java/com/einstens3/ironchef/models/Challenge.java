@@ -1,15 +1,12 @@
 package com.einstens3.ironchef.models;
 
-import android.util.Log;
-
 import com.parse.ParseClassName;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.Locale;
-
-import static com.parse.ParseQuery.getQuery;
 
 @ParseClassName("Challenge")
 public class Challenge extends ParseObject {
@@ -19,8 +16,7 @@ public class Challenge extends ParseObject {
     public static final String TAG = Challenge.class.getSimpleName();
 
     // access keys
-    public static final String KEY_FROM_USER = "fromUser";
-    public static final String KEY_TO_RECIPE = "toRecipe";
+    public static final String KEY_USER = "user";
     public static final String KEY_MY_RECIPE = "myRecipe";
     public static final String KEY_STATE = "state";
 
@@ -37,25 +33,19 @@ public class Challenge extends ParseObject {
         return acceptChallenge(ParseUser.getCurrentUser(), recipe);
     }
 
-    public static Challenge acceptChallenge(ParseUser user, Recipe recipe) {
-        Challenge challenge = new Challenge();
-        challenge.setFromUser(user);
-        challenge.setToRecipe(recipe);
+    public static Challenge acceptChallenge(ParseUser user, final Recipe recipe) {
+        final Challenge challenge = new Challenge();
+        challenge.setUser(user);
         challenge.setState(STATE_ACCEPTED);
-        challenge.saveInBackground(null);
+        challenge.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                recipe.addChallenge(challenge);
+            }
+        });
         return challenge;
     }
 
-    public static int countChallengesForRecipe(Recipe recipe) {
-        try {
-            return getQuery(Challenge.class)
-                    .whereEqualTo(KEY_TO_RECIPE, recipe)
-                    .count();
-        } catch (ParseException e) {
-            Log.e(TAG, "Error in countChallengesForRecipe() recipe: " + recipe, e);
-            return -1;
-        }
-    }
     // ------------------------------------
     //  Constructors
     // ------------------------------------
@@ -67,20 +57,12 @@ public class Challenge extends ParseObject {
     //  Getters/Setters
     // ------------------------------------
 
-    public ParseUser getFromUser() {
-        return getParseUser(KEY_FROM_USER);
+    public ParseUser getUser() {
+        return getParseUser(KEY_USER);
     }
 
-    public void setFromUser(ParseUser value) {
-        put(KEY_FROM_USER, value);
-    }
-
-    public Recipe getToRecipe() {
-        return (Recipe) getParseObject(KEY_TO_RECIPE);
-    }
-
-    public void setToRecipe(Recipe value) {
-        put(KEY_TO_RECIPE, value);
+    public void setUser(ParseUser value) {
+        put(KEY_USER, value);
     }
 
     public Recipe getMyRecipe() {
@@ -105,10 +87,9 @@ public class Challenge extends ParseObject {
 
     @Override
     public String toString() {
-        return String.format(Locale.ENGLISH, "%s{%s: %s, %s: %s, %s: %s, %s: %s}",
+        return String.format(Locale.ENGLISH, "%s{%s: %s, %s: %s, %s: %s}",
                 Challenge.class.getSimpleName(),
-                KEY_FROM_USER, getFromUser() == null ? "null" : getFromUser().getObjectId(),
-                KEY_TO_RECIPE, getToRecipe() == null ? "null" : getToRecipe().getObjectId(),
+                KEY_USER, getUser() == null ? "null" : getUser().getObjectId(),
                 KEY_MY_RECIPE, getMyRecipe() == null ? "null" : getMyRecipe().getObjectId(),
                 KEY_STATE, getStateString());
     }

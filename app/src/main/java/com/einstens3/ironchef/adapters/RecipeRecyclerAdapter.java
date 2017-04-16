@@ -17,19 +17,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.activities.RecipeDetailActivity;
 import com.einstens3.ironchef.models.Recipe;
+import com.parse.CountCallback;
 import com.parse.ParseException;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.icu.lang.UCharacter.GraphemeClusterBreak.V;
-import static com.einstens3.ironchef.R.id.tvLike;
 
 /**
  * Created by raprasad on 4/2/17.
@@ -77,7 +74,6 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ivRecipe.setImageResource(0);
             if (r != null) {
                 tvRecipeDescription.setText(r.getName());
-             //   Log.e(TAG, "Like = " + r.countLikes());
                 try {
                     ivRecipe.setImageURI(Uri.fromFile(r.getPhoto().getFile()));
                 } catch (ParseException e){
@@ -101,14 +97,20 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ButterKnife.bind(this, view);
         }
 
-
         public void renderRecipe(Recipe r) {
-                super.renderRecipe(r);
-                tvLike.setText(Integer.toString(0));
-            }
+            super.renderRecipe(r);
+            // set default value  - 0
+            tvLike.setText(Integer.toString(0));
+            // call count likes asynchronously to improve performance.
+            r.countLikes(new CountCallback() {
+                @Override
+                public void done(int count, ParseException e) {
+                    if (e == null)
+                        tvLike.setText(Integer.toString(count));
+                }
+            });
         }
-
-
+    }
 
     public class MyListViewHolder extends BasicViewHolder {
         @BindView(R.id.tvBanner)

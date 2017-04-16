@@ -22,7 +22,6 @@ import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.Utilities.RecipeQuery;
 import com.einstens3.ironchef.Utilities.StringUtils;
 import com.einstens3.ironchef.models.Challenge;
-import com.einstens3.ironchef.models.Like;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.ParseException;
 
@@ -36,7 +35,6 @@ import static android.os.Build.ID;
 public class RecipeDetailFragment extends Fragment {
     private static final String TAG = RecipeDetailFragment.class.getSimpleName();
     private static final String ARG_PARAM_RECIPE_OBJECT_ID = "objectId";
-    //private static final String ID = "eqsYIVD78S";
 
     String objectId;
     Recipe recipe;
@@ -185,14 +183,13 @@ public class RecipeDetailFragment extends Fragment {
                 Toast.makeText(getContext(), "Failed to obtain Recipe for ID: " + ID, Toast.LENGTH_LONG).show();
             }
         });
-
     }
 
     private void setEventHandlers() {
         ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Like.likeRecipe(RecipeDetailFragment.this.recipe);
+                RecipeDetailFragment.this.recipe.like();
                 Toast.makeText(getContext(), "Liked Recipe", Toast.LENGTH_LONG).show();
             }
         });

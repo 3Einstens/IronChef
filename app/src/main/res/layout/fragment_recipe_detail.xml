@@ -118,7 +118,7 @@
         android:background="@drawable/accept"
         android:text="Accept"/>
 
-    <TextView
+    <!--TextView
         android:id="@+id/lblDescription"
         android:layout_weight="1"
         android:gravity="right"
@@ -126,7 +126,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/llAuthorCategory"
         android:paddingLeft="10dp"
-        android:text="Description"/>
+        android:text="Description"/-->
 
     <TextView
         android:id="@+id/tvDescription"
@@ -137,7 +137,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/lblDescription"
+        android:layout_below="@+id/llAuthorCategory"
         android:textColor="@color/black"
         tools:text="A terrific blend of sweet, tangy, fruity, and zesty. An old family recipe that never fails to please. This is an easy, fail-safe recipe that anyone can make or adjust according to their own likes."/>
 

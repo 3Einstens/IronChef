@@ -23,6 +23,8 @@ import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
 import com.einstens3.ironchef.services.RecipeQuery;
 import com.einstens3.ironchef.utilities.StringUtils;
+import com.parse.CountCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 
 import java.util.ArrayList;
@@ -167,6 +169,27 @@ public class RecipeDetailFragment extends Fragment {
                     if(recipe.getSteps() != null) {
                         stepList.addAll(recipe.getSteps());
                     }
+
+                    recipe.countLikes(new CountCallback() {
+                        @Override
+                        public void done(int count, ParseException e) {
+                            if(count>0){
+                                ivLike.setBackgroundResource(R.drawable.liked);
+                            }
+                        }
+                    });
+
+                    recipe.getOwnChallenge(new GetCallback<Challenge>() {
+                        @Override
+                        public void done(Challenge object, ParseException e) {
+
+                            if(object != null){
+                                if(object.getState() == Challenge.STATE_ACCEPTED){
+                                    btnAccept.setBackgroundResource(R.drawable.accepted);
+                                }
+                            }
+                        }
+                    });
 
                     if(recipe.getIngredients() != null) {
                         ingridients.addAll(recipe.getIngredients());

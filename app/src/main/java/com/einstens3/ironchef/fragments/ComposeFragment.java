@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -17,6 +18,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.einstens3.ironchef.R;
@@ -27,6 +29,7 @@ import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -53,12 +56,9 @@ public class ComposeFragment extends Fragment {
     EditText etIngredients;
     EditText etPrepTime;
     EditText etServing;
-    EditText etStep1;
-    EditText etStep2;
-    EditText etStep3;
-    ImageButton ibStep1;
-    ImageButton ibStep2;
-    ImageButton ibStep3;
+    ImageButton ibAddSteps;
+    ImageButton ibAddIngridient;
+
 
 
     public ComposeFragment() {
@@ -86,16 +86,15 @@ public class ComposeFragment extends Fragment {
         etTitle = (EditText) view.findViewById(R.id.etTitle);
         etDescription = (EditText) view.findViewById(R.id.etDescription);
         etCategories = (EditText) view.findViewById(R.id.etCategories);
-        etIngredients = (EditText) view.findViewById(R.id.etIngredients);
         etPrepTime = (EditText) view.findViewById(R.id.etPrepTime);
         etServing = (EditText) view.findViewById(R.id.etServing);
-        etStep1 = (EditText) view.findViewById(R.id.etStep1);
-        etStep2 = (EditText) view.findViewById(R.id.etStep2);
-        etStep3 = (EditText) view.findViewById(R.id.etStep3);
+        //etStep2 = (EditText) view.findViewById(R.id.etStep2);
+        //etStep3 = (EditText) view.findViewById(R.id.etStep3);
 
-        ibStep1 = (ImageButton) view.findViewById(R.id.ibStep1);
-        ibStep2 = (ImageButton) view.findViewById(R.id.ibStep2);
-        ibStep3 = (ImageButton) view.findViewById(R.id.ibStep3);
+        ibAddSteps = (ImageButton) view.findViewById(R.id.ibAddSteps);
+        ibAddIngridient = (ImageButton) view.findViewById(R.id.ibAddIngridients);
+        //ibStep2 = (ImageButton) view.findViewById(R.id.ibStep2);
+        //ibStep3 = (ImageButton) view.findViewById(R.id.ibStep3);
     }
 
     private void updateControlStates() {
@@ -110,24 +109,24 @@ public class ComposeFragment extends Fragment {
                 onLaunchCamera(0, PHOTO_NAME);
             }
         });
-        ibStep1.setOnClickListener(new View.OnClickListener() {
+        ibAddSteps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onLaunchCamera(1, getStepPhotoName(1));
+
+                //todo Dynamically add new editText
+                addDynamicEditTexts(R.id.llStepListCompose,"Add Step");
             }
         });
-        ibStep2.setOnClickListener(new View.OnClickListener() {
+
+        ibAddIngridient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onLaunchCamera(2, getStepPhotoName(2));
+                addDynamicEditTexts(R.id.llIngridentsCompose,"Add Ingridient");
             }
         });
-        ibStep3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onLaunchCamera(3, getStepPhotoName(3));
-            }
-        });
+
+
+
 
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,9 +148,9 @@ public class ComposeFragment extends Fragment {
 
                 // Save photo images
                 ParseFile photo = getParseFile(PHOTO_NAME, true);
-                ParseFile step1Photo = getParseFile(getStepPhotoName(1), true);
-                ParseFile step2Photo = getParseFile(getStepPhotoName(2), true);
-                ParseFile step3Photo = getParseFile(getStepPhotoName(3), true);
+//                ParseFile step1Photo = getParseFile(getStepPhotoName(1), true);
+//                ParseFile step2Photo = getParseFile(getStepPhotoName(2), true);
+//                ParseFile step3Photo = getParseFile(getStepPhotoName(3), true);
 
                 //  Save Recipe
                 Recipe recipe = new Recipe();
@@ -162,31 +161,94 @@ public class ComposeFragment extends Fragment {
                 recipe.setDescription(getText(etDescription));
                 recipe.setCookingTime(getLong(etPrepTime));
                 recipe.setServing(getLong(etServing));
-                recipe.setIngredients(getList(etIngredients));
                 recipe.setCategories(getList(etCategories));
-                recipe.setStep1Text(getText(etStep1));
-                recipe.setStep2Text(getText(etStep2));
-                recipe.setStep3Text(getText(etStep3));
+
+
+                //iterarte over the linear layout and get steps added
+
+
+                ArrayList<String> steps = getDataFromDynamicEditText(R.id.llStepListCompose);
+                ArrayList<String> ingridients = getDataFromDynamicEditText(R.id.llIngridentsCompose);
+
+                recipe.setSteps(steps);
+                recipe.setIngredients(ingridients);
+
+                Log.d("STEPS",steps.toString());
+                Log.d("INGRIDIENTS",ingridients.toString());
+                Toast.makeText(getContext(),steps.toString(),Toast.LENGTH_SHORT);
+
                 if(photo!=null)
                     recipe.setPhoto(photo);
-                if(step1Photo!=null)
-                    recipe.setPhoto(step1Photo);
-                if(step2Photo!=null)
-                    recipe.setPhoto(step2Photo);
-                if(step3Photo!=null)
-                    recipe.setPhoto(step3Photo);
+
                 recipe.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if(e == null)
+                        if(e == null){
                             Log.e(TAG, "Succeeded to save the Recipe");
+                            Toast.makeText(getContext(),"Recipie Saved",Toast.LENGTH_SHORT).show();
+                        }
                         else
                             Log.e(TAG, "Failed to save the Recipe:" + e,e);
                     }
                 });
+
                 getActivity().finish();
             }
         });
+    }
+
+
+    public void addDynamicEditTexts(int linearLayoutResourceId,String hint){
+        LinearLayout linearLayout = (LinearLayout) view.findViewById(linearLayoutResourceId);
+
+
+        LinearLayout ll = new LinearLayout(getContext());
+        LinearLayout.LayoutParams llparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+        llparams.setMargins(0,5,0,0);
+        ll.setLayoutParams(llparams);
+        ll.setOrientation(LinearLayout.HORIZONTAL);
+
+        ImageButton removeButton = new ImageButton(getContext());
+        Drawable drawable = getActivity().getResources().getDrawable(android.R.drawable.ic_menu_close_clear_cancel);
+        removeButton.setImageDrawable(drawable);
+        removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LinearLayout linearParent =  (LinearLayout) v.getParent().getParent();
+                LinearLayout linearChild = (LinearLayout) v.getParent();
+                linearParent.removeView(linearChild);
+                Toast.makeText(getContext(),"I will remove this text",Toast.LENGTH_SHORT).show();
+            }
+        });
+        EditText editTextView = new EditText(getContext());
+
+        editTextView.setHint(hint);
+        editTextView.setBackgroundResource(R.drawable.compose_edittext);
+        editTextView.setPadding(10,0,0,0);
+
+
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+        editTextView.setLayoutParams(params);
+        ll.addView(editTextView);
+        ll.addView(removeButton);
+        linearLayout.addView(ll);
+    }
+
+    public ArrayList<String> getDataFromDynamicEditText(int llResourceId){
+
+        ArrayList<String> steps = new ArrayList<>();
+        LinearLayout ll = (LinearLayout) view.findViewById(llResourceId);
+        for (int i = 0; i < ll.getChildCount(); i++) {
+            View llView = ll.getChildAt(i);
+            if(llView instanceof LinearLayout){
+                EditText et = (EditText) ((LinearLayout) llView).getChildAt(0);
+                if(et != null && !et.getText().toString().isEmpty())
+                    steps.add(et.getText().toString());
+            }
+        }
+
+        return steps;
     }
 
     private ParseFile getParseFile(String name, boolean withSave){

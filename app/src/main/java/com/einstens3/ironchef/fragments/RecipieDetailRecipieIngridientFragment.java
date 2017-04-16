@@ -16,21 +16,20 @@ import java.util.ArrayList;
 import static com.loopj.android.http.AsyncHttpClient.log;
 
 /**
- * Created by knyamagoudar on 4/12/17.
+ * Created by knyamagoudar on 4/15/17.
  */
 
-public class RecipeDetailRecipeListFragment extends Fragment {
-
+public class RecipieDetailRecipieIngridientFragment extends Fragment{
 
     View view;
-    ArrayList<String> stepList = null;
+    ArrayList<String> ingridients = null;
     ArrayAdapter<String> itemsAdapter;
-    public static RecipeDetailRecipeListFragment newInstance(ArrayList<String> stepList) {
+    public static RecipieDetailRecipieIngridientFragment newInstance(ArrayList<String> ingridients) {
         Bundle args = new Bundle();
-        args.putStringArrayList("stepList", stepList);
-        RecipeDetailRecipeListFragment recipeDetailRecipeListFragment = new RecipeDetailRecipeListFragment();
-        recipeDetailRecipeListFragment.setArguments(args);
-        return recipeDetailRecipeListFragment;
+        args.putStringArrayList("ingridients", ingridients);
+        RecipieDetailRecipieIngridientFragment recipieDetailRecipieIngridientFragment = new RecipieDetailRecipieIngridientFragment();
+        recipieDetailRecipieIngridientFragment.setArguments(args);
+        return recipieDetailRecipieIngridientFragment;
     }
 
     @Nullable
@@ -39,7 +38,7 @@ public class RecipeDetailRecipeListFragment extends Fragment {
         this.view =  inflater.inflate(R.layout.fragment_recipedetail_recipielist, container, false);
         ListView listView = (ListView) view.findViewById(R.id.lvRecipeDetailRecipieList);
         itemsAdapter =
-                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, stepList);
+                new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, ingridients);
         listView.setAdapter(itemsAdapter);
         return view;
     }
@@ -47,8 +46,8 @@ public class RecipeDetailRecipeListFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        stepList = new ArrayList<>();
-        log.d("STEPLIST",getArguments().getStringArrayList("stepList").toString());
-        stepList.addAll(getArguments().getStringArrayList("stepList"));
+        ingridients = new ArrayList<>();
+        log.d("INGRIDIENTS",getArguments().getStringArrayList("ingridients").toString());
+        ingridients.addAll(getArguments().getStringArrayList("ingridients"));
     }
 }

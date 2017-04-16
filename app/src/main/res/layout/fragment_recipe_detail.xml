@@ -115,15 +115,25 @@
         android:text="Accept"/>
 
     <TextView
+        android:id="@+id/lblDescription"
+        android:layout_weight="1"
+        android:gravity="right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llAuthorCategory"
+        android:paddingLeft="10dp"
+        android:text="Description"/>
+
+    <TextView
         android:id="@+id/tvDescription"
         android:paddingTop="5dp"
-        android:paddingLeft="5dp"
+        android:paddingLeft="10dp"
         android:paddingRight="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/llAuthorCategory"
+        android:layout_below="@+id/lblDescription"
         tools:text="A terrific blend of sweet, tangy, fruity, and zesty. An old family recipe that never fails to please. This is an easy, fail-safe recipe that anyone can make or adjust according to their own likes."/>
 
 
@@ -154,7 +164,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center|right"
-                android:text="Ready In:" />
+                android:text="Prep Time:" />
 
             <TextView
                 android:id="@+id/tvCookingTime"
@@ -179,7 +189,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center|right"
-                android:text="Servings:" />
+                android:text="Serving:" />
 
             <TextView
                 android:id="@+id/tvServing"

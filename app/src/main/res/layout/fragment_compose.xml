@@ -13,59 +13,65 @@
         tools:context="com.einstens3.ironchef.fragments.ComposeFragment"
         tools:showIn="@layout/activity_compose">
 
-        <ImageView
-            android:id="@+id/ivUploadPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:scaleType="fitXY"
-            app:srcCompat="@android:color/darker_gray"/>
-
-        <ImageButton
-            android:id="@+id/ibUploadPhoto"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_alignBottom="@+id/ivUploadPhoto"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            app:srcCompat="@android:drawable/ic_menu_camera"
-            />
 
         <EditText
             android:id="@+id/etTitle"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/compose_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/ivUploadPhoto"
             android:ems="10"
             android:hint="Recipe title"
             android:inputType="text"
             android:text=""/>
 
+
+        <LinearLayout
+            android:id="@+id/llImages"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etTitle">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:id="@+id/ivUploadPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:scaleType="fitXY"
+                    app:srcCompat="@android:color/darker_gray"/>
+
+                <ImageButton
+                    android:id="@+id/ibUploadPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"
+                    android:layout_alignParentTop="@id/ivUploadPhoto"
+                    app:srcCompat="@android:drawable/ic_menu_camera"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
         <EditText
             android:id="@+id/etDescription"
+            android:background="@drawable/compose_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/etTitle"
+            android:layout_below="@+id/llImages"
             android:hint="Description"
+            android:paddingLeft="10dp"
             android:inputType="textMultiLine"/>
 
         <EditText
             android:id="@+id/etCategories"
+            android:background="@drawable/compose_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -73,64 +79,61 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/etDescription"
-            android:hint="Italian"
+            android:layout_marginTop="5dp"
+            android:paddingLeft="10dp"
+            android:hint="category"
             android:inputType="textMultiLine"/>
 
-        <EditText
-            android:id="@+id/etIngredients"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentStart="true"
+
+
+
+        <LinearLayout
+            android:id="@+id/llPrepServing"
             android:layout_below="@+id/etCategories"
-            android:hint="1 tablespoon sugar"
-            android:inputType="textMultiLine"/>
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <TextView
+                android:id="@+id/lblPrepTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="20dp"
+                android:gravity="center"
+                android:text="Prep Time: "/>
 
-        <TextView
-            android:id="@+id/lblPrepTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/etPrepTime"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/etIngredients"
-            android:text="Prep Time"/>
+            <EditText
+                android:id="@+id/etPrepTime"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:hint="40"
+                android:inputType="numberDecimal"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
+                android:text=""
+                />
 
-        <EditText
-            android:id="@+id/etPrepTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/etIngredients"
-            android:layout_toRightOf="@+id/lblPrepTime"
-            android:hint="40"
-            android:inputType="numberDecimal"
-            android:text=""
-            />
+            <TextView
+                android:id="@+id/lblServing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="50dp"
+                android:gravity="center"
+                android:text="Serving"/>
 
-        <TextView
-            android:id="@+id/lblServing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/etPrepTime"
-            android:layout_below="@+id/etIngredients"
-            android:layout_toEndOf="@+id/etPrepTime"
-            android:layout_toRightOf="@+id/etPrepTime"
-            android:text="Serving"/>
+            <EditText
+                android:id="@+id/etServing"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:hint="4"
+                android:layout_marginTop="5dp"
+                android:inputType="numberDecimal"
+                android:text=""/>
 
-        <EditText
-            android:id="@+id/etServing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/etPrepTime"
-            android:layout_below="@+id/etIngredients"
-            android:layout_toEndOf="@+id/lblServing"
-            android:layout_toRightOf="@+id/lblServing"
-            android:hint="4"
-            android:inputType="numberDecimal"
-            android:text=""/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/lblStep"
@@ -140,40 +143,72 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/lblPrepTime"
+            android:layout_below="@+id/llPrepServing"
             android:text="Steps"/>
 
 
+        <LinearLayout
+            android:id="@+id/llStepListCompose"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lblStep"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+
+
+        </LinearLayout>
+
         <ImageButton
-            android:id="@+id/ibStep1"
+            android:id="@+id/ibAddSteps"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/lblStep"
-            app:srcCompat="@android:drawable/ic_menu_camera"/>
+            android:layout_below="@+id/llStepListCompose"
+            app:srcCompat="@android:drawable/ic_menu_add"/>
 
-        <EditText
-            android:id="@+id/etStep1"
+
+        <TextView
+            android:id="@+id/lbIngrident"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/lblStep"
-            android:layout_toRightOf="@+id/ibStep1"
-            android:layout_alignTop="@+id/ibStep1"
-            android:layout_alignBottom="@+id/ibStep1"
-            android:hint="step1"
-            android:inputType=""
-            android:text=""/>
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/ibAddSteps"
+            android:text="Ingredient"/>
+
+        <LinearLayout
+            android:id="@+id/llIngridentsCompose"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/lbIngrident"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true">
+
+
+        </LinearLayout>
 
         <ImageButton
+            android:id="@+id/ibAddIngridients"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/llIngridentsCompose"
+            app:srcCompat="@android:drawable/ic_menu_add"/>
+
+        <!--ImageButton
             android:id="@+id/ibStep2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/ibStep1"
-            android:layout_alignRight="@+id/ibStep1"
-            android:layout_below="@+id/ibStep1"
+            android:layout_alignEnd="@+id/llStepListCompose"
+            android:layout_alignRight="@+id/llStepListCompose"
+            android:layout_below="@+id/llStepListCompose"
             app:srcCompat="@android:drawable/ic_menu_camera"/>
 
         <EditText
@@ -206,13 +241,13 @@
             android:layout_toRightOf="@+id/ibStep3"
             android:layout_alignTop="@+id/ibStep3"
             android:layout_alignBottom="@+id/ibStep3"
-            android:hint="step3"/>
+            android:hint="step3"/ -->
 
         <View
             android:id="@+id/vBorder"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/ibStep3"
+            android:layout_below="@+id/ibAddIngridients"
             android:layout_marginBottom="20dp"
             />
 

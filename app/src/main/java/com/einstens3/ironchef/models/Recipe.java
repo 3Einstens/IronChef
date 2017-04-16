@@ -108,6 +108,22 @@ public class Recipe extends ParseObject {
         put("categories", value);
     }
 
+    public List<String> getSteps() {
+        return getList("steps");
+    }
+
+    public void setSteps(List<String> value) {
+        put("steps", value);
+    }
+
+    public List<String> getIngridients() {
+        return getList("ingridients");
+    }
+
+    public void setIngridients(List<String> value) {
+        put("ingridients", value);
+    }
+
 
     // serving: long - a quantity of food suitable for how many person.
 

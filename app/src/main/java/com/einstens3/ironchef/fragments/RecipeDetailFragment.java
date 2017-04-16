@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.bumptech.glide.Glide;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.Utilities.RecipeQuery;
 import com.einstens3.ironchef.Utilities.StringUtils;
@@ -54,10 +55,11 @@ public class RecipeDetailFragment extends Fragment {
     PagerSlidingTabStrip pagerSlidingTabStrip;
 
     ArrayList<String> stepList = null;
+    ArrayList<String> ingridients = null;
 
     public class RecipieDetailPagerAdapter extends FragmentPagerAdapter {
         final int PAGE_COUNT = 2;
-        private String tabTitles[] = { "Recipe", "Direction"};
+        private String tabTitles[] = { "Steps", "Ingridients"};
         @Override
         public Fragment getItem(int position) {
             if (position == 0){
@@ -66,9 +68,9 @@ public class RecipeDetailFragment extends Fragment {
                 return recipeDetailRecipeListFragment;
 
             } else  if (position == 1){
-                RecipeDetailRecipeListFragment recipeDetailRecipeListFragment
-                        = RecipeDetailRecipeListFragment.newInstance(stepList);
-                return recipeDetailRecipeListFragment;
+                RecipieDetailRecipieIngridientFragment  recipieDetailRecipieIngridientFragment
+                        = RecipieDetailRecipieIngridientFragment.newInstance(ingridients);
+                return recipieDetailRecipieIngridientFragment;
             } else {
                 RecipeDetailRecipeListFragment recipeDetailRecipeListFragment
                         = RecipeDetailRecipeListFragment.newInstance(stepList);
@@ -111,6 +113,7 @@ public class RecipeDetailFragment extends Fragment {
             objectId = getArguments().getString(ARG_PARAM_RECIPE_OBJECT_ID);
         }
         stepList = new ArrayList<>();
+        ingridients = new ArrayList<>();
     }
 
     @Override
@@ -157,15 +160,18 @@ public class RecipeDetailFragment extends Fragment {
                         tvServing.setText(String.valueOf(recipe.getServing()));
                     if (recipe.getCategories() != null)
                         tvCategory.setText(StringUtils.fromList(recipe.getCategories()));
-                    if (recipe.getPhoto() != null)
-                        ivPhoto.setImageURI(Uri.fromFile(recipe.getPhoto().getFile()));
-
-                    if(recipe.getStep1Text() != null) {
-                        String text = recipe.getStep1Text();
-                        stepList.add(recipe.getStep1Text());
+                    if (recipe.getPhoto() != null){
+                        //ivPhoto.setImageURI(Uri.fromFile(recipe.getPhoto().getFile()));
+                        Glide.with(getContext()).load(Uri.fromFile(recipe.getPhoto().getFile())).into(ivPhoto);
                     }
-                    if(recipe.getStep2Text() != null) stepList.add(recipe.getStep2Text());
-                    if(recipe.getStep3Text() != null) stepList.add(recipe.getStep2Text());
+
+                    if(recipe.getSteps() != null) {
+                        stepList.addAll(recipe.getSteps());
+                    }
+
+                    if(recipe.getIngredients() != null) {
+                        ingridients.addAll(recipe.getIngredients());
+                    }
 
                     viewPager = (ViewPager) view.findViewById(R.id.recipeDetailviewpager);
                     pagerSlidingTabStrip = (PagerSlidingTabStrip) view.findViewById(R.id.pstRecipeDetailTabs);

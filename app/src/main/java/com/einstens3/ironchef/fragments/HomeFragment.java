@@ -36,6 +36,7 @@ public class HomeFragment extends Fragment {
     protected EndlessRecyclerViewScrollListener scrollListener;
     protected GridLayoutManager gridLayoutManager;
     protected StaggeredGridLayoutManager mLayoutManager;
+
     public HomeFragment() {
 
     }
@@ -45,12 +46,12 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
         ButterKnife.bind(this, v);
+        int layoutType = getLayoutType();
+
+        mArrayAdapter = new RecipeRecyclerAdapter(getActivity(), mArrayList, layoutType);
         rvRecipies.setAdapter(mArrayAdapter);
-       // gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-        mLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager = new StaggeredGridLayoutManager( layoutType == RecipeRecyclerAdapter.HOME_RECIPE ? 2: 1, StaggeredGridLayoutManager.VERTICAL);
         rvRecipies.setLayoutManager(mLayoutManager);
-        //RecyclerView.ItemDecoration itemDecoration = new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL);
-        //rvRecipies.addItemDecoration(itemDecoration);
         swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
         swipeContainer.post(new Runnable() {
             @Override
@@ -88,47 +89,18 @@ public class HomeFragment extends Fragment {
         return v;
     }
 
-    public void makeNetworkCall(final int pageNo) {
+    protected void makeNetworkCall(final int pageNo) {
         queryAllRecipe();
-
-//        NetworkClient.getRecipe("rigatoni", pageNo * 20, (pageNo * 20) + 20, new JsonHttpResponseHandler() {
-//            @Override
-//            public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
-//                super.onSuccess(statusCode, headers, response);
-//                try {
-//                    JSONArray arrayList = response.getJSONArray("hits");
-//                    ArrayList a = EdamamRecipe.fromJSONArray(arrayList);
-//                    if (pageNo == 0) {
-//                        mArrayList = mArrayAdapter.swap(a);
-//                    } else {
-//                        mArrayList = mArrayAdapter.add(a);
-//                    }
-//                    Log.d("debug", response.toString());
-//                } catch (Exception ex) {
-//
-//                }
-//                swipeContainer.setRefreshing(false);
-//            }
-//
-//            @Override
-//            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-//                super.onFailure(statusCode, headers, throwable, errorResponse);
-//                Log.d("debug", errorResponse.toString());
-//                swipeContainer.setRefreshing(false);
-//                // fragmentListener.onLoading(false);
-//            }
-//        });
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mArrayList = new ArrayList<>();
-        mArrayAdapter = new RecipeRecyclerAdapter(getActivity(), mArrayList, RecipeRecyclerAdapter.HOME_RECIPE);
     }
 
 
-    private void queryAllRecipe(){
+    protected void queryAllRecipe(){
         new RecipeQuery().queryAllRecipes(new RecipeQuery.QueryRecipesCallback() {
             @Override
             public void success(List<Recipe> recipes) {
@@ -143,6 +115,8 @@ public class HomeFragment extends Fragment {
             }
         });
     }
+
+    protected  int getLayoutType() {return RecipeRecyclerAdapter.HOME_RECIPE; }
 }
 
 

@@ -19,6 +19,7 @@ import android.widget.TextView;
 
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.activities.RecipeDetailActivity;
+import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.CountCallback;
 import com.parse.ParseException;
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.einstens3.ironchef.R.id.tvLike;
 
 /**
  * Created by raprasad on 4/2/17.
@@ -102,6 +105,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             // set default value  - 0
             tvLike.setText(Integer.toString(0));
             // call count likes asynchronously to improve performance.
+           // tvLike.setText(Integer.toString(r.co );
             r.countLikes(new CountCallback() {
                 @Override
                 public void done(int count, ParseException e) {

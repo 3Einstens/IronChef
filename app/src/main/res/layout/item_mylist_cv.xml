@@ -57,10 +57,11 @@
                 android:layout_margin="3dp"
                 android:orientation="horizontal"
                 android:layout_gravity="center"
-                android:background="@drawable/layer_banner">
+               >
 
                 <TextView
                     android:id="@+id/tvBanner"
+                    android:background="@drawable/layer_banner"
                     android:gravity="center"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"

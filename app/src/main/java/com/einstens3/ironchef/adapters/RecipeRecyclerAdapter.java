@@ -127,14 +127,24 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         public void renderRecipe(Recipe r) {
            super.renderRecipe(r);
+            String s = r.getName();
+            Log.d(TAG, "====>Name" + s);
             if (r != null) {
-                tvBanner.setText("Pending!");
-
                 r.getOwnChallenge(new GetCallback<Challenge>() {
                     @Override
                     public void done(Challenge challenge, ParseException e) {
-                        if(e == null)
-                            Log.e(TAG, "challenge: " + challenge.getState());
+                            if ( e == null && challenge != null) {
+                                if (challenge.getState() == Challenge.STATE_ACCEPTED) {
+                                    tvBanner.setText(mContext.getResources().getString(R.string.accepted));
+                                } else if (challenge.getState() == Challenge.STATE_COMPLETED) {
+                                    tvBanner.setText(mContext.getResources().getString(R.string.completed));
+                                } else {
+                                    tvBanner.setVisibility(View.GONE);
+                                }
+                            }
+                             else { //it is showing up here because the user liked this
+                                tvBanner.setText(mContext.getResources().getString(R.string.liked));
+                            }
                     }
                 });
 

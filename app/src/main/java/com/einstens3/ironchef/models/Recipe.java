@@ -233,6 +233,19 @@ public class Recipe extends ParseObject {
     // Like related features
     // ----------------------------------------------------------------
 
+    /**
+     * Check if currentUser (logged in user) likes this Recipe
+     * The callback method's paramet is ParseUser object.
+     * If it is null, user does not Like, if it is actual ParserUser object, user likes this Recipe.
+     * @param callback
+     */
+    public void doesCurrentUserLikeRecipe(GetCallback<ParseUser> callback) {
+        getLikesRelation()
+                .getQuery()
+                .whereEqualTo("objectId", ParseUser.getCurrentUser().getObjectId())
+                .getFirstInBackground(callback);
+    }
+
     public void like() {
         addLike(ParseUser.getCurrentUser());
     }
@@ -263,16 +276,16 @@ public class Recipe extends ParseObject {
     // Challenge related features
     // ----------------------------------------------------------------
 
-    public ParseRelation<Challenge> getChallengesRelation(){
+    public ParseRelation<Challenge> getChallengesRelation() {
         return getRelation(KEY_CHALLENGES);
     }
 
-    public void addChallenge(Challenge value){
+    public void addChallenge(Challenge value) {
         getChallengesRelation().add(value);
         saveInBackground();
     }
 
-    public void removeChallenge(Challenge value){
+    public void removeChallenge(Challenge value) {
         getChallengesRelation().remove(value);
         saveInBackground();
     }

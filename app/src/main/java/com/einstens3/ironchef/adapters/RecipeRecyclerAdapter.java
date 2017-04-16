@@ -24,6 +24,7 @@ import com.einstens3.ironchef.models.Recipe;
 import com.parse.CountCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
@@ -134,6 +135,13 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     public void done(Challenge challenge, ParseException e) {
                         if(e == null)
                             Log.e(TAG, "challenge: " + challenge.getState());
+                    }
+                });
+
+                r.doesCurrentUserLikeRecipe(new GetCallback<ParseUser>() {
+                    @Override
+                    public void done(ParseUser user, ParseException e) {
+                        Log.e(TAG, "user: " + (user==null?"null":user.getEmail()));
                     }
                 });
             }

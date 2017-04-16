@@ -6,6 +6,5 @@ public class DispatchActivity extends ParseLoginDispatchActivity {
     @Override
     protected Class<?> getTargetClass() {
         return HomeActivity.class;
-        //return RecipeDetailActivity.class;
     }
 }

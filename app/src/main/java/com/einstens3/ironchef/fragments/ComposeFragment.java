@@ -77,7 +77,7 @@ public class ComposeFragment extends Fragment {
     private void bindControls() {
 
         btnPublish = (Button) view.findViewById(R.id.btnPublish);
-        btnSave = (Button) view.findViewById(R.id.btnSave);
+       // btnSave = (Button) view.findViewById(R.id.);
         btnCancel = (Button) view.findViewById(R.id.btnCancel);
 
         ivUploadPhoto = (ImageView) view.findViewById(R.id.ivUploadPhoto);
@@ -134,13 +134,13 @@ public class ComposeFragment extends Fragment {
                 getActivity().finish();
             }
         });
-        btnSave.setOnClickListener(new View.OnClickListener() {
+     /*   btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // TODO: Save as Draft
                 Toast.makeText(getContext(), "Not implemented yet", Toast.LENGTH_LONG).show();
             }
-        });
+        });*/
         btnPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

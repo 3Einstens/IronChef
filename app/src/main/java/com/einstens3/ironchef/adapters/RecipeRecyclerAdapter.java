@@ -134,10 +134,14 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             String s = r.getName();
             Log.d(TAG, "====>Name" + s);
             if (r != null) {
-                r.getOwnChallenge(new GetCallback<Challenge>() {
-                    @Override
-                    public void done(Challenge challenge, ParseException e) {
-                            if ( e == null && challenge != null) {
+                if (r.isOwnRecipe()){
+                    tvBanner.setText(mContext.getResources().getString(R.string.created));
+                } else {
+
+                    r.getOwnChallenge(new GetCallback<Challenge>() {
+                        @Override
+                        public void done(Challenge challenge, ParseException e) {
+                            if (e == null && challenge != null) {
                                 if (challenge.getState() == Challenge.STATE_ACCEPTED) {
                                     tvBanner.setText(mContext.getResources().getString(R.string.accepted));
                                 } else if (challenge.getState() == Challenge.STATE_COMPLETED) {
@@ -145,12 +149,12 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                 } else {
                                     tvBanner.setVisibility(View.GONE);
                                 }
-                            }
-                             else { //it is showing up here because the user liked this
+                            } else { //it is showing up here because the user liked this
                                 tvBanner.setText(mContext.getResources().getString(R.string.liked));
                             }
-                    }
-                });
+                        }
+                    });
+                }
 
                 r.doesCurrentUserLikeRecipe(new GetCallback<ParseUser>() {
                     @Override

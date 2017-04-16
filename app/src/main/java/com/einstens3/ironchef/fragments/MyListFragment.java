@@ -6,11 +6,14 @@ package com.einstens3.ironchef.fragments;
 
 import android.support.annotation.Nullable;
 
+import com.einstens3.ironchef.R;
 import com.parse.ParseException;
 
 import android.os.Bundle;
 
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 
 
 import com.einstens3.ironchef.services.RecipeQuery;
@@ -21,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class MyListFragment extends HomeFragment  {
+public class MyListFragment extends HomeFragment {
 
 
     public MyListFragment() {
@@ -69,7 +72,10 @@ public class MyListFragment extends HomeFragment  {
         });
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        menu.removeItem(R.id.action_search);
+    }
+
+
 }
-
-
-

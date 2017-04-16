@@ -1,4 +1,4 @@
-package com.einstens3.ironchef.Utilities;
+package com.einstens3.ironchef.utilities;
 
 /**
  * Created by raprasad on 4/8/17.
@@ -13,11 +13,6 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 /**
  * Created by raprasad on 10/24/16.
  */
-
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 
 public abstract class EndlessRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
     // The minimum amount of items to have below your current scroll position

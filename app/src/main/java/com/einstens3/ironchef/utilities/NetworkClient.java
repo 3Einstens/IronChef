@@ -1,4 +1,4 @@
-package com.einstens3.ironchef.Utilities;
+package com.einstens3.ironchef.utilities;
 
 /**
  * Created by raprasad on 4/8/17.

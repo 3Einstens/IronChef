@@ -32,9 +32,6 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-import static com.einstens3.ironchef.R.id.ivPhoto;
-import static java.security.AccessController.getContext;
-
 /**
  * Created by raprasad on 4/2/17.
  */
@@ -83,7 +80,6 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 tvRecipeDescription.setText(r.getName());
                 try {
                    // ivRecipe.setImageURI(Uri.fromFile(r.getPhoto().getFile()));
-
                     if (r.getPhoto() != null) {
                         Glide.with(mContext).load(Uri.fromFile(r.getPhoto().getFile())).into(ivRecipe);
                     }

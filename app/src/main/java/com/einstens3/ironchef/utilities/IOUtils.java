@@ -1,4 +1,4 @@
-package com.einstens3.ironchef.Utilities;
+package com.einstens3.ironchef.utilities;
 
 import java.io.IOException;
 import java.io.InputStream;

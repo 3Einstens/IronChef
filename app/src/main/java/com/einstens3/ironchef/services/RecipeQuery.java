@@ -1,4 +1,4 @@
-package com.einstens3.ironchef.Utilities;
+package com.einstens3.ironchef.services;
 
 import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;

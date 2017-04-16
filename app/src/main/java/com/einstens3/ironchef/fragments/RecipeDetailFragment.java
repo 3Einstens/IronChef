@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -164,11 +163,6 @@ public class RecipeDetailFragment extends Fragment {
                         //ivPhoto.setImageURI(Uri.fromFile(recipe.getPhoto().getFile()));
                         Glide.with(getContext()).load(Uri.fromFile(recipe.getPhoto().getFile())).into(ivPhoto);
                     }
-
-                    if (((AppCompatActivity)getActivity()).getSupportActionBar() != null){
-                        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(recipe.getName());
-                    }
-
 
                     if(recipe.getSteps() != null) {
                         stepList.addAll(recipe.getSteps());

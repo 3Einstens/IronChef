@@ -12,8 +12,9 @@
     <ImageView
         android:id="@+id/ivPhoto"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:scaleType="fitXY"
+        android:layout_height="225dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
         app:srcCompat="@drawable/com_parse_ui_facebook_login_button_background_selector"
         />
 

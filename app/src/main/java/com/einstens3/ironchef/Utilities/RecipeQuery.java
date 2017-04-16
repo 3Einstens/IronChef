@@ -18,7 +18,6 @@ public class RecipeQuery {
 
     public interface QueryRecipeCallback {
         void success(Recipe recipe);
-
         void error(ParseException e);
     }
 
@@ -67,8 +66,21 @@ public class RecipeQuery {
      * search query by keyword
      */
     public static void queryRecipesByKeyword(final String regex, final QueryRecipesCallback callback) {
-        ParseQuery<Recipe> query = getQuery(Recipe.class);
-        query.whereMatches("name", ".*" + regex + ".*");
+
+        List<ParseQuery<Recipe>> queries = new ArrayList<>();
+
+        // query in name field
+        ParseQuery<Recipe> queryInNameField = getQuery(Recipe.class);
+        queryInNameField.whereMatches("name", ".*" + regex + ".*");
+        queries.add(queryInNameField);
+
+        // query in name field
+        ParseQuery<Recipe> queryInCategoryField = getQuery(Recipe.class);
+        queryInCategoryField.whereMatches("categories", ".*" + regex + ".*");
+        queries.add(queryInCategoryField);
+
+        // Run OR query
+        ParseQuery<Recipe> query = ParseQuery.or(queries);
         query.orderByDescending("updatedAt");
         query.findInBackground(new FindCallback<Recipe>() {
             @Override

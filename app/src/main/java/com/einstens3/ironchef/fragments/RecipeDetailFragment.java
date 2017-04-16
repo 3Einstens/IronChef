@@ -6,11 +6,11 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -20,10 +20,10 @@ import android.widget.Toast;
 import com.astuetz.PagerSlidingTabStrip;
 import com.bumptech.glide.Glide;
 import com.einstens3.ironchef.R;
-import com.einstens3.ironchef.services.RecipeQuery;
-import com.einstens3.ironchef.utilities.StringUtils;
 import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
+import com.einstens3.ironchef.services.RecipeQuery;
+import com.einstens3.ironchef.utilities.StringUtils;
 import com.parse.ParseException;
 
 import java.util.ArrayList;
@@ -50,7 +50,7 @@ public class RecipeDetailFragment extends Fragment {
     TextView tvServing;
     ListView lvIngredients;
     ImageButton ivLike;
-    Button btnAccept;
+    ImageButton btnAccept;
     ViewPager viewPager;
     PagerSlidingTabStrip pagerSlidingTabStrip;
 
@@ -137,7 +137,7 @@ public class RecipeDetailFragment extends Fragment {
         tvServing = (TextView) view.findViewById(R.id.tvServing);
         //lvIngredients = (ListView) view.findViewById(R.id.lvIngredients);
         ivLike = (ImageButton)view.findViewById(R.id.ivLike);
-        btnAccept  = (Button)view.findViewById(R.id.btnAccept);
+        btnAccept  = (ImageButton)view.findViewById(R.id.btnAccept);
     }
 
     private void updateControlStates() {
@@ -164,6 +164,11 @@ public class RecipeDetailFragment extends Fragment {
                         //ivPhoto.setImageURI(Uri.fromFile(recipe.getPhoto().getFile()));
                         Glide.with(getContext()).load(Uri.fromFile(recipe.getPhoto().getFile())).into(ivPhoto);
                     }
+
+                    if (((AppCompatActivity)getActivity()).getSupportActionBar() != null){
+                        ((AppCompatActivity)getActivity()).getSupportActionBar().setTitle(recipe.getName());
+                    }
+
 
                     if(recipe.getSteps() != null) {
                         stepList.addAll(recipe.getSteps());
@@ -195,6 +200,7 @@ public class RecipeDetailFragment extends Fragment {
         ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ivLike.setBackgroundResource(R.drawable.liked);
                 RecipeDetailFragment.this.recipe.like();
                 Toast.makeText(getContext(), "Liked Recipe", Toast.LENGTH_LONG).show();
             }
@@ -202,6 +208,7 @@ public class RecipeDetailFragment extends Fragment {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                btnAccept.setBackgroundResource(R.drawable.accepted);
                 Challenge.acceptChallenge(RecipeDetailFragment.this.recipe);
                 Toast.makeText(getContext(), "Challenge Accepted", Toast.LENGTH_LONG).show();
             }

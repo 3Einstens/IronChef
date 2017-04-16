@@ -97,21 +97,24 @@
 
     <ImageButton
         android:id="@+id/ivLike"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:layout_above="@+id/tvTitle"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:src="@drawable/ic_like"
+        android:background="@drawable/like"
+        android:layout_marginBottom="20dp"
         android:text="LIKE"/>
 
-    <Button
+    <ImageButton
         android:id="@+id/btnAccept"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/tvTitle"
-        android:layout_toLeftOf="@+id/ivLike"
-        android:layout_toStartOf="@+id/ivLike"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:layout_above="@+id/ivLike"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/accept"
         android:text="Accept"/>
 
     <TextView
@@ -134,6 +137,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/lblDescription"
+        android:textColor="@color/black"
         tools:text="A terrific blend of sweet, tangy, fruity, and zesty. An old family recipe that never fails to please. This is an easy, fail-safe recipe that anyone can make or adjust according to their own likes."/>
 
 

@@ -8,4 +8,5 @@
     <string name="accepted">Yes! I am Making This!</string>
     <string name="completed">I Made This!</string>
     <string name="liked">I Love This!</string>
+    <string name="created">I Created This!</string>
 </resources>

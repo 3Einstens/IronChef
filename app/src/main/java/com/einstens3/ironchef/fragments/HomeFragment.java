@@ -3,14 +3,19 @@ package com.einstens3.ironchef.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.Utilities.EndlessRecyclerViewScrollListener;
@@ -36,9 +41,9 @@ public class HomeFragment extends Fragment {
     protected EndlessRecyclerViewScrollListener scrollListener;
     protected GridLayoutManager gridLayoutManager;
     protected StaggeredGridLayoutManager mLayoutManager;
+    private String mQueryString;
 
     public HomeFragment() {
-
     }
 
     @Override
@@ -50,7 +55,7 @@ public class HomeFragment extends Fragment {
 
         mArrayAdapter = new RecipeRecyclerAdapter(getActivity(), mArrayList, layoutType);
         rvRecipies.setAdapter(mArrayAdapter);
-        mLayoutManager = new StaggeredGridLayoutManager( layoutType == RecipeRecyclerAdapter.HOME_RECIPE ? 2: 1, StaggeredGridLayoutManager.VERTICAL);
+        mLayoutManager = new StaggeredGridLayoutManager(layoutType == RecipeRecyclerAdapter.HOME_RECIPE ? 2 : 1, StaggeredGridLayoutManager.VERTICAL);
         rvRecipies.setLayoutManager(mLayoutManager);
         swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
         swipeContainer.post(new Runnable() {
@@ -90,13 +95,69 @@ public class HomeFragment extends Fragment {
     }
 
     protected void makeNetworkCall(final int pageNo) {
-        queryAllRecipe();
+        if (mQueryString == null || mQueryString.isEmpty()) {
+            queryAllRecipe();
+        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mArrayList = new ArrayList<>();
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        MenuItem mSearchMenuItem = menu.findItem(R.id.action_search);
+        final SearchView searchView = (SearchView) mSearchMenuItem.getActionView();
+
+
+        MenuItemCompat.setOnActionExpandListener(mSearchMenuItem, new MenuItemCompat.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                return true;
+            }
+
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                mQueryString = null;
+                makeNetworkCall(0);
+                return true;
+            }
+        });
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                //    new RecipeQuery().queryAllRecipes(new RecipeQuery.QueryRecipesCallback()
+                mQueryString = query;
+                new RecipeQuery().queryRecipesByKeyword(query, new RecipeQuery.QueryRecipesCallback() {
+                    @Override
+                    public void success(List<Recipe> recipes) {
+                        mArrayList = mArrayAdapter.swap(new ArrayList(recipes));
+                        swipeContainer.setRefreshing(false);
+                    }
+
+                    @Override
+                    public void error(ParseException e) {
+                        Log.e("ERROR", "Query Error", e);
+                        swipeContainer.setRefreshing(false);
+                    }
+                });
+
+                searchView.clearFocus();
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+
+
     }
 
 

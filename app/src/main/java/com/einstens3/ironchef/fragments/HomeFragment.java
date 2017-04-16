@@ -15,11 +15,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.einstens3.ironchef.R;
-import com.einstens3.ironchef.Utilities.EndlessRecyclerViewScrollListener;
-import com.einstens3.ironchef.Utilities.RecipeQuery;
+import com.einstens3.ironchef.utilities.EndlessRecyclerViewScrollListener;
+import com.einstens3.ironchef.services.RecipeQuery;
 import com.einstens3.ironchef.adapters.RecipeRecyclerAdapter;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.ParseException;

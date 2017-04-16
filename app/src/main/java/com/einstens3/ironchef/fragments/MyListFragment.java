@@ -13,7 +13,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 
-import com.einstens3.ironchef.Utilities.RecipeQuery;
+import com.einstens3.ironchef.services.RecipeQuery;
 import com.einstens3.ironchef.adapters.RecipeRecyclerAdapter;
 import com.einstens3.ironchef.models.Recipe;
 

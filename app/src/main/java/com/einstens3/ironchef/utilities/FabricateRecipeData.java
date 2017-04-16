@@ -1,4 +1,4 @@
-package com.einstens3.ironchef.Utilities;
+package com.einstens3.ironchef.utilities;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -15,7 +15,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.Locale;
 
-import static com.einstens3.ironchef.Utilities.AssetsUtils.fromAssetFile;
+import static com.einstens3.ironchef.utilities.AssetsUtils.fromAssetFile;
 
 
 public class FabricateRecipeData {

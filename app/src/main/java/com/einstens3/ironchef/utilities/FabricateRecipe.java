@@ -1,4 +1,4 @@
-package com.einstens3.ironchef.Utilities;
+package com.einstens3.ironchef.utilities;
 
 import android.content.Context;
 import android.widget.Toast;

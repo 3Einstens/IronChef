@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.activities.RecipeDetailActivity;
 import com.einstens3.ironchef.models.Challenge;
@@ -30,6 +31,9 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static com.einstens3.ironchef.R.id.ivPhoto;
+import static java.security.AccessController.getContext;
 
 /**
  * Created by raprasad on 4/2/17.
@@ -78,7 +82,11 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             if (r != null) {
                 tvRecipeDescription.setText(r.getName());
                 try {
-                    ivRecipe.setImageURI(Uri.fromFile(r.getPhoto().getFile()));
+                   // ivRecipe.setImageURI(Uri.fromFile(r.getPhoto().getFile()));
+
+                    if (r.getPhoto() != null) {
+                        Glide.with(mContext).load(Uri.fromFile(r.getPhoto().getFile())).into(ivRecipe);
+                    }
                 } catch (ParseException e){
                     Log.d(TAG, "parse exception: " + e.getMessage());
                 }

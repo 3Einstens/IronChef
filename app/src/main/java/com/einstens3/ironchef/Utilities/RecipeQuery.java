@@ -10,9 +10,7 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import static com.parse.ParseQuery.getQuery;
 
@@ -65,28 +63,23 @@ public class RecipeQuery {
         });
     }
 
-    // should call from background thread
-    public static List<Recipe> queryMyRecipes() throws ParseException {
-        ParseUser me = ParseUser.getCurrentUser();
-        Set<Recipe> recipes = new HashSet<>();
-
-        // Recipes current user composed
-        ParseQuery<Recipe> authorRecipeQuery = ParseQuery.getQuery(Recipe.class);
-        authorRecipeQuery.whereEqualTo(Recipe.KEY_AUTHOR, me);
-        recipes.addAll(authorRecipeQuery.find());
-
-        ParseQuery<Recipe> likedRecipeQuery = ParseQuery.getQuery(Recipe.class);
-        likedRecipeQuery.whereContainedIn(Recipe.KEY_LIKES, Arrays.asList(me));
-        recipes.addAll(likedRecipeQuery.find());
-
-        // Recipes current user likes
-        ParseQuery<Challenge> challengeQuery = ParseQuery.getQuery(Challenge.class);
-        challengeQuery.whereEqualTo(Challenge.KEY_USER, me);
-        ParseQuery<Recipe> challengeRecipes = ParseQuery.getQuery(Recipe.class);
-        challengeRecipes.whereMatchesQuery(Recipe.KEY_CHALLENGES, challengeQuery);
-        recipes.addAll(challengeRecipes.find());
-
-        return new ArrayList<>(recipes);
+    /**
+     * search query by keyword
+     */
+    public static void queryRecipesByKeyword(final String regex, final QueryRecipesCallback callback) {
+        ParseQuery<Recipe> query = getQuery(Recipe.class);
+        query.whereMatches("name", ".*" + regex + ".*");
+        query.orderByDescending("updatedAt");
+        query.findInBackground(new FindCallback<Recipe>() {
+            @Override
+            public void done(List<Recipe> objects, ParseException e) {
+                if (e == null) {
+                    callback.success(objects);
+                } else {
+                    callback.error(e);
+                }
+            }
+        });
     }
 
     /**

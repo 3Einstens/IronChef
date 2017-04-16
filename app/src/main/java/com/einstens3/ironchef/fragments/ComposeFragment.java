@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -209,15 +209,18 @@ public class ComposeFragment extends Fragment {
         ll.setOrientation(LinearLayout.HORIZONTAL);
 
         ImageButton removeButton = new ImageButton(getContext());
-        Drawable drawable = getActivity().getResources().getDrawable(android.R.drawable.ic_menu_close_clear_cancel);
-        removeButton.setImageDrawable(drawable);
+        LinearLayout.LayoutParams rbparams = new LinearLayout.LayoutParams(100, 100);
+
+        rbparams.gravity = Gravity.CENTER;
+        removeButton.setLayoutParams(rbparams);
+
+        removeButton.setBackgroundResource(R.drawable.cancel);
         removeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LinearLayout linearParent =  (LinearLayout) v.getParent().getParent();
                 LinearLayout linearChild = (LinearLayout) v.getParent();
                 linearParent.removeView(linearChild);
-                Toast.makeText(getContext(),"I will remove this text",Toast.LENGTH_SHORT).show();
             }
         });
         EditText editTextView = new EditText(getContext());
@@ -225,8 +228,6 @@ public class ComposeFragment extends Fragment {
         editTextView.setHint(hint);
         editTextView.setBackgroundResource(R.drawable.compose_edittext);
         editTextView.setPadding(10,0,0,0);
-
-
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
         editTextView.setLayoutParams(params);

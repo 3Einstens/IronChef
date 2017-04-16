@@ -161,12 +161,12 @@
 
         <ImageButton
             android:id="@+id/ibAddSteps"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/llStepListCompose"
-            app:srcCompat="@android:drawable/ic_menu_add"/>
+            android:background="@drawable/add"/>
 
 
         <TextView
@@ -195,12 +195,12 @@
 
         <ImageButton
             android:id="@+id/ibAddIngridients"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/llIngridentsCompose"
-            app:srcCompat="@android:drawable/ic_menu_add"/>
+            android:background="@drawable/add"/>
 
         <!--ImageButton
             android:id="@+id/ibStep2"
@@ -258,9 +258,10 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/vBorder"
+            android:background="@color/colorPrimary"
             android:text="Cancel"/>
 
-        <Button
+        <!--Button
             android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -269,7 +270,7 @@
             android:layout_below="@+id/vBorder"
             android:layout_toLeftOf="@+id/btnPublish"
             android:layout_toStartOf="@+id/btnPublish"
-            android:text="Save"/>
+            android:text="Save"/ -->
 
         <Button
             android:id="@+id/btnPublish"
@@ -280,6 +281,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/vBorder"
+            android:background="@color/colorPrimary"
             android:text="Publish"/>
 
 

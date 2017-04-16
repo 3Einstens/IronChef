@@ -7,7 +7,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
@@ -19,6 +18,7 @@ import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.einstens3.ironchef.R;
+import com.einstens3.ironchef.fragments.ActivityNavigation;
 import com.einstens3.ironchef.fragments.HomeFragment;
 import com.einstens3.ironchef.fragments.MyListFragment;
 import com.parse.ParseUser;
@@ -26,7 +26,7 @@ import com.parse.ParseUser;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements ActivityNavigation {
 
     private ParseUser currentUser;
     @BindView(R.id.viewpager)
@@ -130,8 +130,15 @@ public class HomeActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void showComposeUI(){
+    public void showComposeUI(){
         Intent intent = new Intent(HomeActivity.this, ComposeActivity.class);
+        startActivity(intent);
+    }
+
+    public void showComposeUIForChallenge(String challengeId){
+        Toast.makeText(HomeActivity.this, "Will submit my recipe! challengeId -> " + challengeId, Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(HomeActivity.this, ComposeActivity.class);
+        intent.putExtra("challengeId", challengeId);
         startActivity(intent);
     }
 }

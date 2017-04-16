@@ -19,10 +19,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.einstens3.ironchef.R;
+import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
+import com.einstens3.ironchef.services.ChallengeService;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -41,8 +45,12 @@ public class ComposeFragment extends Fragment {
 
     private static final String TAG = ComposeFragment.class.getSimpleName();
 
+    private static final String ARG_PARAM_CHALLENGE_ID = "challengeId";
+
     private static final String PHOTO_NAME = "photo"; // main photo
     private static final String STEP_PHOTO_NAME = "step_%d"; // Step photo
+
+    String challengeId;
 
     View view;
     Button btnPublish;
@@ -58,10 +66,26 @@ public class ComposeFragment extends Fragment {
     EditText etServing;
     ImageButton ibAddSteps;
     ImageButton ibAddIngridient;
-
-
+    TextView tvChallengeStatus;
 
     public ComposeFragment() {
+    }
+
+    public static ComposeFragment newInstance(String challengeId) {
+        ComposeFragment fragment = new ComposeFragment();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM_CHALLENGE_ID, challengeId);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            challengeId = getArguments().getString(ARG_PARAM_CHALLENGE_ID);
+            Log.e(TAG, "challengeId -> " + challengeId);
+        }
     }
 
     @Override
@@ -95,11 +119,25 @@ public class ComposeFragment extends Fragment {
         ibAddIngridient = (ImageButton) view.findViewById(R.id.ibAddIngridients);
         //ibStep2 = (ImageButton) view.findViewById(R.id.ibStep2);
         //ibStep3 = (ImageButton) view.findViewById(R.id.ibStep3);
+
+        tvChallengeStatus = (TextView)view.findViewById(R.id.tvChallengeStatus);
     }
 
     private void updateControlStates() {
         ibUploadPhoto.setVisibility(View.VISIBLE);
         ivUploadPhoto.setVisibility(View.INVISIBLE);
+
+        // update if challenge
+        if(challengeId != null){
+            ChallengeService.getChallenge(challengeId, new GetCallback<Challenge>() {
+                @Override
+                public void done(Challenge challenge, ParseException e) {
+                    tvChallengeStatus.setText("Challenge Recipe");
+                }
+            });
+        }else{
+            tvChallengeStatus.setVisibility(View.GONE);
+        }
     }
 
     private void setEventHandlers() {
@@ -153,7 +191,7 @@ public class ComposeFragment extends Fragment {
 //                ParseFile step3Photo = getParseFile(getStepPhotoName(3), true);
 
                 //  Save Recipe
-                Recipe recipe = new Recipe();
+                final Recipe recipe = new Recipe();
                 recipe.setDraft(false);
                 recipe.setPublic(false);
                 recipe.setAuthor(ParseUser.getCurrentUser());
@@ -183,12 +221,31 @@ public class ComposeFragment extends Fragment {
                 recipe.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
-                        if(e == null){
-                            Log.e(TAG, "Succeeded to save the Recipe");
-                  //          Toast.makeText(getContext(),"Recipie Saved",Toast.LENGTH_SHORT).show();
+                        if (e == null) {
+                            Log.i(TAG, "Succeeded to save the Recipe");
+                            if(challengeId!= null){
+                                ChallengeService.getChallenge(challengeId, new GetCallback<Challenge>() {
+                                    @Override
+                                    public void done(Challenge challenge, ParseException e) {
+                                        if(challenge!=null){
+                                            challenge.setState(Challenge.STATE_COMPLETED);
+                                            challenge.setMyRecipe(recipe);
+                                            challenge.saveInBackground(new SaveCallback() {
+                                                @Override
+                                                public void done(ParseException e) {
+                                                    if(e==null)
+                                                        Log.i(TAG, "successfully update challenge");
+                                                    else
+                                                        Log.e(TAG, "Failed to update challenge.");
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        } else {
+                            Log.e(TAG, "Failed to save the Recipe:" + e, e);
                         }
-                        else
-                            Log.e(TAG, "Failed to save the Recipe:" + e,e);
                     }
                 });
 

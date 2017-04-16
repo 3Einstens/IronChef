@@ -1,9 +1,5 @@
 package com.einstens3.ironchef.adapters;
 
-/**
- * Created by raprasad on 4/8/17.
- */
-
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -20,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.activities.RecipeDetailActivity;
+import com.einstens3.ironchef.fragments.ActivityNavigation;
 import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.CountCallback;
@@ -33,14 +30,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by raprasad on 4/2/17.
+ * Created by raprasad on 4/8/17.
  */
-
-
-/**
- * Created by raprasad on 3/24/17.
- */
-
 public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context mContext;
@@ -73,22 +64,17 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             });
         }
 
-
         public void renderRecipe(Recipe r) {
             ivRecipe.setImageResource(0);
             if (r != null) {
                 tvRecipeDescription.setText(r.getName());
                 try {
-                   // ivRecipe.setImageURI(Uri.fromFile(r.getPhoto().getFile()));
                     if (r.getPhoto() != null) {
                         Glide.with(mContext).load(Uri.fromFile(r.getPhoto().getFile())).into(ivRecipe);
                     }
-                } catch (ParseException e){
+                } catch (ParseException e) {
                     Log.d(TAG, "parse exception: " + e.getMessage());
                 }
-               //  tvLike.setText(Integer.toString(r.countLikes()) );
-              /*  Glide.with(ivRecipe.getContext())
-                        .load(r.getProfileImage()).into(ivRecipe);*/
             }
         }
     }
@@ -109,7 +95,6 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             // set default value  - 0
             tvLike.setText(Integer.toString(0));
             // call count likes asynchronously to improve performance.
-           // tvLike.setText(Integer.toString(r.co );
             r.countLikes(new CountCallback() {
                 @Override
                 public void done(int count, ParseException e) {
@@ -130,20 +115,27 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
 
         public void renderRecipe(Recipe r) {
-           super.renderRecipe(r);
+            super.renderRecipe(r);
             String s = r.getName();
             Log.d(TAG, "====>Name" + s);
             if (r != null) {
-                if (r.isOwnRecipe()){
+                if (r.isOwnRecipe()) {
                     tvBanner.setText(mContext.getResources().getString(R.string.created));
                 } else {
-
                     r.getOwnChallenge(new GetCallback<Challenge>() {
                         @Override
-                        public void done(Challenge challenge, ParseException e) {
+                        public void done(final Challenge challenge, ParseException e) {
                             if (e == null && challenge != null) {
                                 if (challenge.getState() == Challenge.STATE_ACCEPTED) {
                                     tvBanner.setText(mContext.getResources().getString(R.string.accepted));
+                                    tvBanner.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if(mContext instanceof ActivityNavigation){
+                                                ((ActivityNavigation)mContext).showComposeUIForChallenge(challenge.getObjectId());
+                                            }
+                                        }
+                                    });
                                 } else if (challenge.getState() == Challenge.STATE_COMPLETED) {
                                     tvBanner.setText(mContext.getResources().getString(R.string.completed));
                                 } else {
@@ -159,7 +151,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 r.doesCurrentUserLikeRecipe(new GetCallback<ParseUser>() {
                     @Override
                     public void done(ParseUser user, ParseException e) {
-                        Log.e(TAG, "user: " + (user==null?"null":user.getEmail()));
+                        Log.e(TAG, "user: " + (user == null ? "null" : user.getEmail()));
                     }
                 });
             }
@@ -184,8 +176,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view;
         RecyclerView.ViewHolder viewHolder;
-        if (mRecipeType == HOME_RECIPE){
-           view  = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipie_cv, parent, false);
+        if (mRecipeType == HOME_RECIPE) {
+            view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_recipie_cv, parent, false);
             viewHolder = new HomeViewHolder(view);
         } else {
             view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_mylist_cv, parent, false);
@@ -249,4 +241,3 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         context.startActivity(intent);
     }
 }
-

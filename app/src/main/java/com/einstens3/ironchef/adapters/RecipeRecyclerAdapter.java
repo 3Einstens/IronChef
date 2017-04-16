@@ -22,14 +22,13 @@ import com.einstens3.ironchef.activities.RecipeDetailActivity;
 import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.CountCallback;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.einstens3.ironchef.R.id.tvLike;
 
 /**
  * Created by raprasad on 4/2/17.
@@ -129,6 +128,14 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
            super.renderRecipe(r);
             if (r != null) {
                 tvBanner.setText("Pending!");
+
+                r.getOwnChallenge(new GetCallback<Challenge>() {
+                    @Override
+                    public void done(Challenge challenge, ParseException e) {
+                        if(e == null)
+                            Log.e(TAG, "challenge: " + challenge.getState());
+                    }
+                });
             }
         }
     }

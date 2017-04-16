@@ -1,6 +1,7 @@
 package com.einstens3.ironchef.models;
 
 import com.parse.CountCallback;
+import com.parse.GetCallback;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -275,4 +276,13 @@ public class Recipe extends ParseObject {
         getChallengesRelation().remove(value);
         saveInBackground();
     }
+
+    public void getOwnChallenge(GetCallback<Challenge> callback) {
+        getChallengesRelation()
+                .getQuery()
+                .whereEqualTo(Challenge.KEY_USER, ParseUser.getCurrentUser())
+                .getFirstInBackground(callback);
+
+    }
+
 }

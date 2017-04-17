@@ -155,15 +155,11 @@ public class HomeFragment extends Fragment {
                 return false;
             }
         });
-
-
     }
-
 
     protected void queryAllRecipe(){
         // search example:
-        //new RecipeService().queryRecipesByKeyword("Rigatoni", new RecipeService.QueryRecipesCallback() {
-        new RecipeService().queryAllRecipes(new RecipeService.QueryRecipesCallback() {
+        new RecipeService().queryOriginalRecipes(new RecipeService.QueryRecipesCallback() {
             @Override
             public void success(List<Recipe> recipes) {
                 mArrayList = mArrayAdapter.swap(new ArrayList(recipes));

@@ -12,9 +12,6 @@ Everyone loves foods, but not many people cook. Having a healthy diet is a key t
 ## Demo
 #### Sprint 2
 <img src='https://github.com/3Einstens/IronChef/raw/master/demo/ironchef_sprint2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-#### Sprint 1
-<img src='https://github.com/3Einstens/IronChef/raw/master/demo/ironchef_sprint1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-
 
 ## User Stories
 ### The following functionalities are required to be implemented:

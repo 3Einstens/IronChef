@@ -1,4 +1,4 @@
-package com.einstens3.ironchef.fragments;
+package com.einstens3.ironchef.activities;
 
 public interface ActivityNavigation {
     void showComposeUI();

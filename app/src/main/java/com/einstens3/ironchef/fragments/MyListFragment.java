@@ -4,28 +4,19 @@ package com.einstens3.ironchef.fragments;
  * Created by raprasad on 4/9/17.
  */
 
-import android.support.annotation.Nullable;
-
-import com.einstens3.ironchef.R;
-import com.einstens3.ironchef.services.RecipeService;
-import com.parse.ParseException;
-
-import android.os.Bundle;
-
 import android.util.Log;
 import android.view.Menu;
 
-
+import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.adapters.RecipeRecyclerAdapter;
 import com.einstens3.ironchef.models.Recipe;
+import com.einstens3.ironchef.services.RecipeService;
+import com.parse.ParseException;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class MyListFragment extends HomeFragment {
-
-
     public MyListFragment() {
     }
 
@@ -34,28 +25,12 @@ public class MyListFragment extends HomeFragment {
         return RecipeRecyclerAdapter.MYLIST_RECIPE;
     }
 
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-
     @Override
     protected void makeNetworkCall(final int pageNo) {
         queryMyListRecipes();
     }
 
     private void queryMyListRecipes() {
-
-
         new RecipeService().queryMyRecipes(new RecipeService.QueryRecipesCallback() {
             @Override
             public void success(List<Recipe> recipes) {
@@ -75,6 +50,4 @@ public class MyListFragment extends HomeFragment {
     public void onPrepareOptionsMenu(Menu menu) {
         menu.removeItem(R.id.action_search);
     }
-
-
 }

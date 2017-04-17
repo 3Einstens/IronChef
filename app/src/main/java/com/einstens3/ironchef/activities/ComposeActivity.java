@@ -8,7 +8,7 @@ import android.view.Menu;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.fragments.ComposeFragment;
 
-public class ComposeActivity extends AppCompatActivity {
+public class ComposeActivity extends AppCompatActivity implements ActivityResult{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,5 +31,11 @@ public class ComposeActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_compose, menu);
         return true;
+    }
+
+    @Override
+    public void submit() {
+        setResult(RESULT_OK);
+        finish();
     }
 }

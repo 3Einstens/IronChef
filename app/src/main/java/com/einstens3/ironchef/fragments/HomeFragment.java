@@ -17,10 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.einstens3.ironchef.R;
-import com.einstens3.ironchef.utilities.EndlessRecyclerViewScrollListener;
-import com.einstens3.ironchef.services.RecipeService;
 import com.einstens3.ironchef.adapters.RecipeRecyclerAdapter;
 import com.einstens3.ironchef.models.Recipe;
+import com.einstens3.ironchef.services.RecipeService;
+import com.einstens3.ironchef.utilities.EndlessRecyclerViewScrollListener;
 import com.parse.ParseException;
 
 import java.util.ArrayList;
@@ -29,7 +29,7 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements FragmentRefresh {
     @BindView(R.id.rvRecipies)
     RecyclerView rvRecipies;
     @BindView(R.id.swipeContainer)
@@ -157,7 +157,7 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    protected void queryAllRecipe(){
+    protected void queryAllRecipe() {
         // search example:
         new RecipeService().queryOriginalRecipes(new RecipeService.QueryRecipesCallback() {
             @Override
@@ -174,7 +174,14 @@ public class HomeFragment extends Fragment {
         });
     }
 
-    protected  int getLayoutType() {return RecipeRecyclerAdapter.HOME_RECIPE; }
+    protected int getLayoutType() {
+        return RecipeRecyclerAdapter.HOME_RECIPE;
+    }
+
+    @Override
+    public void update() {
+        makeNetworkCall(0);
+    }
 }
 
 

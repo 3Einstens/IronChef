@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.activities.RecipeDetailActivity;
-import com.einstens3.ironchef.fragments.ActivityNavigation;
+import com.einstens3.ironchef.activities.ActivityNavigation;
 import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.CountCallback;
@@ -27,10 +27,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static com.einstens3.ironchef.R.id.ivLike;
-import static com.einstens3.ironchef.R.id.tvBanner;
-import static com.einstens3.ironchef.R.id.tvLike;
 
 /**
  * Created by raprasad on 4/8/17.

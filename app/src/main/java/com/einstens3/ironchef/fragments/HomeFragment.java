@@ -18,7 +18,7 @@ import android.view.ViewGroup;
 
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.utilities.EndlessRecyclerViewScrollListener;
-import com.einstens3.ironchef.services.RecipeQuery;
+import com.einstens3.ironchef.services.RecipeService;
 import com.einstens3.ironchef.adapters.RecipeRecyclerAdapter;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.ParseException;
@@ -129,9 +129,9 @@ public class HomeFragment extends Fragment {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                //    new RecipeQuery().queryAllRecipes(new RecipeQuery.QueryRecipesCallback()
+                //    new RecipeService().queryAllRecipes(new RecipeService.QueryRecipesCallback()
                 mQueryString = query;
-                new RecipeQuery().queryRecipesByKeyword(query, new RecipeQuery.QueryRecipesCallback() {
+                new RecipeService().queryRecipesByKeyword(query, new RecipeService.QueryRecipesCallback() {
                     @Override
                     public void success(List<Recipe> recipes) {
                         mArrayList = mArrayAdapter.swap(new ArrayList(recipes));
@@ -162,8 +162,8 @@ public class HomeFragment extends Fragment {
 
     protected void queryAllRecipe(){
         // search example:
-        //new RecipeQuery().queryRecipesByKeyword("Rigatoni", new RecipeQuery.QueryRecipesCallback() {
-        new RecipeQuery().queryAllRecipes(new RecipeQuery.QueryRecipesCallback() {
+        //new RecipeService().queryRecipesByKeyword("Rigatoni", new RecipeService.QueryRecipesCallback() {
+        new RecipeService().queryAllRecipes(new RecipeService.QueryRecipesCallback() {
             @Override
             public void success(List<Recipe> recipes) {
                 mArrayList = mArrayAdapter.swap(new ArrayList(recipes));

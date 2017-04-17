@@ -14,7 +14,7 @@ import java.util.List;
 
 import static com.parse.ParseQuery.getQuery;
 
-public class RecipeQuery {
+public class RecipeService {
 
     public interface QueryRecipeCallback {
         void success(Recipe recipe);
@@ -66,15 +66,14 @@ public class RecipeQuery {
      * search query by keyword
      */
     public static void queryRecipesByKeyword(final String regex, final QueryRecipesCallback callback) {
-
         List<ParseQuery<Recipe>> queries = new ArrayList<>();
 
-        // query in name field
+        // query in the name field
         ParseQuery<Recipe> queryInNameField = getQuery(Recipe.class);
         queryInNameField.whereMatches("name", ".*" + regex + ".*");
         queries.add(queryInNameField);
 
-        // query in name field
+        // query in the categories field
         ParseQuery<Recipe> queryInCategoryField = getQuery(Recipe.class);
         queryInCategoryField.whereMatches("categories", ".*" + regex + ".*");
         queries.add(queryInCategoryField);

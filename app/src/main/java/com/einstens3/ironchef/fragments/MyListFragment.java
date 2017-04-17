@@ -7,16 +7,15 @@ package com.einstens3.ironchef.fragments;
 import android.support.annotation.Nullable;
 
 import com.einstens3.ironchef.R;
+import com.einstens3.ironchef.services.RecipeService;
 import com.parse.ParseException;
 
 import android.os.Bundle;
 
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 
 
-import com.einstens3.ironchef.services.RecipeQuery;
 import com.einstens3.ironchef.adapters.RecipeRecyclerAdapter;
 import com.einstens3.ironchef.models.Recipe;
 
@@ -57,7 +56,7 @@ public class MyListFragment extends HomeFragment {
     private void queryMyListRecipes() {
 
 
-        new RecipeQuery().queryMyRecipes(new RecipeQuery.QueryRecipesCallback() {
+        new RecipeService().queryMyRecipes(new RecipeService.QueryRecipesCallback() {
             @Override
             public void success(List<Recipe> recipes) {
                 mArrayList = mArrayAdapter.swap(new ArrayList(recipes));

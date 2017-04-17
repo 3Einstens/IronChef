@@ -26,6 +26,8 @@ import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
 import com.einstens3.ironchef.services.ChallengeService;
+import com.einstens3.ironchef.services.RecipeService;
+import com.einstens3.ironchef.utilities.StringUtils;
 import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseFile;
@@ -51,6 +53,7 @@ public class ComposeFragment extends Fragment {
     private static final String PHOTO_NAME = "photo"; // main photo
     private static final String STEP_PHOTO_NAME = "step_%d"; // Step photo
 
+    // information for challenge. If normal compose, following two parameters will be `null`.
     String challengeTo;
     String challengeId;
 
@@ -141,6 +144,21 @@ public class ComposeFragment extends Fragment {
             });
         }else{
             tvChallengeStatus.setVisibility(View.GONE);
+        }
+        if(challengeTo != null){
+            RecipeService.queryRecipe(challengeTo, new RecipeService.QueryRecipeCallback(){
+                @Override
+                public void success(Recipe recipe) {
+                    etTitle.setText(recipe.getName());
+                    etCategories.setText(StringUtils.fromList(recipe.getCategories()));
+                    etTitle.setEnabled(false);
+                    etCategories.setEnabled(false);
+                }
+
+                @Override
+                public void error(ParseException e) {
+                }
+            });
         }
     }
 

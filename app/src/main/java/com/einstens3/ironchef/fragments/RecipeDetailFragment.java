@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
-import com.einstens3.ironchef.services.RecipeQuery;
+import com.einstens3.ironchef.services.RecipeService;
 import com.einstens3.ironchef.utilities.StringUtils;
 import com.parse.CountCallback;
 import com.parse.GetCallback;
@@ -142,7 +142,7 @@ public class RecipeDetailFragment extends Fragment {
     }
 
     private void updateControlStates() {
-        new RecipeQuery().queryRecipe(objectId, new RecipeQuery.QueryRecipeCallback() {
+        new RecipeService().queryRecipe(objectId, new RecipeService.QueryRecipeCallback() {
             @Override
             public void success(Recipe recipe) {
                 RecipeDetailFragment.this.recipe = recipe;

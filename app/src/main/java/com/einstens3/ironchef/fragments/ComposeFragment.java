@@ -208,21 +208,15 @@ public class ComposeFragment extends Fragment {
 
                 // Save photo images
                 ParseFile photo = getParseFile(PHOTO_NAME, true);
-//                ParseFile step1Photo = getParseFile(getStepPhotoName(1), true);
-//                ParseFile step2Photo = getParseFile(getStepPhotoName(2), true);
-//                ParseFile step3Photo = getParseFile(getStepPhotoName(3), true);
 
                 //  Save Recipe
                 final Recipe recipe = new Recipe();
-                recipe.setDraft(false);
-                recipe.setPublic(false);
                 recipe.setAuthor(ParseUser.getCurrentUser());
                 recipe.setName(getText(etTitle));
                 recipe.setDescription(getText(etDescription));
                 recipe.setCookingTime(getLong(etPrepTime));
                 recipe.setServing(getLong(etServing));
                 recipe.setCategories(getList(etCategories));
-
 
                 //iterarte over the linear layout and get steps added
 

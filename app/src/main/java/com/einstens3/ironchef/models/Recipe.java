@@ -12,7 +12,6 @@ import com.parse.ParseUser;
 
 import java.util.List;
 
-
 @ParseClassName("Recipe")
 public class Recipe extends ParseObject {
     // ------------------------------------
@@ -20,7 +19,18 @@ public class Recipe extends ParseObject {
     // ------------------------------------
     public static final String TAG = Recipe.class.getSimpleName();
 
+    public static final String KEY_OBJECT_ID = "objectId";
+    public static final String KEY_UPDATED_AT = "updatedAt";
+    public static final String KEY_NAME = "name";
     public static final String KEY_AUTHOR = "author";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_INGREDIENTS = "ingredients";
+    public static final String KEY_PHOTO = "photo";
+    public static final String KEY_CATEGORIES = "categories";
+    public static final String KEY_STEPS = "steps";
+    public static final String KEY_SERVING = "serving";
+    public static final String KEY_COOKING_TIME = "cookingTime";
+    public static final String KEY_CHALLENGE_TO = "challengeTo";
     public static final String KEY_CHALLENGES = "challenges";
     public static final String KEY_LIKES = "likes";
 
@@ -41,21 +51,11 @@ public class Recipe extends ParseObject {
     // name: String - Recipe Name  Name could be unique
 
     public String getName() {
-        return getString("name");
+        return getString(KEY_NAME);
     }
 
     public void setName(String value) {
-        put("name", value);
-    }
-
-    //  standardName: String - Standard Recipe Name for grouping same foods
-
-    public String getStandardName() {
-        return getString("standardName");
-    }
-
-    public void setStandardName(String value) {
-        put("standardName", value);
+        put(KEY_NAME, value);
     }
 
     // author: ParseUser - Recipe Author (owner)
@@ -71,152 +71,82 @@ public class Recipe extends ParseObject {
     // description: String - Recipe description
 
     public String getDescription() {
-        return getString("description");
+        return getString(KEY_DESCRIPTION);
     }
 
     public void setDescription(String value) {
-        put("description", value);
+        put(KEY_DESCRIPTION, value);
     }
 
     // ingredients: List<String> - list of ingredients
 
     public List<String> getIngredients() {
-        return getList("ingredients");
+        return getList(KEY_INGREDIENTS);
     }
 
     public void setIngredients(List<String> value) {
-        put("ingredients", value);
+        put(KEY_INGREDIENTS, value);
     }
 
     // photo: ParseFile - Recipe's main photo
 
     public ParseFile getPhoto() {
-        return getParseFile("photo");
+        return getParseFile(KEY_PHOTO);
     }
 
     public void setPhoto(ParseFile value) {
-        put("photo", value);
+        put(KEY_PHOTO, value);
     }
 
     // categories: List<String> - List of categories that the recipe belongs to
 
     public List<String> getCategories() {
-        return getList("categories");
+        return getList(KEY_CATEGORIES);
     }
 
     public void setCategories(List<String> value) {
-        put("categories", value);
+        put(KEY_CATEGORIES, value);
     }
 
+    // steps: List<String> - List of steps (directions)
+
     public List<String> getSteps() {
-        return getList("steps");
+        return getList(KEY_STEPS);
     }
 
     public void setSteps(List<String> value) {
-        put("steps", value);
-    }
-
-    public List<String> getIngridients() {
-        return getList("ingridients");
-    }
-
-    public void setIngridients(List<String> value) {
-        put("ingridients", value);
+        put(KEY_STEPS, value);
     }
 
     // serving: long - a quantity of food suitable for how many person.
 
     public long getServing() {
-        return getLong("serving");
+        return getLong(KEY_SERVING);
     }
 
     public void setServing(long value) {
-        put("serving", value);
+        put(KEY_SERVING, value);
     }
 
     // cookingTime: long - total cooking time
 
     public long getCookingTime() {
-        return getLong("cookingTime");
+        return getLong(KEY_COOKING_TIME);
     }
 
     public void setCookingTime(long value) {
-        put("cookingTime", value);
+        put(KEY_COOKING_TIME, value);
     }
 
     // challengeTo: Recipe - null in case this is original recipe
     //                     - reference to original recipe
 
     public Recipe getChallengeTo() {
-        return (Recipe) getParseObject("challengeTo");
+        return (Recipe) getParseObject(KEY_CHALLENGE_TO);
     }
 
     public void setChallengeTo(Recipe value) {
-        put("challengeTo", value);
-    }
-
-    public String getStep1Text() {
-        return getString("step1text");
-    }
-
-    public void setStep1Text(String value) {
-        put("step1text", value);
-    }
-
-    public ParseFile getStep1Photo() {
-        return getParseFile("step1photo");
-    }
-
-    public void setStep1Photo(ParseFile value) {
-        put("step1photo", value);
-    }
-
-    public String getStep2Text() {
-        return getString("step2text");
-    }
-
-    public void setStep2Text(String value) {
-        put("step2text", value);
-    }
-
-    public ParseFile getStep2Photo() {
-        return getParseFile("step2photo");
-    }
-
-    public void setStep2Photo(ParseFile value) {
-        put("step2photo", value);
-    }
-
-    public String getStep3Text() {
-        return getString("step3text");
-    }
-
-    public void setStep3Text(String value) {
-        put("step3text", value);
-    }
-
-    public ParseFile getStep3Photo() {
-        return getParseFile("step3photo");
-    }
-
-    public void setStep3Photo(ParseFile value) {
-        put("step3photo", value);
-    }
-
-    public boolean isDraft() {
-        return getBoolean("draft");
-    }
-
-    public void setDraft(boolean value) {
-        put("draft", value);
-    }
-
-    public boolean isPublic() {
-        return getBoolean("public");
-    }
-
-    public void setPublic(boolean value) {
-        put("public", value);
+        put(KEY_CHALLENGE_TO, value);
     }
 
     // ----------------------------------------------------------------
@@ -241,7 +171,7 @@ public class Recipe extends ParseObject {
     public void doesCurrentUserLikeRecipe(ParseUser user, GetCallback<ParseUser> callback) {
         getLikesRelation()
                 .getQuery()
-                .whereEqualTo("objectId", user.getObjectId())
+                .whereEqualTo(KEY_OBJECT_ID, user.getObjectId())
                 .getFirstInBackground(callback);
     }
 

@@ -12,6 +12,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.einstens3.ironchef.models.Recipe.KEY_AUTHOR;
+import static com.einstens3.ironchef.models.Recipe.KEY_CATEGORIES;
+import static com.einstens3.ironchef.models.Recipe.KEY_CHALLENGE_TO;
+import static com.einstens3.ironchef.models.Recipe.KEY_NAME;
+import static com.einstens3.ironchef.models.Recipe.KEY_UPDATED_AT;
 import static com.parse.ParseQuery.getQuery;
 
 public class RecipeService {
@@ -51,7 +56,7 @@ public class RecipeService {
      */
     public static void queryAllRecipes(final QueryRecipesCallback callback) {
         ParseQuery<Recipe> query = getQuery(Recipe.class);
-        query.orderByDescending("updatedAt");
+        query.orderByDescending(KEY_UPDATED_AT);
         query.findInBackground(new FindCallback<Recipe>() {
             @Override
             public void done(List<Recipe> objects, ParseException e) {
@@ -72,17 +77,17 @@ public class RecipeService {
 
         // query in the name field
         ParseQuery<Recipe> queryInNameField = getQuery(Recipe.class);
-        queryInNameField.whereMatches("name", ".*" + regex + ".*");
+        queryInNameField.whereMatches(KEY_NAME, ".*" + regex + ".*");
         queries.add(queryInNameField);
 
         // query in the categories field
         ParseQuery<Recipe> queryInCategoryField = getQuery(Recipe.class);
-        queryInCategoryField.whereMatches("categories", ".*" + regex + ".*");
+        queryInCategoryField.whereMatches(KEY_CATEGORIES, ".*" + regex + ".*");
         queries.add(queryInCategoryField);
 
         // Run OR query
         ParseQuery<Recipe> query = ParseQuery.or(queries);
-        query.orderByDescending("updatedAt");
+        query.orderByDescending(KEY_UPDATED_AT);
         query.findInBackground(new FindCallback<Recipe>() {
             @Override
             public void done(List<Recipe> objects, ParseException e) {
@@ -106,7 +111,7 @@ public class RecipeService {
 
         // Recipes current user composed
         ParseQuery<Recipe> authorRecipeQuery = ParseQuery.getQuery(Recipe.class);
-        authorRecipeQuery.whereEqualTo("author", me);
+        authorRecipeQuery.whereEqualTo(KEY_AUTHOR, me);
         queries.add(authorRecipeQuery);
 
         // Recipes current user likes
@@ -123,7 +128,7 @@ public class RecipeService {
 
         // Run OR query
         ParseQuery<Recipe> query = ParseQuery.or(queries);
-        query.orderByDescending("updatedAt");
+        query.orderByDescending(KEY_UPDATED_AT);
         query.findInBackground(new FindCallback<Recipe>() {
             @Override
             public void done(List<Recipe> objects, ParseException e) {
@@ -142,8 +147,8 @@ public class RecipeService {
      */
     public static void queryChallengeRecipes(String recipeID, final QueryRecipesCallback callback) {
         ParseQuery<Recipe> query = getQuery(Recipe.class);
-        query.whereEqualTo("challengeTo", Recipe.createWithoutData(Recipe.class, recipeID));
-        query.orderByDescending("updatedAt");
+        query.whereEqualTo(KEY_CHALLENGE_TO, Recipe.createWithoutData(Recipe.class, recipeID));
+        query.orderByDescending(KEY_UPDATED_AT);
         query.findInBackground(new FindCallback<Recipe>() {
             @Override
             public void done(List<Recipe> objects, ParseException e) {
@@ -162,8 +167,8 @@ public class RecipeService {
      */
     public static void queryOriginalRecipes(final QueryRecipesCallback callback) {
         ParseQuery<Recipe> query = getQuery(Recipe.class);
-        query.whereDoesNotExist("challengeTo");
-        query.orderByDescending("updatedAt");
+        query.whereDoesNotExist(KEY_CHALLENGE_TO);
+        query.orderByDescending(KEY_UPDATED_AT);
         query.findInBackground(new FindCallback<Recipe>() {
             @Override
             public void done(List<Recipe> objects, ParseException e) {

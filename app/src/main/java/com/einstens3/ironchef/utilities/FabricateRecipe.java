@@ -39,8 +39,6 @@ public class FabricateRecipe {
 
         //  Save Recipe
         final Recipe recipe = new Recipe();
-        recipe.setDraft(false);
-        recipe.setPublic(false);
         recipe.setAuthor(ParseUser.getCurrentUser());
         recipe.setName("Thai Green Curry Chicken");
         recipe.setDescription("In this quick and easy recipe that never fails, the chicken stays moist and tender. Serve over jasmine rice for a satisfying meal.");
@@ -60,17 +58,8 @@ public class FabricateRecipe {
                 "2 tablespoons white sugar",
                 "1/2 cup cilantro leaves, for garnish"));
         recipe.setCategories(Arrays.asList("Thai"));
-        recipe.setStep1Text("Toss chicken first in 1 tablespoon dark soy sauce, then in the flour, coating pieces evenly. Heat the oil in a large skillet over medium high heat. Place chicken in the skillet, cook and stir chicken until browned, about 5 minutes. Remove chicken.");
-        recipe.setStep2Text("Reduce heat to medium and stir in curry paste. Cook for 1 minute until fragrant, then stir in green onions, garlic, and ginger; cook an additional 2 minutes. Return chicken to the skillet, stirring to coat with the curry mixture. Stir the coconut milk, fish sauce, 1 tablespoon soy sauce, and sugar into the chicken-curry mixture. Allow to simmer over medium heat for 20 minutes until the chicken is tender. Serve garnished with cilantro leaves.");
-        recipe.setStep3Text("");
         if (photo != null)
             recipe.setPhoto(photo);
-//        if(step1Photo!=null)
-//            recipe.setPhoto(step1Photo);
-//        if(step2Photo!=null)
-//            recipe.setPhoto(step2Photo);
-//        if(step3Photo!=null)
-//            recipe.setPhoto(step3Photo);
         recipe.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {

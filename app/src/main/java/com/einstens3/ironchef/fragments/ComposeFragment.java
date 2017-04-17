@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.einstens3.ironchef.R;
+import com.einstens3.ironchef.activities.ActivityResult;
 import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
 import com.einstens3.ironchef.services.ChallengeService;
@@ -269,7 +270,11 @@ public class ComposeFragment extends Fragment {
                     }
                 });
 
-                getActivity().finish();
+                if(getActivity() instanceof ActivityResult) {
+                    ((ActivityResult) getActivity()).submit();
+                }else{
+                    getActivity().finish();
+                }
             }
         });
     }

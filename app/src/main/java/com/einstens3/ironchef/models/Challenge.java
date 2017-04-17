@@ -15,7 +15,11 @@ public class Challenge extends ParseObject {
     // ------------------------------------
     public static final String TAG = Challenge.class.getSimpleName();
 
-    // access keys
+    // access keys (ParseObject)
+    public static final String KEY_OBJECT_ID = "objectId";
+    public static final String KEY_UPDATED_AT = "updatedAt";
+
+    // access keys (Challenge)
     public static final String KEY_USER = "user";
     public static final String KEY_MY_RECIPE = "myRecipe";
     public static final String KEY_STATE = "state";

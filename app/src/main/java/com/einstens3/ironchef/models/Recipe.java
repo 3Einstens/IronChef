@@ -19,8 +19,11 @@ public class Recipe extends ParseObject {
     // ------------------------------------
     public static final String TAG = Recipe.class.getSimpleName();
 
+    // access keys (ParseObject)
     public static final String KEY_OBJECT_ID = "objectId";
     public static final String KEY_UPDATED_AT = "updatedAt";
+
+    // access keys (Recipe)
     public static final String KEY_NAME = "name";
     public static final String KEY_AUTHOR = "author";
     public static final String KEY_DESCRIPTION = "description";

@@ -3,6 +3,7 @@ package com.einstens3.ironchef.activities;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -23,7 +24,7 @@ import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
 import com.einstens3.ironchef.R;
-import com.einstens3.ironchef.fragments.ActivityNavigation;
+import com.einstens3.ironchef.fragments.FragmentRefresh;
 import com.einstens3.ironchef.fragments.HomeFragment;
 import com.einstens3.ironchef.fragments.MyListFragment;
 import com.parse.LogOutCallback;
@@ -36,8 +37,7 @@ import butterknife.ButterKnife;
 
 public class HomeActivity extends AppCompatActivity implements ActivityNavigation {
 
-
-
+    public static final String TAG = HomeActivity.class.getSimpleName();
 
     private ParseUser currentUser;
     @BindView(R.id.toolbar)
@@ -53,17 +53,23 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
     private ActionBarDrawerToggle mDrawerToggle;
 
 
-
     public class HomePagerAdapter extends FragmentPagerAdapter {
         final int PAGE_COUNT = 2;
         private String tabTitles[] = {"Home", "My List"};
 
+        private HomeFragment homeFragment;
+        private MyListFragment myListFragment;
+
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                return new HomeFragment();
+                if(homeFragment==null)
+                    homeFragment =  new HomeFragment();
+                return homeFragment;
             } else if (position == 1) {
-                return new MyListFragment();
+                if(myListFragment==null)
+                    myListFragment =  new MyListFragment();
+                return myListFragment;
             } else {
                 return null;
             }
@@ -83,7 +89,6 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         public HomePagerAdapter(FragmentManager fm) {
             super(fm);
         }
-
     }
 
     @Override
@@ -93,13 +98,9 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
 
         ButterKnife.bind(this);
 
-
         setSupportActionBar(toolbar);
 
         getSupportActionBar().setDisplayUseLogoEnabled(false);
-        //getSupportActionBar().setTitle("Home");
-
-
 
         viewPager.setAdapter(new HomePagerAdapter(getSupportFragmentManager()));
         pagerSlidingTabStrip.setViewPager(viewPager);
@@ -115,17 +116,16 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
             }
         });
         // Find our drawer view
-        mDrawerToggle =  setupDrawerToggle();
+        mDrawerToggle = setupDrawerToggle();
         mDrawer.addDrawerListener(mDrawerToggle);
         setupDrawerContent(nvView);
-        View header=nvView.getHeaderView(0);
-        TextView tvName = (TextView)header.findViewById(R.id.userName);
+        View header = nvView.getHeaderView(0);
+        TextView tvName = (TextView) header.findViewById(R.id.userName);
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             tvName.setText(ParseUser.getCurrentUser().getUsername());
         }
     }
-
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
@@ -140,7 +140,7 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
 
     public void selectDrawerItem(MenuItem menuItem) {
         // Create a new fragment and specify the fragment to show based on nav item clicked
-        switch(menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {
             case R.id.profile:
                 //TODO
                 break;
@@ -164,17 +164,11 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         mDrawer.closeDrawers();
     }
 
-
     private ActionBarDrawerToggle setupDrawerToggle() {
         // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
         // and will not render the hamburger icon without it.
-        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open, R.string.drawer_close);
     }
-
-
-
-
-
 
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
@@ -189,8 +183,6 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         // Pass any configuration change to the drawer toggles
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-
-
 
     @Override
     protected void onStart() {
@@ -239,15 +231,37 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         return super.onOptionsItemSelected(item);
     }
 
+    private final int REQUEST_CODE_COMPOSE = 1000;
+
     public void showComposeUI() {
         Intent intent = new Intent(HomeActivity.this, ComposeActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_COMPOSE);
     }
 
     public void showComposeUIForChallenge(String challengeTo, String challengeId) {
         Intent intent = new Intent(HomeActivity.this, ComposeActivity.class);
         intent.putExtra("challengeTo", challengeTo); // Recipe.objectId
         intent.putExtra("challengeId", challengeId); // Challenge.objectId
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_CODE_COMPOSE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_COMPOSE) {
+            final Handler handler = new Handler();
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    // Successful result fro Compose activity. Refresh Fragments
+                    FragmentPagerAdapter fragmentPagerAdapter = (FragmentPagerAdapter) viewPager.getAdapter();
+                    for (int i = 0; i < fragmentPagerAdapter.getCount(); i++) {
+                        Fragment fragment = fragmentPagerAdapter.getItem(i);
+                        if (fragment != null && fragment instanceof FragmentRefresh) {
+                            ((FragmentRefresh) fragment).update();
+                        }
+                    }
+                }
+            }, 500);
+        }
     }
 }

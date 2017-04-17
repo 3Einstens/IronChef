@@ -28,6 +28,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.einstens3.ironchef.R.id.ivLike;
+
 /**
  * Created by raprasad on 4/8/17.
  */
@@ -83,6 +85,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
         @BindView(R.id.tvLike)
         TextView tvLike;
+        @BindView(R.id.image_action_like)
+        ImageView ivLike;
 
         public HomeViewHolder(View view) {
             super(view);
@@ -99,6 +103,9 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 public void done(int count, ParseException e) {
                     if (e == null)
                         tvLike.setText(Integer.toString(count));
+                    if(count>0) {
+                        ivLike.setBackgroundResource(R.drawable.liked);
+                    }
                 }
             });
         }

@@ -9,10 +9,7 @@
     tools:showIn="@layout/activity_home">
 
 
-    <android.support.design.widget.CoordinatorLayout
-        android:id="@+id/activity_timeline"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeContainer"
@@ -27,8 +24,6 @@
         />
 
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    </android.support.design.widget.CoordinatorLayout>
 
 
 </android.support.constraint.ConstraintLayout>

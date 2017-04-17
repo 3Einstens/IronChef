@@ -1,19 +1,24 @@
 package com.einstens3.ironchef.activities;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -21,18 +26,33 @@ import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.fragments.ActivityNavigation;
 import com.einstens3.ironchef.fragments.HomeFragment;
 import com.einstens3.ironchef.fragments.MyListFragment;
+import com.parse.LogOutCallback;
+import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+
 public class HomeActivity extends AppCompatActivity implements ActivityNavigation {
 
+
+
+
     private ParseUser currentUser;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.viewpager)
     ViewPager viewPager;
     @BindView(R.id.tabs)
     PagerSlidingTabStrip pagerSlidingTabStrip;
+    @BindView(R.id.nvView)
+    NavigationView nvView;
+    @BindView(R.id.drawer_layout)
+    DrawerLayout mDrawer;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+
 
     public class HomePagerAdapter extends FragmentPagerAdapter {
         final int PAGE_COUNT = 2;
@@ -70,9 +90,17 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
         ButterKnife.bind(this);
+
+
+        setSupportActionBar(toolbar);
+
+        getSupportActionBar().setDisplayUseLogoEnabled(false);
+        //getSupportActionBar().setTitle("Home");
+
+
+
         viewPager.setAdapter(new HomePagerAdapter(getSupportFragmentManager()));
         pagerSlidingTabStrip.setViewPager(viewPager);
 
@@ -86,7 +114,83 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
                     Toast.makeText(HomeActivity.this, "To post the recipe, please login!", Toast.LENGTH_LONG).show();
             }
         });
+        // Find our drawer view
+        mDrawerToggle =  setupDrawerToggle();
+        mDrawer.addDrawerListener(mDrawerToggle);
+        setupDrawerContent(nvView);
+        View header=nvView.getHeaderView(0);
+        TextView tvName = (TextView)header.findViewById(R.id.userName);
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            tvName.setText(ParseUser.getCurrentUser().getUsername());
+        }
     }
+
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        navigationView.setNavigationItemSelectedListener(
+                new NavigationView.OnNavigationItemSelectedListener() {
+                    @Override
+                    public boolean onNavigationItemSelected(MenuItem menuItem) {
+                        selectDrawerItem(menuItem);
+                        return true;
+                    }
+                });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        // Create a new fragment and specify the fragment to show based on nav item clicked
+        switch(menuItem.getItemId()) {
+            case R.id.profile:
+                //TODO
+                break;
+            case R.id.logOut:
+                ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        Intent intent = new Intent(HomeActivity.this, DispatchActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
+                break;
+        }
+
+        // Highlight the selected item has been done by NavigationView
+        menuItem.setChecked(true);
+        // Set action bar title
+        setTitle(menuItem.getTitle());
+        // Close the navigation drawer
+        mDrawer.closeDrawers();
+    }
+
+
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        // NOTE: Make sure you pass in a valid toolbar reference.  ActionBarDrawToggle() does not require it
+        // and will not render the hamburger icon without it.
+        return new ActionBarDrawerToggle(this, mDrawer, toolbar, R.string.drawer_open,  R.string.drawer_close);
+    }
+
+
+
+
+
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+
 
     @Override
     protected void onStart() {
@@ -128,6 +232,10 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 

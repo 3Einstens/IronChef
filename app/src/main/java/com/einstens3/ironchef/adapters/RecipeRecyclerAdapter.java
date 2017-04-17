@@ -29,6 +29,8 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 import static com.einstens3.ironchef.R.id.ivLike;
+import static com.einstens3.ironchef.R.id.tvBanner;
+import static com.einstens3.ironchef.R.id.tvLike;
 
 /**
  * Created by raprasad on 4/8/17.
@@ -64,20 +66,6 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
             });
         }
-
-        public void renderRecipe(Recipe r) {
-            ivRecipe.setImageResource(0);
-            if (r != null) {
-                tvRecipeDescription.setText(r.getName());
-                try {
-                    if (r.getPhoto() != null) {
-                        Glide.with(mContext).load(Uri.fromFile(r.getPhoto().getFile())).into(ivRecipe);
-                    }
-                } catch (ParseException e) {
-                    Log.d(TAG, "parse exception: " + e.getMessage());
-                }
-            }
-        }
     }
 
 
@@ -93,22 +81,6 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ButterKnife.bind(this, view);
         }
 
-        public void renderRecipe(Recipe r) {
-            super.renderRecipe(r);
-            // set default value  - 0
-            tvLike.setText(Integer.toString(0));
-            // call count likes asynchronously to improve performance.
-            r.countLikes(new CountCallback() {
-                @Override
-                public void done(int count, ParseException e) {
-                    if (e == null)
-                        tvLike.setText(Integer.toString(count));
-                    if(count>0) {
-                        ivLike.setBackgroundResource(R.drawable.liked);
-                    }
-                }
-            });
-        }
     }
 
     public class MyListViewHolder extends BasicViewHolder {
@@ -118,42 +90,6 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         public MyListViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
-        }
-
-        public void renderRecipe(final Recipe r) {
-            super.renderRecipe(r);
-            String s = r.getName();
-            Log.d(TAG, "====>Name" + s);
-            if (r != null) {
-                if (r.isOwnRecipe()) {
-                    tvBanner.setText(mContext.getResources().getString(R.string.created));
-                } else {
-                    r.getOwnChallenge(new GetCallback<Challenge>() {
-                        @Override
-                        public void done(final Challenge challenge, ParseException e) {
-                            if (e == null && challenge != null) {
-                                if (challenge.getState() == Challenge.STATE_ACCEPTED) {
-                                    tvBanner.setText(mContext.getResources().getString(R.string.accepted));
-                                    tvBanner.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            if(mContext instanceof ActivityNavigation){
-                                                ((ActivityNavigation)mContext).showComposeUIForChallenge(r.getObjectId(), challenge.getObjectId());
-                                            }
-                                        }
-                                    });
-                                } else if (challenge.getState() == Challenge.STATE_COMPLETED) {
-                                    tvBanner.setText(mContext.getResources().getString(R.string.completed));
-                                } else {
-                                    tvBanner.setVisibility(View.GONE);
-                                }
-                            } else { //it is showing up here because the user liked this
-                                tvBanner.setText(mContext.getResources().getString(R.string.liked));
-                            }
-                        }
-                    });
-                }
-            }
         }
     }
 
@@ -188,9 +124,68 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if (holder != null) {
+            final Recipe r = mRecipe.get(position);
+            ((BasicViewHolder) holder).mPosition = position;
             if (holder instanceof BasicViewHolder) {
-                ((BasicViewHolder) holder).renderRecipe(mRecipe.get(position));
-                ((BasicViewHolder) holder).mPosition = position;
+                BasicViewHolder basicViewHolder = (BasicViewHolder) holder;
+                if (r!=null) {
+                    basicViewHolder.tvRecipeDescription.setText(r.getName());
+                }
+
+                try {
+                    basicViewHolder.ivRecipe.setImageResource(0);
+                    if (r.getPhoto() != null) {
+                        Glide.with(mContext).load(Uri.fromFile(r.getPhoto().getFile())).into(basicViewHolder.ivRecipe);
+                    }
+                } catch (ParseException e) {
+                    Log.d(TAG, "parse exception: " + e.getMessage());
+                }
+            }
+            if (holder instanceof HomeViewHolder) {
+                final HomeViewHolder homeViewHolder = (HomeViewHolder) holder;
+                homeViewHolder.tvLike.setText(Integer.toString(0));
+                // call count likes asynchronously to improve performance.
+                r.countLikes(new CountCallback() {
+                    @Override
+                    public void done(int count, ParseException e) {
+                        if (e == null)
+                            homeViewHolder.tvLike.setText(Integer.toString(count));
+                        if(count>0) {
+                            homeViewHolder.ivLike.setBackgroundResource(R.drawable.liked);
+                        }
+                    }
+                });
+
+            } else {
+                final MyListViewHolder myListViewHolder = (MyListViewHolder) holder;
+                if (r.isOwnRecipe()) {
+                    myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.created));
+                } else {
+                    r.getOwnChallenge(new GetCallback<Challenge>() {
+                        @Override
+                        public void done(final Challenge challenge, ParseException e) {
+                            if (e == null && challenge != null) {
+                                if (challenge.getState() == Challenge.STATE_ACCEPTED) {
+                                    myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.accepted));
+                                    myListViewHolder.tvBanner.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if(mContext instanceof ActivityNavigation){
+                                                ((ActivityNavigation)mContext).showComposeUIForChallenge(r.getObjectId(), challenge.getObjectId());
+                                            }
+                                        }
+                                    });
+                                } else if (challenge.getState() == Challenge.STATE_COMPLETED) {
+                                    myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.completed));
+                                } else {
+                                    myListViewHolder.tvBanner.setVisibility(View.GONE);
+                                }
+                            } else { //it is showing up here because the user liked this
+                                myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.liked));
+                            }
+                        }
+                    });
+                }
             }
         }
     }

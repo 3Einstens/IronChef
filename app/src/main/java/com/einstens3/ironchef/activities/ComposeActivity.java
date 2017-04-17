@@ -15,7 +15,7 @@ public class ComposeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_compose);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        getSupportActionBar().setTitle(getApplicationContext().getResources().getString(R.string.add_recipe));
         String challengeTo = getIntent().getStringExtra("challengeTo");
         String challengeId = getIntent().getStringExtra("challengeId");
         if (findViewById(R.id.fragment_container) != null) {

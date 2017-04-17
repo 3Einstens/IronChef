@@ -60,7 +60,7 @@ public class RecipeDetailFragment extends Fragment {
 
     public class RecipieDetailPagerAdapter extends FragmentPagerAdapter {
         final int PAGE_COUNT = 2;
-        private String tabTitles[] = { "Steps", "Ingridients"};
+        private String tabTitles[] = { "Steps", "Ingredients"};
         @Override
         public Fragment getItem(int position) {
             if (position == 0){

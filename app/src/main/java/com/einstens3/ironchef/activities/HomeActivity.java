@@ -3,7 +3,6 @@ package com.einstens3.ironchef.activities;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -248,20 +247,17 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK && requestCode == REQUEST_CODE_COMPOSE) {
-            final Handler handler = new Handler();
-            handler.postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    // Successful result fro Compose activity. Refresh Fragments
-                    FragmentPagerAdapter fragmentPagerAdapter = (FragmentPagerAdapter) viewPager.getAdapter();
-                    for (int i = 0; i < fragmentPagerAdapter.getCount(); i++) {
-                        Fragment fragment = fragmentPagerAdapter.getItem(i);
-                        if (fragment != null && fragment instanceof FragmentRefresh) {
-                            ((FragmentRefresh) fragment).update();
-                        }
-                    }
-                }
-            }, 500);
+            refreshFragments();
+        }
+    }
+
+    private void refreshFragments() {
+        FragmentPagerAdapter fragmentPagerAdapter = (FragmentPagerAdapter) viewPager.getAdapter();
+        for (int i = 0; i < fragmentPagerAdapter.getCount(); i++) {
+            Fragment fragment = fragmentPagerAdapter.getItem(i);
+            if (fragment != null && fragment instanceof FragmentRefresh) {
+                ((FragmentRefresh) fragment).update();
+            }
         }
     }
 }

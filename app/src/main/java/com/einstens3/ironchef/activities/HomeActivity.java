@@ -37,11 +37,12 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
     public class HomePagerAdapter extends FragmentPagerAdapter {
         final int PAGE_COUNT = 2;
         private String tabTitles[] = {"Home", "My List"};
+
         @Override
         public Fragment getItem(int position) {
-            if (position == 0){
+            if (position == 0) {
                 return new HomeFragment();
-            } else  if (position == 1){
+            } else if (position == 1) {
                 return new MyListFragment();
             } else {
                 return null;
@@ -79,7 +80,7 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(currentUser!=null)
+                if (currentUser != null)
                     showComposeUI();
                 else
                     Toast.makeText(HomeActivity.this, "To post the recipe, please login!", Toast.LENGTH_LONG).show();
@@ -130,15 +131,15 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         return super.onOptionsItemSelected(item);
     }
 
-    public void showComposeUI(){
+    public void showComposeUI() {
         Intent intent = new Intent(HomeActivity.this, ComposeActivity.class);
         startActivity(intent);
     }
 
-    public void showComposeUIForChallenge(String challengeId){
-        Toast.makeText(HomeActivity.this, "Will submit my recipe! challengeId -> " + challengeId, Toast.LENGTH_LONG).show();
+    public void showComposeUIForChallenge(String challengeTo, String challengeId) {
         Intent intent = new Intent(HomeActivity.this, ComposeActivity.class);
-        intent.putExtra("challengeId", challengeId);
+        intent.putExtra("challengeTo", challengeTo); // Recipe.objectId
+        intent.putExtra("challengeId", challengeId); // Challenge.objectId
         startActivity(intent);
     }
 }

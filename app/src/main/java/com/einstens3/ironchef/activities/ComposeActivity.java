@@ -16,11 +16,12 @@ public class ComposeActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        String challengeTo = getIntent().getStringExtra("challengeTo");
         String challengeId = getIntent().getStringExtra("challengeId");
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null)
                 return;
-            ComposeFragment fragment = ComposeFragment.newInstance(challengeId);
+            ComposeFragment fragment = ComposeFragment.newInstance(challengeTo, challengeId);
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
         }
     }

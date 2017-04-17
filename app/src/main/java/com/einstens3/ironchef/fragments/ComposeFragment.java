@@ -45,11 +45,13 @@ public class ComposeFragment extends Fragment {
 
     private static final String TAG = ComposeFragment.class.getSimpleName();
 
-    private static final String ARG_PARAM_CHALLENGE_ID = "challengeId";
+    private static final String ARG_PARAM_CHALLENGE_TO = "challengeTo"; // Recipe.objectId
+    private static final String ARG_PARAM_CHALLENGE_ID = "challengeId"; // Challenge.objectId
 
     private static final String PHOTO_NAME = "photo"; // main photo
     private static final String STEP_PHOTO_NAME = "step_%d"; // Step photo
 
+    String challengeTo;
     String challengeId;
 
     View view;
@@ -71,9 +73,10 @@ public class ComposeFragment extends Fragment {
     public ComposeFragment() {
     }
 
-    public static ComposeFragment newInstance(String challengeId) {
+    public static ComposeFragment newInstance(String challengeTo, String challengeId) {
         ComposeFragment fragment = new ComposeFragment();
         Bundle args = new Bundle();
+        args.putString(ARG_PARAM_CHALLENGE_TO, challengeTo);
         args.putString(ARG_PARAM_CHALLENGE_ID, challengeId);
         fragment.setArguments(args);
         return fragment;
@@ -83,8 +86,9 @@ public class ComposeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            challengeTo = getArguments().getString(ARG_PARAM_CHALLENGE_TO);
             challengeId = getArguments().getString(ARG_PARAM_CHALLENGE_ID);
-            Log.e(TAG, "challengeId -> " + challengeId);
+            Log.e(TAG, "challengeId -> " + challengeId +", challengeTo -> "+challengeTo);
         }
     }
 
@@ -218,12 +222,16 @@ public class ComposeFragment extends Fragment {
                 if(photo!=null)
                     recipe.setPhoto(photo);
 
+                // challengeTo
+                if (challengeTo != null)
+                    recipe.setChallengeTo(Recipe.createWithoutData(Recipe.class, challengeTo));
+
                 recipe.saveInBackground(new SaveCallback() {
                     @Override
                     public void done(ParseException e) {
                         if (e == null) {
                             Log.i(TAG, "Succeeded to save the Recipe");
-                            if(challengeId!= null){
+                            if (challengeId != null) {
                                 ChallengeService.getChallenge(challengeId, new GetCallback<Challenge>() {
                                     @Override
                                     public void done(Challenge challenge, ParseException e) {

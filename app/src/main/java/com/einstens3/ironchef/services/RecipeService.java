@@ -18,11 +18,13 @@ public class RecipeService {
 
     public interface QueryRecipeCallback {
         void success(Recipe recipe);
+
         void error(ParseException e);
     }
 
     public interface QueryRecipesCallback {
         void success(List<Recipe> recipes);
+
         void error(ParseException e);
     }
 
@@ -121,6 +123,46 @@ public class RecipeService {
 
         // Run OR query
         ParseQuery<Recipe> query = ParseQuery.or(queries);
+        query.orderByDescending("updatedAt");
+        query.findInBackground(new FindCallback<Recipe>() {
+            @Override
+            public void done(List<Recipe> objects, ParseException e) {
+                if (e == null) {
+                    callback.success(objects);
+                } else {
+                    callback.error(e);
+                }
+            }
+        });
+    }
+
+    /**
+     * Get recipes that challenge to the specified recipe
+     * - Order by `updatedAt` descending order
+     */
+    public static void queryChallengeRecipes(String recipeID, final QueryRecipesCallback callback) {
+        ParseQuery<Recipe> query = getQuery(Recipe.class);
+        query.whereEqualTo("challengeTo", Recipe.createWithoutData(Recipe.class, recipeID));
+        query.orderByDescending("updatedAt");
+        query.findInBackground(new FindCallback<Recipe>() {
+            @Override
+            public void done(List<Recipe> objects, ParseException e) {
+                if (e == null) {
+                    callback.success(objects);
+                } else {
+                    callback.error(e);
+                }
+            }
+        });
+    }
+
+    /**
+     * Get all Original recipes
+     * - Order by `updatedAt` descending order
+     */
+    public static void queryOriginalRecipes(final QueryRecipesCallback callback) {
+        ParseQuery<Recipe> query = getQuery(Recipe.class);
+        query.whereDoesNotExist("challengeTo");
         query.orderByDescending("updatedAt");
         query.findInBackground(new FindCallback<Recipe>() {
             @Override

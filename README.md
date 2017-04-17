@@ -10,7 +10,8 @@
 Everyone loves foods, but not many people cook. Having a healthy diet is a key to having a wonderful life. IronChef helps everyone to enjoy the cooking by applying the essence of the gamification. The rule could be similar to Ice Bucket Challenge. If you receive a recipe challenge from your friends, you SHOULD accept it, cook it, and post your recipe on the net. Then you could challenge some your friends for their recipes!
 
 ## Demo
-
+#### Sprint 2
+<img src='https://github.com/3Einstens/IronChef/raw/master/demo/ironchef_sprint2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 #### Sprint 1
 <img src='https://github.com/3Einstens/IronChef/raw/master/demo/ironchef_sprint1.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 

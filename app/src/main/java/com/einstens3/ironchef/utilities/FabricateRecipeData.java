@@ -17,7 +17,6 @@ import java.util.Locale;
 
 import static com.einstens3.ironchef.utilities.AssetsUtils.fromAssetFile;
 
-
 public class FabricateRecipeData {
     private static final String TAG = FabricateRecipe.class.getSimpleName();
 
@@ -46,7 +45,6 @@ public class FabricateRecipeData {
                             recipe.setName(label);
                             recipe.setServing(4);
                             recipe.setCookingTime(35);
-                            //recipe.setAuthor(ParseUser.getCurrentUser());
                             recipe.setCategories(Arrays.asList("Italian"));
                             recipe.setIngredients(Arrays.asList("sugar", "salt"));
                             recipe.setPhoto(parseFile);

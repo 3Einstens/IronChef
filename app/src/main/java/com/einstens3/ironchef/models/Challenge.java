@@ -24,7 +24,6 @@ public class Challenge extends ParseObject {
     public final static int STATE_ACCEPTED = 0;
     public final static int STATE_COMPLETED = 1;
 
-
     // ------------------------------------
     //  Static convenient methods
     // ------------------------------------

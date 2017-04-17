@@ -22,7 +22,6 @@ import com.einstens3.ironchef.models.Recipe;
 import com.parse.CountCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
-import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
@@ -114,7 +113,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ButterKnife.bind(this, view);
         }
 
-        public void renderRecipe(Recipe r) {
+        public void renderRecipe(final Recipe r) {
             super.renderRecipe(r);
             String s = r.getName();
             Log.d(TAG, "====>Name" + s);
@@ -132,7 +131,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                         @Override
                                         public void onClick(View v) {
                                             if(mContext instanceof ActivityNavigation){
-                                                ((ActivityNavigation)mContext).showComposeUIForChallenge(challenge.getObjectId());
+                                                ((ActivityNavigation)mContext).showComposeUIForChallenge(r.getObjectId(), challenge.getObjectId());
                                             }
                                         }
                                     });
@@ -147,13 +146,6 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                         }
                     });
                 }
-
-                r.doesCurrentUserLikeRecipe(new GetCallback<ParseUser>() {
-                    @Override
-                    public void done(ParseUser user, ParseException e) {
-                        Log.e(TAG, "user: " + (user == null ? "null" : user.getEmail()));
-                    }
-                });
             }
         }
     }

@@ -124,7 +124,6 @@ public class Recipe extends ParseObject {
         put("ingridients", value);
     }
 
-
     // serving: long - a quantity of food suitable for how many person.
 
     public long getServing() {
@@ -155,15 +154,6 @@ public class Recipe extends ParseObject {
     public void setChallengeTo(Recipe value) {
         put("challengeTo", value);
     }
-
-    // NOTE - For Sprint 1, Steps are fixed number of steps
-
-//    class Step extends ParseObject{
-//        String text;
-//        ParseFile photo;
-//
-//    }
-//    public List<Step> getSteps();
 
     public String getStep1Text() {
         return getString("step1text");
@@ -220,7 +210,6 @@ public class Recipe extends ParseObject {
     public void setDraft(boolean value) {
         put("draft", value);
     }
-
 
     public boolean isPublic() {
         return getBoolean("public");

@@ -239,57 +239,44 @@ public class ComposeFragment extends Fragment {
                 if (challengeTo != null)
                     recipe.setChallengeTo(Recipe.createWithoutData(Recipe.class, challengeTo));
 
-                // save recipe.
-                save(recipe);
-            }
-        });
-    }
-
-    private void save(final Recipe recipe) {
-        recipe.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.i(TAG, "Succeeded to save the Recipe");
-                    if (challengeId != null) {
-                        ChallengeService.getChallenge(challengeId, new GetCallback<Challenge>() {
-                            @Override
-                            public void done(Challenge challenge, ParseException e) {
-                                if (challenge != null) {
-                                    challenge.setState(Challenge.STATE_COMPLETED);
-                                    challenge.setMyRecipe(recipe);
-                                    challenge.saveInBackground(new SaveCallback() {
-                                        @Override
-                                        public void done(ParseException e) {
-                                            if (e == null) {
-                                                // with challenge, success
-                                                submitResultToActivity();
-                                                Log.i(TAG, "successfully update challenge");
-                                            } else {
-                                                Log.e(TAG, "Failed to update challenge.");
-                                            }
+                recipe.saveInBackground(new SaveCallback() {
+                    @Override
+                    public void done(ParseException e) {
+                        if (e == null) {
+                            Log.i(TAG, "Succeeded to save the Recipe");
+                            if (challengeId != null) {
+                                ChallengeService.getChallenge(challengeId, new GetCallback<Challenge>() {
+                                    @Override
+                                    public void done(Challenge challenge, ParseException e) {
+                                        if(challenge!=null){
+                                            challenge.setState(Challenge.STATE_COMPLETED);
+                                            challenge.setMyRecipe(recipe);
+                                            challenge.saveInBackground(new SaveCallback() {
+                                                @Override
+                                                public void done(ParseException e) {
+                                                    if(e==null)
+                                                        Log.i(TAG, "successfully update challenge");
+                                                    else
+                                                        Log.e(TAG, "Failed to update challenge.");
+                                                }
+                                            });
                                         }
-                                    });
-                                }
+                                    }
+                                });
                             }
-                        });
-                    } else {
-                        // not challenge, success
-                        submitResultToActivity();
+                        } else {
+                            Log.e(TAG, "Failed to save the Recipe:" + e, e);
+                        }
                     }
-                } else {
-                    Log.e(TAG, "Failed to save the Recipe:" + e, e);
+                });
+
+                if(getActivity() instanceof ActivityResult) {
+                    ((ActivityResult) getActivity()).submit();
+                }else{
+                    getActivity().finish();
                 }
             }
         });
-    }
-
-    private void submitResultToActivity() {
-        if (getActivity() instanceof ActivityResult) {
-            ((ActivityResult) getActivity()).submit();
-        } else {
-            getActivity().finish();
-        }
     }
 
 

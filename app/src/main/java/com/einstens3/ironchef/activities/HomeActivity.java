@@ -142,6 +142,7 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         switch (menuItem.getItemId()) {
             case R.id.profile:
                 //TODO
+                Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show(); ;
                 break;
             case R.id.logOut:
                 ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {

@@ -2,6 +2,9 @@ package com.einstens3.ironchef.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
@@ -197,6 +200,12 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         getMenuInflater().inflate(R.menu.menu_home, menu);
 
         MenuItem searchItem = menu.findItem(R.id.action_search);
+        Drawable drawable = menu.findItem(R.id.action_search).getIcon();
+        if (drawable != null) {
+            drawable.mutate();
+            drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
+        }
+
         final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override

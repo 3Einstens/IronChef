@@ -12,7 +12,13 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
+import com.einstens3.ironchef.BuildConfig;
 import com.einstens3.ironchef.R;
+import com.einstens3.ironchef.models.Challenge;
+import com.einstens3.ironchef.models.Recipe;
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.interceptors.ParseLogInterceptor;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

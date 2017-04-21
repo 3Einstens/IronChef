@@ -38,6 +38,10 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
+            android:name=".activities.SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
             android:name=".activities.ComposeActivity"
             android:label="@string/title_activity_compose"
             android:theme="@style/AppTheme.NoActionBar">

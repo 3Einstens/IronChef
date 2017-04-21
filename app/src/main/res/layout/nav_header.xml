@@ -10,7 +10,7 @@
         android:id="@+id/ivHeader"
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:src="@color/colorAccent"
+        android:src="@color/tabBackground"
         android:scaleType="centerCrop" />
 
 
@@ -18,26 +18,25 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:background="@color/colorAccent"
         android:layout_centerInParent="true"
         android:padding="12dp">
 
         <ImageView
             android:id="@+id/ivProfile"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
             android:scaleType="centerCrop"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_person_black"/>
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/person"/>
 
         <TextView
             android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:layout_marginLeft="16dp"
+            android:gravity="center_horizontal"
             style="@style/titleBanner"
             android:text="user@user.com"
            />

@@ -54,8 +54,9 @@ public class HomeFragment extends Fragment implements FragmentRefresh {
 
         mArrayAdapter = new RecipeRecyclerAdapter(getActivity(), mArrayList, layoutType);
         rvRecipies.setAdapter(mArrayAdapter);
-        mLayoutManager = new StaggeredGridLayoutManager(layoutType == RecipeRecyclerAdapter.HOME_RECIPE ? 2 : 1, StaggeredGridLayoutManager.VERTICAL);
-        rvRecipies.setLayoutManager(mLayoutManager);
+        gridLayoutManager = new GridLayoutManager(getContext(),layoutType == RecipeRecyclerAdapter.HOME_RECIPE ? 2 : 1) ;
+        //mLayoutManager = new StaggeredGridLayoutManager(layoutType == RecipeRecyclerAdapter.HOME_RECIPE ? 2 : 1, StaggeredGridLayoutManager.VERTICAL);
+        rvRecipies.setLayoutManager(gridLayoutManager);
         swipeContainer = (SwipeRefreshLayout) v.findViewById(R.id.swipeContainer);
         swipeContainer.post(new Runnable() {
             @Override
@@ -71,7 +72,7 @@ public class HomeFragment extends Fragment implements FragmentRefresh {
         });
 
 
-        scrollListener = new EndlessRecyclerViewScrollListener(mLayoutManager) {
+        scrollListener = new EndlessRecyclerViewScrollListener(gridLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
                 // Triggered only when new data needs to be appended to the list

@@ -129,7 +129,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
 
                 try {
-                    basicViewHolder.ivRecipe.setImageResource(0);
+
                     if (r.getPhoto() != null) {
                         Glide.with(mContext).load(Uri.fromFile(r.getPhoto().getFile())).into(basicViewHolder.ivRecipe);
                     }

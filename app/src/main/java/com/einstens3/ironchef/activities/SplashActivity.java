@@ -51,6 +51,7 @@ public class SplashActivity extends Activity {
                 Intent i = new Intent(SplashActivity.this, HomeActivity.class);
                 startActivity(i);
 
+             //   overridePendingTransition(R.anim.fadin,R.anim.fadeout);
                 // close this activity
                 finish();
             }

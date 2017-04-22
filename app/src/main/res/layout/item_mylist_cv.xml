@@ -7,9 +7,11 @@
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="15dp"
+    android:layout_margin="5dp"
     app:cardCornerRadius="8dp"
     app:cardElevation="6dp"
+    app:cardUseCompatPadding="true"
+    app:contentPadding="10dp"
     app:cardPreventCornerOverlap="false">
 
     <LinearLayout
@@ -35,6 +37,7 @@
                 style="@style/titleBold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:padding="8dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="@dimen/cv_text_margin_image"
@@ -45,7 +48,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_margin="3dp"
             android:orientation="horizontal">
 
             <TextView

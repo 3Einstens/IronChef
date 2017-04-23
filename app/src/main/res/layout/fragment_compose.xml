@@ -13,31 +13,31 @@
         tools:context="com.einstens3.ironchef.fragments.ComposeFragment"
         tools:showIn="@layout/activity_compose">
 
-
         <EditText
             android:id="@+id/etTitle"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/compose_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/compose_edittext"
             android:ems="10"
             android:hint="Recipe title"
             android:inputType="text"
             android:text=""/>
-
 
         <LinearLayout
             android:id="@+id/llImages"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/etTitle">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <ImageView
                     android:id="@+id/ivUploadPhoto"
                     android:layout_width="match_parent"
@@ -57,7 +57,6 @@
 
         <EditText
             android:id="@+id/etDescription"
-            android:background="@drawable/compose_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -65,13 +64,13 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/llImages"
+            android:background="@drawable/compose_edittext"
             android:hint="Description"
-            android:paddingLeft="10dp"
-            android:inputType="textMultiLine"/>
+            android:inputType="textMultiLine"
+            android:paddingLeft="10dp"/>
 
         <EditText
             android:id="@+id/etCategories"
-            android:background="@drawable/compose_edittext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
@@ -80,26 +79,25 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/etDescription"
             android:layout_marginTop="5dp"
-            android:paddingLeft="10dp"
+            android:background="@drawable/compose_edittext"
             android:hint="category"
-            android:inputType="textMultiLine"/>
-
-
+            android:inputType="textMultiLine"
+            android:paddingLeft="10dp"/>
 
 
         <LinearLayout
             android:id="@+id/llPrepServing"
-            android:layout_below="@+id/etCategories"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/etCategories"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/lblPrepTime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="Prep Time: "/>
 
@@ -107,10 +105,10 @@
                 android:id="@+id/etPrepTime"
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="5dp"
                 android:hint="40"
                 android:inputType="numberDecimal"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="10dp"
                 android:text=""
                 />
 
@@ -118,8 +116,8 @@
                 android:id="@+id/lblServing"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="50dp"
+                android:layout_marginTop="5dp"
                 android:gravity="center"
                 android:text="Serving"/>
 
@@ -128,11 +126,10 @@
                 android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
-                android:hint="4"
                 android:layout_marginTop="5dp"
+                android:hint="4"
                 android:inputType="numberDecimal"
                 android:text=""/>
-
         </LinearLayout>
 
         <TextView
@@ -146,17 +143,14 @@
             android:layout_below="@+id/llPrepServing"
             android:text="Steps"/>
 
-
         <LinearLayout
             android:id="@+id/llStepListCompose"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lblStep"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true">
-
-
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/lblStep"
+            android:orientation="vertical">
         </LinearLayout>
 
         <ImageButton
@@ -177,20 +171,18 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
-            android:layout_marginTop="5dp"
             android:layout_below="@+id/ibAddSteps"
+            android:layout_marginTop="5dp"
             android:text="Ingredient"/>
 
         <LinearLayout
             android:id="@+id/llIngridentsCompose"
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/lbIngrident"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true">
-
-
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/lbIngrident"
+            android:orientation="vertical">
         </LinearLayout>
 
         <ImageButton
@@ -201,47 +193,6 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/llIngridentsCompose"
             android:background="@drawable/add"/>
-
-        <!--ImageButton
-            android:id="@+id/ibStep2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/llStepListCompose"
-            android:layout_alignRight="@+id/llStepListCompose"
-            android:layout_below="@+id/llStepListCompose"
-            app:srcCompat="@android:drawable/ic_menu_camera"/>
-
-        <EditText
-            android:id="@+id/etStep2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_toRightOf="@+id/ibStep2"
-            android:layout_alignTop="@+id/ibStep2"
-            android:layout_alignBottom="@+id/ibStep2"
-            android:hint="step2"/>
-
-        <ImageButton
-            android:id="@+id/ibStep3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignEnd="@+id/ibStep2"
-            android:layout_alignRight="@+id/ibStep2"
-            android:layout_below="@+id/ibStep2"
-            app:srcCompat="@android:drawable/ic_menu_camera"/>
-
-        <EditText
-            android:id="@+id/etStep3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/etStep2"
-            android:layout_toRightOf="@+id/ibStep3"
-            android:layout_alignTop="@+id/ibStep3"
-            android:layout_alignBottom="@+id/ibStep3"
-            android:hint="step3"/ -->
 
         <View
             android:id="@+id/vBorder"
@@ -261,25 +212,14 @@
             android:background="@color/colorPrimary"
             android:text="Cancel"/>
 
-        <!--Button
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/btnCancel"
-            android:layout_alignBottom="@+id/btnCancel"
-            android:layout_below="@+id/vBorder"
-            android:layout_toLeftOf="@+id/btnPublish"
-            android:layout_toStartOf="@+id/btnPublish"
-            android:text="Save"/ -->
-
         <Button
             android:id="@+id/btnPublish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/btnCancel"
             android:layout_alignBottom="@+id/btnCancel"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
+            android:layout_alignTop="@+id/btnCancel"
             android:layout_below="@+id/vBorder"
             android:background="@color/colorPrimary"
             android:text="Publish"/>

@@ -8,5 +8,4 @@
     tools:context="com.einstens3.ironchef.fragments.RecipeChallengeFragment"
     tools:showIn="@layout/activity_recipe_challenge">
 
-
 </android.support.constraint.ConstraintLayout>

@@ -5,18 +5,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.einstens3.ironchef.fragments.RecipeDetailFragment"
-    >
-
+    tools:context="com.einstens3.ironchef.fragments.RecipeDetailFragment">
 
     <ImageView
         android:id="@+id/ivPhoto"
         android:layout_width="match_parent"
         android:layout_height="225dp"
-        android:scaleType="centerCrop"
         android:adjustViewBounds="true"
-        app:srcCompat="@drawable/com_parse_ui_facebook_login_button_background_selector"
-        />
+        android:scaleType="centerCrop"
+        app:srcCompat="@drawable/com_parse_ui_facebook_login_button_background_selector"/>
 
     <TextView
         android:id="@+id/tvTitle"
@@ -24,77 +21,72 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/ivPhoto"
         android:layout_centerHorizontal="true"
+        android:paddingTop="10dp"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="24sp"
-        android:paddingTop="10dp"
         tools:text="Beefy Backed Raviloli"/>
-
 
     <LinearLayout
         android:id="@+id/llAuthorCategory"
-        android:paddingTop="5dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_below="@+id/tvTitle"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tvTitle"
+        android:orientation="horizontal"
+        android:paddingTop="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/lblAuthor"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="right"
                 android:layout_weight="1"
+                android:gravity="right"
                 android:text="Recipe by:"/>
 
             <TextView
                 android:id="@+id/tvAuthor"
-                android:layout_weight="1"
-                android:gravity="left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="ROGUE34"
+                android:layout_weight="1"
+                android:gravity="left"
                 android:paddingLeft="5dp"
                 android:textColor="@color/black"
-                android:textStyle="bold"/>
-
+                android:textStyle="bold"
+                tools:text="ROGUE34"/>
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/lblCategory"
-                android:layout_weight="1"
-                android:gravity="right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
                 android:text="Category:"/>
 
             <TextView
                 android:id="@+id/tvCategory"
-                android:layout_weight="1"
-                android:gravity="left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="left"
                 android:textColor="@color/black"
                 tools:text="Italian"/>
         </LinearLayout>
-
-
     </LinearLayout>
-
 
     <ImageButton
         android:id="@+id/ivLike"
@@ -103,51 +95,40 @@
         android:layout_above="@+id/tvTitle"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:background="@drawable/like"
         android:layout_marginBottom="20dp"
+        android:background="@drawable/like"
         android:text="LIKE"/>
 
     <ImageButton
         android:id="@+id/btnAccept"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
         android:layout_above="@+id/ivLike"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
         android:background="@drawable/accept"
         android:text="Accept"/>
 
-    <!--TextView
-        android:id="@+id/lblDescription"
-        android:layout_weight="1"
-        android:gravity="right"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/llAuthorCategory"
-        android:paddingLeft="10dp"
-        android:text="Description"/-->
-
     <TextView
         android:id="@+id/tvDescription"
-        android:paddingTop="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="5dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/llAuthorCategory"
+        android:paddingLeft="10dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
         android:textColor="@color/black"
         tools:text="A terrific blend of sweet, tangy, fruity, and zesty. An old family recipe that never fails to please. This is an easy, fail-safe recipe that anyone can make or adjust according to their own likes."/>
 
-
     <LinearLayout
+        android:id="@+id/llRDCookingServing"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/llRDCookingServing"
-        android:orientation="horizontal"
-        android:layout_below="@+id/tvDescription">
+        android:layout_below="@+id/tvDescription"
+        android:orientation="horizontal">
 
         <ImageView
             android:layout_width="40dp"
@@ -159,9 +140,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:paddingLeft="10dp"
             android:gravity="center"
-            >
+            android:paddingLeft="10dp">
 
             <TextView
                 android:id="@+id/lblCookingTime"
@@ -169,7 +149,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center|right"
-                android:text="Prep Time:" />
+                android:text="Prep Time:"/>
 
             <TextView
                 android:id="@+id/tvCookingTime"
@@ -178,10 +158,9 @@
                 android:layout_weight="1"
                 android:gravity="center|left"
                 android:textColor="@color/black"
-                tools:text="1h 25m" />
+                tools:text="1h 25m"/>
 
         </LinearLayout>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -194,7 +173,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:gravity="center|right"
-                android:text="Serving:" />
+                android:text="Serving:"/>
 
             <TextView
                 android:id="@+id/tvServing"
@@ -203,77 +182,25 @@
                 android:layout_weight="1"
                 android:gravity="center|left"
                 android:textColor="@color/black"
-                tools:text="8" />
-
+                tools:text="8"/>
         </LinearLayout>
-
     </LinearLayout>
 
-
     <com.astuetz.PagerSlidingTabStrip
-        android:layout_below="@id/llRDCookingServing"
         android:id="@+id/pstRecipeDetailTabs"
-        app:pstsShouldExpand="true"
-        app:pstsTextAllCaps="true"
-        app:pstsIndicatorColor="@color/colorAccent"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:textColor="@color/colorAccent"/>
+        android:layout_below="@id/llRDCookingServing"
+        android:textColor="@color/colorAccent"
+        app:pstsIndicatorColor="@color/colorAccent"
+        app:pstsShouldExpand="true"
+        app:pstsTextAllCaps="true"/>
 
     <android.support.v4.view.ViewPager
-        android:layout_below="@+id/pstRecipeDetailTabs"
         android:id="@+id/recipeDetailviewpager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white" />
-
-
-
-
-    <!--TextView
-        android:id="@+id/lblIngredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:paddingTop="10dp"
-        android:layout_below="@+id/llRDCookingServing"
-        android:text="Ingredients"
-        android:textStyle="bold"/>
-
-    <ListView
-        android:id="@+id/lvIngredients"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lblIngredients"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:paddingTop="10dp"
-        android:layout_alignParentStart="true"/>
-
-    <TextView
-        android:id="@+id/lblSteps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/lvIngredients"
-        android:text="Steps"
-        android:textStyle="bold"/>
-
-    <ListView
-        android:id="@+id/lvSteps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/lblSteps"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"/-->
+        android:layout_below="@+id/pstRecipeDetailTabs"
+        android:background="@android:color/white"/>
 
 </RelativeLayout>

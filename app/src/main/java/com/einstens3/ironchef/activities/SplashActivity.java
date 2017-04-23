@@ -10,15 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.GlideDrawableImageViewTarget;
-import com.einstens3.ironchef.BuildConfig;
 import com.einstens3.ironchef.R;
-import com.einstens3.ironchef.models.Challenge;
-import com.einstens3.ironchef.models.Recipe;
-import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.interceptors.ParseLogInterceptor;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +18,7 @@ import butterknife.ButterKnife;
 public class SplashActivity extends Activity {
 
     // Splash screen timer
-    private static int SPLASH_TIME_OUT = 3000;
+    private static int SPLASH_TIME_OUT = 1000;
     @BindView(R.id.imgLogo)
     ImageView imgFire;
 
@@ -35,7 +27,6 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-      //  Glide.with(this).load(R.raw.ic_fire_burning).asGif().into(imgFire);
 
         new Handler().postDelayed(new Runnable() {
 
@@ -51,7 +42,6 @@ public class SplashActivity extends Activity {
                 Intent i = new Intent(SplashActivity.this, HomeActivity.class);
                 startActivity(i);
 
-             //   overridePendingTransition(R.anim.fadin,R.anim.fadeout);
                 // close this activity
                 finish();
             }

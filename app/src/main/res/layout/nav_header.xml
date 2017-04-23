@@ -1,16 +1,17 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:id="@+id/view_container"
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
                 android:gravity="bottom"
                 android:orientation="vertical" >
 
-    <ImageView
+    <View
         android:id="@+id/ivHeader"
         android:layout_width="match_parent"
         android:layout_height="240dp"
-        android:src="@color/tabBackground"
+        android:background="@color/tabBackground"
         android:scaleType="centerCrop" />
 
     <LinearLayout
@@ -18,14 +19,13 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:orientation="vertical"
-        android:background="@color/colorAccent"
         android:layout_centerInParent="true"
         android:padding="12dp">
 
         <ImageView
             android:id="@+id/ivProfile"
-            android:layout_width="75dp"
-            android:layout_height="75dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:scaleType="centerCrop"
             android:layout_gravity="center_horizontal"
             android:src="@drawable/person"/>
@@ -34,9 +34,12 @@
             android:id="@+id/userName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            style="@style/titleBanner"
-            android:text="user@user.com"/>
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            tools:text="Tom Brady"/>
     </LinearLayout>
 </RelativeLayout>

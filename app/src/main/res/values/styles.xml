@@ -13,7 +13,9 @@
         <item name="android:textColorPrimary">@color/textColorPrimary</item>
 
         <!-- Note: this animation does not work with  Activity Shared Elements Transitions -->
+        <!-- In some cases, the slide activity transition does not make sense. For example: compose -> photo -> compose
         <item name="android:windowAnimationStyle">@style/CustomActivityAnimation</item>
+        -->
     </style>
 
     <style name="AppTheme.NoActionBar">

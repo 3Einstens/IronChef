@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.fragments.ComposeFragment;
@@ -36,6 +37,14 @@ public class ComposeActivity extends AppCompatActivity implements ActivityResult
     @Override
     public void submit() {
         setResult(RESULT_OK);
-        finish();
+        supportFinishAfterTransition();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            supportFinishAfterTransition();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

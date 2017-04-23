@@ -2,6 +2,7 @@ package com.einstens3.ironchef.activities;
 
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
@@ -13,6 +14,8 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -23,14 +26,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.fragments.FragmentRefresh;
 import com.einstens3.ironchef.fragments.HomeFragment;
 import com.einstens3.ironchef.fragments.MyListFragment;
+import com.einstens3.ironchef.utilities.GravatarUtils;
 import com.parse.LogOutCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -124,11 +131,21 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         mDrawer.addDrawerListener(mDrawerToggle);
         setupDrawerContent(nvView);
         View header = nvView.getHeaderView(0);
+        final ImageView ivProfile = (ImageView)header.findViewById(R.id.ivProfile);
         TextView tvName = (TextView) header.findViewById(R.id.userName);
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
             tvName.setText(ParseUser.getCurrentUser().getUsername());
         }
+        Glide.with(HomeActivity.this).load(GravatarUtils.url(ParseUser.getCurrentUser().getEmail(), 200)).asBitmap()
+                .into(new BitmapImageViewTarget(ivProfile) {
+                    @Override
+                    protected void setResource(Bitmap resource) {
+                        RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(HomeActivity.this.getResources(), resource);
+                        circularBitmapDrawable.setCircular(true);
+                        ivProfile.setImageDrawable(circularBitmapDrawable);
+                    }
+                });
     }
 
     private void setupDrawerContent(NavigationView navigationView) {

@@ -24,7 +24,8 @@
             android:layout_height="wrap_content">
 
             <ImageView
-                android:id="@+id/ivImage"
+                android:id="@+id/ivPhoto"
+                android:transitionName="recipeDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
@@ -34,6 +35,7 @@
 
             <TextView
                 android:id="@+id/tvDescription"
+                android:transitionName="recipeDetail"
                 style="@style/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

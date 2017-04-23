@@ -50,7 +50,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView tvRecipeDescription;
         private int mPosition;
 
-        public BasicViewHolder(View view) {
+        public BasicViewHolder(final View view) {
             super(view);
             ButterKnife.bind(this, view);
 
@@ -60,7 +60,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showRecipeDetailUI(v.getContext(), mPosition);
+                    showRecipeDetailUI(v.getContext(), mPosition, view);
                 }
             });
         }
@@ -68,11 +68,11 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         /**
          * Show Recipe Detail UI with Recipe.objectID.
          */
-        private void showRecipeDetailUI(Context context, int index) {
+        private void showRecipeDetailUI(Context context, int index, View view) {
             Intent intent = new Intent(context, RecipeDetailActivity.class);
             intent.putExtra("objectId", mRecipe.get(index).getObjectId());
             ActivityOptionsCompat options = ActivityOptionsCompat.
-                    makeSceneTransitionAnimation((Activity) context, ivPhoto, "recipeDetail");
+                    makeSceneTransitionAnimation((Activity) context, view, "recipeDetail");
             context.startActivity(intent,options.toBundle());
         }
     }

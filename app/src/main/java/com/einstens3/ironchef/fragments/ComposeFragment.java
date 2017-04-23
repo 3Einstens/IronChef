@@ -186,22 +186,13 @@ public class ComposeFragment extends Fragment {
             }
         });
 
-
-
-
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().finish();
+                getActivity().supportFinishAfterTransition();
             }
         });
-//        btnSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // TODO: Save as Draft
-//                Toast.makeText(getContext(), "Not implemented yet", Toast.LENGTH_LONG).show();
-//            }
-//        });
+
         btnPublish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -274,16 +265,15 @@ public class ComposeFragment extends Fragment {
                     }
                 });
 
-                if(getActivity() instanceof ActivityResult) {
+                if (getActivity() instanceof ActivityResult) {
                     ((ActivityResult) getActivity()).submit();
-                }else{
-                    getActivity().finish();
+                } else {
+                    getActivity().supportFinishAfterTransition();
                 }
             }
         });
     }
-
-
+    
     public void addDynamicEditTexts(int linearLayoutResourceId,String hint){
         LinearLayout linearLayout = (LinearLayout) view.findViewById(linearLayoutResourceId);
 

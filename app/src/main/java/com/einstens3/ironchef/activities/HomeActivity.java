@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -108,12 +109,12 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         viewPager.setAdapter(new HomePagerAdapter(getSupportFragmentManager()));
         pagerSlidingTabStrip.setViewPager(viewPager);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (currentUser != null)
-                    showComposeUI();
+                    showComposeUI(fab);
                 else
                     Toast.makeText(HomeActivity.this, "To post the recipe, please login!", Toast.LENGTH_LONG).show();
             }
@@ -157,6 +158,8 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
                         finish();
                     }
                 });
+                break;
+            default:
                 break;
         }
 
@@ -243,9 +246,11 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
 
     private final int REQUEST_CODE_COMPOSE = 1000;
 
-    public void showComposeUI() {
+    public void showComposeUI(View view) {
         Intent intent = new Intent(HomeActivity.this, ComposeActivity.class);
-        startActivityForResult(intent, REQUEST_CODE_COMPOSE);
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(this, view, "compose");
+        startActivityForResult(intent, REQUEST_CODE_COMPOSE, options.toBundle());
     }
 
     public void showComposeUIForChallenge(String challengeTo, String challengeId) {

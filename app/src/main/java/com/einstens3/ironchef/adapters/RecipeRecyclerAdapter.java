@@ -24,6 +24,7 @@ import com.einstens3.ironchef.models.Recipe;
 import com.parse.CountCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
@@ -159,9 +160,18 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     public void done(int count, ParseException e) {
                         if (e == null)
                             homeViewHolder.tvLike.setText(Integer.toString(count));
-                        if(count>0) {
-                            homeViewHolder.ivLike.setBackgroundResource(R.drawable.liked);
-                        }
+                        else
+                            homeViewHolder.tvLike.setText(0);
+                    }
+                });
+                // Does current logged in user like the recipe?
+                r.doesCurrentUserLikeRecipe(new GetCallback<ParseUser>() {
+                    @Override
+                    public void done(ParseUser object, ParseException e) {
+                        if (object != null)
+                            homeViewHolder.ivLike.setImageResource(R.drawable.filled_heart);
+                        else
+                            homeViewHolder.ivLike.setImageResource(R.drawable.heart);
                     }
                 });
 

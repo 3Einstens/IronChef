@@ -57,7 +57,7 @@
                 android:layout_height="15dp"
                 android:layout_gravity="center_vertical"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_like"/>
+                android:src="@drawable/heart"/>
 
             <TextView
                 android:id="@+id/tvLike"

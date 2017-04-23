@@ -45,7 +45,6 @@ import com.parse.ParseUser;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
 public class HomeActivity extends AppCompatActivity implements ActivityNavigation {
 
     public static final String TAG = HomeActivity.class.getSimpleName();
@@ -74,12 +73,12 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         @Override
         public Fragment getItem(int position) {
             if (position == 0) {
-                if(homeFragment==null)
-                    homeFragment =  new HomeFragment();
+                if (homeFragment == null)
+                    homeFragment = new HomeFragment();
                 return homeFragment;
             } else if (position == 1) {
-                if(myListFragment==null)
-                    myListFragment =  new MyListFragment();
+                if (myListFragment == null)
+                    myListFragment = new MyListFragment();
                 return myListFragment;
             } else {
                 return null;
@@ -131,7 +130,7 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         mDrawer.addDrawerListener(mDrawerToggle);
         setupDrawerContent(nvView);
         View header = nvView.getHeaderView(0);
-        final ImageView ivProfile = (ImageView)header.findViewById(R.id.ivProfile);
+        final ImageView ivProfile = (ImageView) header.findViewById(R.id.ivProfile);
         TextView tvName = (TextView) header.findViewById(R.id.userName);
         ParseUser currentUser = ParseUser.getCurrentUser();
         if (currentUser != null) {
@@ -164,7 +163,8 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
         switch (menuItem.getItemId()) {
             case R.id.profile:
                 //TODO
-                Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show(); ;
+                Toast.makeText(this, getString(R.string.coming_soon), Toast.LENGTH_SHORT).show();
+                ;
                 break;
             case R.id.logOut:
                 ParseUser.getCurrentUser().logOutInBackground(new LogOutCallback() {

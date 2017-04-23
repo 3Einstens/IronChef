@@ -1,0 +1,44 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@drawable/login_ui_selector"
+              android:gravity="center"
+              android:orientation="vertical"
+              android:paddingBottom="@dimen/com_parse_ui_vertical_margin"
+              android:paddingLeft="@dimen/com_parse_ui_horizontal_margin"
+              android:paddingRight="@dimen/com_parse_ui_horizontal_margin"
+              android:paddingTop="@dimen/com_parse_ui_vertical_margin">
+
+    <!--
+    <include
+        layout="@layout/com_parse_ui_parse_login_app_logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"/>
+    -->
+    <TextView
+        android:layout_marginTop="70dp"
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="0.5"
+        android:fontFamily="cursive"
+        android:text="IronChef"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="48sp"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.5"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <include layout="@layout/com_parse_ui_parse_login_form"/>
+
+        <include layout="@layout/com_parse_ui_parse_login_third_party_section"/>
+    </LinearLayout>
+</LinearLayout>

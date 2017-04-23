@@ -170,6 +170,9 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                             if (count > 0){
                                 int color =  ContextCompat.getColor(mContext, R.color.red);
                                 homeViewHolder.ivLike.setColorFilter(color);
+                            } else {
+                                int color =  ContextCompat.getColor(mContext, R.color.gray);
+                                homeViewHolder.ivLike.setColorFilter(color);
                             }
                         }
                         else

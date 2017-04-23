@@ -207,6 +207,10 @@ public class ComposeFragment extends Fragment {
             public void onClick(View v) {
                 // TODO: Required field value check
 
+                if(validateFields(R.id.llStepListCompose)){
+                    return;
+                }
+
                 // Save photo images
                 ParseFile photo = getParseFile(PHOTO_NAME, true);
 
@@ -311,7 +315,7 @@ public class ComposeFragment extends Fragment {
         editTextView.setBackgroundResource(R.drawable.compose_edittext);
         editTextView.setPadding(10,0,0,0);
 
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 100, 1);
         editTextView.setLayoutParams(params);
         ll.addView(editTextView);
         ll.addView(removeButton);
@@ -332,6 +336,36 @@ public class ComposeFragment extends Fragment {
         }
 
         return steps;
+    }
+
+    public boolean validateFields(int linearLayoutResourceId){
+        // edit text
+
+        boolean isValid = false;
+        if(etTitle.getText().toString().isEmpty()){
+            etTitle.setError("Title is required");
+            isValid = true;
+        }
+
+        if(etCategories.getText().toString().isEmpty()){
+            etCategories.setError("Category is required");
+            isValid = true;
+        }
+
+        if(etDescription.getText().toString().isEmpty()){
+            etDescription.setError("Description is required");
+            isValid = true;
+        }
+
+//        ParseFile photo = null;
+//        File photoFile = getPhotoFile(PHOTO_NAME);
+//        if(!photoFile.exists()) {
+//            return true;
+//        }
+
+
+        return isValid;
+
     }
 
     private ParseFile getParseFile(String name, boolean withSave){
@@ -418,4 +452,6 @@ public class ComposeFragment extends Fragment {
     private static String getStepPhotoName(int index) {
         return String.format(Locale.ENGLISH, STEP_PHOTO_NAME, index);
     }
+
+
 }

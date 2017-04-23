@@ -2,15 +2,18 @@ package com.einstens3.ironchef.fragments;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -50,9 +53,10 @@ public class RecipeDetailFragment extends Fragment {
     TextView tvCookingTime;
     TextView tvServing;
     ListView lvIngredients;
-    ImageButton ivLike;
-    ImageButton btnAccept;
+    ImageView ivLike;
+    ImageView btnAccept;
     ViewPager viewPager;
+    CollapsingToolbarLayout collapsingToolbar;
     PagerSlidingTabStrip pagerSlidingTabStrip;
 
     ArrayList<String> stepList = null;
@@ -125,20 +129,28 @@ public class RecipeDetailFragment extends Fragment {
         updateControlStates();
         setEventHandlers();
 
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.frRecipieDetailtoolbar);
+        ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         return this.view;
     }
 
     private void bindControls() {
         ivPhoto = (ImageView) view.findViewById(R.id.ivPhoto);
-        tvTitle = (TextView) view.findViewById(R.id.tvTitle);
+        //tvTitle = (TextView) view.findViewById(R.id.tvTitle);
         tvAuthor = (TextView) view.findViewById(R.id.tvAuthor);
         tvDescription = (TextView) view.findViewById(R.id.tvDescription);
         tvCategory = (TextView) view.findViewById(R.id.tvCategory);
         tvCookingTime = (TextView) view.findViewById(R.id.tvCookingTime);
         tvServing = (TextView) view.findViewById(R.id.tvServing);
         //lvIngredients = (ListView) view.findViewById(R.id.lvIngredients);
-        ivLike = (ImageButton)view.findViewById(R.id.ivLike);
-        btnAccept  = (ImageButton)view.findViewById(R.id.btnAccept);
+        ivLike = (ImageView)view.findViewById(R.id.ivLike);
+        btnAccept  = (ImageView)view.findViewById(R.id.btnAccept);
+        NestedScrollView scrollView = (NestedScrollView) view.findViewById (R.id.nest_scrollview);
+        scrollView.setFillViewport (true);
+        collapsingToolbar = (CollapsingToolbarLayout) view.findViewById(R.id.collapsing_toolbar);
     }
 
     private void updateControlStates() {
@@ -147,8 +159,9 @@ public class RecipeDetailFragment extends Fragment {
             public void success(Recipe recipe) {
                 RecipeDetailFragment.this.recipe = recipe;
                 try {
-                    if (recipe.getName() != null)
-                        tvTitle.setText(recipe.getName());
+                    if (recipe.getName() != null){
+                        collapsingToolbar.setTitle(recipe.getName());
+                    }
                     if (recipe.getDescription() != null)
                         tvDescription.setText(recipe.getDescription());
                     if (recipe.getAuthor() != null)
@@ -174,7 +187,7 @@ public class RecipeDetailFragment extends Fragment {
                         @Override
                         public void done(int count, ParseException e) {
                             if(count>0){
-                                ivLike.setBackgroundResource(R.drawable.liked);
+                                ivLike.setImageResource(R.drawable.filled_heart);
                             }
                         }
                     });
@@ -185,7 +198,7 @@ public class RecipeDetailFragment extends Fragment {
 
                             if(object != null){
                                 if(object.getState() == Challenge.STATE_ACCEPTED){
-                                    btnAccept.setBackgroundResource(R.drawable.accepted);
+                                    btnAccept.setImageResource(R.drawable.challenge_accepted);
                                 }
                             }
                         }
@@ -217,7 +230,7 @@ public class RecipeDetailFragment extends Fragment {
         ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ivLike.setBackgroundResource(R.drawable.liked);
+                ivLike.setImageResource(R.drawable.filled_heart);
                 RecipeDetailFragment.this.recipe.like();
                 Toast.makeText(getContext(), "Liked Recipe", Toast.LENGTH_LONG).show();
             }
@@ -225,7 +238,7 @@ public class RecipeDetailFragment extends Fragment {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnAccept.setBackgroundResource(R.drawable.accepted);
+                btnAccept.setImageResource(R.drawable.challenge_accepted);
                 Challenge.acceptChallenge(RecipeDetailFragment.this.recipe);
                 Toast.makeText(getContext(), "Challenge Accepted", Toast.LENGTH_LONG).show();
             }

@@ -1,8 +1,10 @@
 package com.einstens3.ironchef.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
@@ -15,8 +17,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.einstens3.ironchef.R;
-import com.einstens3.ironchef.activities.RecipeDetailActivity;
 import com.einstens3.ironchef.activities.ActivityNavigation;
+import com.einstens3.ironchef.activities.RecipeDetailActivity;
 import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
 import com.parse.CountCallback;
@@ -42,8 +44,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
 
     public class BasicViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.ivImage)
-        ImageView ivRecipe;
+        @BindView(R.id.ivPhoto)
+        ImageView ivPhoto;
         @BindView(R.id.tvDescription)
         TextView tvRecipeDescription;
         private int mPosition;
@@ -53,14 +55,25 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             ButterKnife.bind(this, view);
 
             // NOTE: handle click event with item view
-            //       make ivRecipe not clickable to cascade click even to parent view.
-            ivRecipe.setClickable(false);
+            //       make ivPhoto not clickable to cascade click even to parent view.
+            ivPhoto.setClickable(false);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     showRecipeDetailUI(v.getContext(), mPosition);
                 }
             });
+        }
+
+        /**
+         * Show Recipe Detail UI with Recipe.objectID.
+         */
+        private void showRecipeDetailUI(Context context, int index) {
+            Intent intent = new Intent(context, RecipeDetailActivity.class);
+            intent.putExtra("objectId", mRecipe.get(index).getObjectId());
+            ActivityOptionsCompat options = ActivityOptionsCompat.
+                    makeSceneTransitionAnimation((Activity) context, ivPhoto, "recipeDetail");
+            context.startActivity(intent,options.toBundle());
         }
     }
 
@@ -131,7 +144,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 try {
 
                     if (r.getPhoto() != null) {
-                        Glide.with(mContext).load(Uri.fromFile(r.getPhoto().getFile())).into(basicViewHolder.ivRecipe);
+                        Glide.with(mContext).load(Uri.fromFile(r.getPhoto().getFile())).into(basicViewHolder.ivPhoto);
                     }
                 } catch (ParseException e) {
                     Log.d(TAG, "parse exception: " + e.getMessage());
@@ -222,12 +235,5 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         return 0;
     }
 
-    /**
-     * Show Recipe Detail UI with Recipe.objectID.
-     */
-    private void showRecipeDetailUI(Context context, int index) {
-        Intent intent = new Intent(context, RecipeDetailActivity.class);
-        intent.putExtra("objectId", mRecipe.get(index).getObjectId());
-        context.startActivity(intent);
-    }
+
 }

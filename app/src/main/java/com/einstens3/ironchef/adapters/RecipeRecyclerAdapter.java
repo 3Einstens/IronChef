@@ -3,13 +3,8 @@ package com.einstens3.ironchef.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.ColorStateList;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
@@ -35,8 +30,6 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
-import static android.support.v4.content.ContextCompat.getColor;
 
 /**
  * Created by raprasad on 4/8/17.
@@ -161,24 +154,20 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             if (holder instanceof HomeViewHolder) {
                 final HomeViewHolder homeViewHolder = (HomeViewHolder) holder;
                 homeViewHolder.tvLike.setText(Integer.toString(0));
+
+                // Set number of likes
                 // call count likes asynchronously to improve performance.
                 r.countLikes(new CountCallback() {
                     @Override
                     public void done(int count, ParseException e) {
-                        if (e == null) {
+                        if (e == null)
                             homeViewHolder.tvLike.setText(Integer.toString(count));
-                            if (count > 0){
-                                int color =  ContextCompat.getColor(mContext, R.color.red);
-                                homeViewHolder.ivLike.setColorFilter(color);
-                            } else {
-                                int color =  ContextCompat.getColor(mContext, R.color.gray);
-                                homeViewHolder.ivLike.setColorFilter(color);
-                            }
-                        }
                         else
                             homeViewHolder.tvLike.setText(0);
                     }
                 });
+
+                // Set colored heart if current loggedin user likes the recipe.
                 // Does current logged in user like the recipe?
                 r.doesCurrentUserLikeRecipe(new GetCallback<ParseUser>() {
                     @Override

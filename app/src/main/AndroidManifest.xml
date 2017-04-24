@@ -44,7 +44,7 @@
         <activity
             android:name=".activities.ComposeActivity"
             android:label="@string/title_activity_compose"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme">
         </activity>
         <activity
             android:name=".activities.RecipeDetailActivity"

@@ -29,6 +29,8 @@ public class Recipe extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_INGREDIENTS = "ingredients";
     public static final String KEY_PHOTO = "photo";
+    public static final String KEY_PHOTO2 = "photo2";
+    public static final String KEY_PHOTO3 = "photo3";
     public static final String KEY_CATEGORIES = "categories";
     public static final String KEY_STEPS = "steps";
     public static final String KEY_SERVING = "serving";
@@ -100,6 +102,23 @@ public class Recipe extends ParseObject {
     public void setPhoto(ParseFile value) {
         put(KEY_PHOTO, value);
     }
+
+    public ParseFile getPhoto2() {
+        return getParseFile(KEY_PHOTO2);
+    }
+    public void setPhoto2(ParseFile value){
+        put(KEY_PHOTO2, value);
+    }
+
+    public ParseFile getPhoto3() {
+        return getParseFile(KEY_PHOTO3);
+    }
+    public void setPhoto3(ParseFile value){
+        put(KEY_PHOTO3, value);
+    }
+
+
+
 
     // categories: List<String> - List of categories that the recipe belongs to
 

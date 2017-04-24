@@ -52,6 +52,8 @@ public class ComposeFragment extends Fragment {
     private static final String ARG_PARAM_CHALLENGE_ID = "challengeId"; // Challenge.objectId
 
     private static final String PHOTO_NAME = "photo"; // main photo
+    private static final String PHOTO_NAME2 = "photo2";
+    private static final String PHOTO_NAME3 = "photo3";
     private static final String STEP_PHOTO_NAME = "step_%d"; // Step photo
 
     // information for challenge. If normal compose, following two parameters will be `null`.
@@ -63,6 +65,12 @@ public class ComposeFragment extends Fragment {
     Button btnCancel;
     ImageView ivUploadPhoto;
     ImageButton ibUploadPhoto;
+
+    ImageView ivUploadPhoto2;
+    ImageButton ibUploadPhoto2;
+
+    ImageView ivUploadPhoto3;
+    ImageButton ibUploadPhoto3;
     EditText etTitle;
     EditText etDescription;
     EditText etCategories;
@@ -111,6 +119,12 @@ public class ComposeFragment extends Fragment {
 
         ivUploadPhoto = (ImageView) view.findViewById(R.id.ivUploadPhoto);
         ibUploadPhoto = (ImageButton) view.findViewById(R.id.ibUploadPhoto);
+
+        ivUploadPhoto2 = (ImageView) view.findViewById(R.id.ivUploadPhoto2);
+        ibUploadPhoto2 = (ImageButton) view.findViewById(R.id.ibUploadPhoto2);
+
+        ivUploadPhoto3 = (ImageView) view.findViewById(R.id.ivUploadPhoto3);
+        ibUploadPhoto3 = (ImageButton) view.findViewById(R.id.ibUploadPhoto3);
 
         etTitle = (EditText) view.findViewById(R.id.etTitle);
         etDescription = (EditText) view.findViewById(R.id.etDescription);
@@ -179,6 +193,21 @@ public class ComposeFragment extends Fragment {
                 onLaunchCamera(0, PHOTO_NAME);
             }
         });
+
+        ibUploadPhoto2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLaunchCamera(1, PHOTO_NAME);
+            }
+        });
+
+        ibUploadPhoto3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onLaunchCamera(2, PHOTO_NAME);
+            }
+        });
+
         ibAddSteps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,6 +242,8 @@ public class ComposeFragment extends Fragment {
 
                 // Save photo images
                 ParseFile photo = getParseFile(PHOTO_NAME, true);
+                ParseFile photo2 = getParseFile(PHOTO_NAME2, true);
+                ParseFile photo3 = getParseFile(PHOTO_NAME3, true);
 
                 //  Save Recipe
                 final Recipe recipe = new Recipe();
@@ -388,7 +419,7 @@ public class ComposeFragment extends Fragment {
         return et.getText().toString().trim();
     }
 
-    private void displayImage(Bitmap photo) {
+    private void displayImage(Bitmap photo,ImageButton ibUploadPhoto,ImageView ivUploadPhoto) {
         ibUploadPhoto.setVisibility(View.INVISIBLE);
         ivUploadPhoto.setVisibility(View.VISIBLE);
         ivUploadPhoto.setImageBitmap(photo);
@@ -417,7 +448,15 @@ public class ComposeFragment extends Fragment {
             // main photo
             if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
                 Bitmap takenImage = BitmapFactory.decodeFile(getPhotoFile(PHOTO_NAME).getPath());
-                displayImage(takenImage);
+                displayImage(takenImage,ibUploadPhoto,ivUploadPhoto);
+            }
+            else if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE+1) {
+                    Bitmap takenImage = BitmapFactory.decodeFile(getPhotoFile(PHOTO_NAME).getPath());
+                    displayImage(takenImage,ibUploadPhoto2,ivUploadPhoto2);
+            }
+            else if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE+2) {
+                Bitmap takenImage = BitmapFactory.decodeFile(getPhotoFile(PHOTO_NAME).getPath());
+                displayImage(takenImage,ibUploadPhoto3,ivUploadPhoto3);
             }
             // step photo
             else if (requestCode > CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && requestCode <= CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_MAX) {

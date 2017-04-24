@@ -3,6 +3,7 @@
 <android.support.v7.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -22,7 +23,6 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
             <ImageView
                 android:id="@+id/ivPhoto"
                 android:transitionName="recipeDetail"
@@ -30,9 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:adjustViewBounds="true"
-                android:scaleType="fitXY"
-                android:src="@color/red"/>
-
+                android:scaleType="fitXY"/>
             <TextView
                 android:id="@+id/tvDescription"
                 android:transitionName="recipeDetail"
@@ -41,32 +39,68 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:padding="6dp"/>
-
         </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:gravity="center|left"
-            android:orientation="horizontal">
+            android:layout_height="20dp"
+            android:layout_marginTop="5dp">
 
             <ImageView
                 android:id="@+id/image_action_like"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-                android:layout_gravity="center_vertical"
-                android:scaleType="fitXY"
-                android:src="@drawable/heart"/>
+
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+
+                android:layout_alignTop="@+id/tvLike"
+                android:layout_alignBottom="@+id/tvLike"
+
+                android:scaleType="fitCenter"
+                tools:src="@drawable/heart"
+                tools:srcCompat="@drawable/heart"/>
 
             <TextView
                 android:id="@+id/tvLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_vertical"
-                android:text="0 likes"/>
-        </LinearLayout>
+
+                android:layout_toRightOf="@+id/image_action_like"
+
+                android:layout_alignParentTop="true"
+
+                android:layout_marginLeft="5dp"
+                tools:text="0"/>
+
+            <TextView
+                android:id="@+id/tvAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:layout_toLeftOf="@+id/ivAuthor"
+
+                android:layout_alignParentTop="true"
+
+
+                android:layout_marginRight="5dp"
+                tools:text="Tom Brady"/>
+
+            <ImageView
+                android:id="@+id/ivAuthor"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignTop="@+id/tvAuthor"
+                android:layout_alignBottom="@+id/tvAuthor"
+
+                android:scaleType="fitCenter"
+                tools:src="@drawable/heart"
+                tools:srcCompat="@drawable/heart"/>
+
+        </RelativeLayout>
     </LinearLayout>
 
 </android.support.v7.widget.CardView>

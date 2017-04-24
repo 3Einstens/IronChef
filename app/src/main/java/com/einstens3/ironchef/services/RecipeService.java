@@ -38,6 +38,7 @@ public class RecipeService {
      */
     public static void queryRecipe(String recipeID, final QueryRecipeCallback callback) {
         ParseQuery<Recipe> query = getQuery(Recipe.class);
+        query.include("author");
         query.getInBackground(recipeID, new GetCallback<Recipe>() {
             @Override
             public void done(Recipe object, ParseException e) {
@@ -56,6 +57,7 @@ public class RecipeService {
      */
     public static void queryAllRecipes(final QueryRecipesCallback callback) {
         ParseQuery<Recipe> query = getQuery(Recipe.class);
+        query.include("author");
         query.orderByDescending(KEY_UPDATED_AT);
         query.findInBackground(new FindCallback<Recipe>() {
             @Override
@@ -87,6 +89,7 @@ public class RecipeService {
 
         // Run OR query
         ParseQuery<Recipe> query = ParseQuery.or(queries);
+        query.include("author");
         query.orderByDescending(KEY_UPDATED_AT);
         query.findInBackground(new FindCallback<Recipe>() {
             @Override
@@ -128,6 +131,7 @@ public class RecipeService {
 
         // Run OR query
         ParseQuery<Recipe> query = ParseQuery.or(queries);
+        query.include("author");
         query.orderByDescending(KEY_UPDATED_AT);
         query.findInBackground(new FindCallback<Recipe>() {
             @Override
@@ -147,6 +151,7 @@ public class RecipeService {
      */
     public static void queryChallengeRecipes(String recipeID, final QueryRecipesCallback callback) {
         ParseQuery<Recipe> query = getQuery(Recipe.class);
+        query.include("author");
         query.whereEqualTo(KEY_CHALLENGE_TO, Recipe.createWithoutData(Recipe.class, recipeID));
         query.orderByDescending(KEY_UPDATED_AT);
         query.findInBackground(new FindCallback<Recipe>() {
@@ -167,6 +172,7 @@ public class RecipeService {
      */
     public static void queryOriginalRecipes(final QueryRecipesCallback callback) {
         ParseQuery<Recipe> query = getQuery(Recipe.class);
+        query.include("author");
         query.whereDoesNotExist(KEY_CHALLENGE_TO);
         query.orderByDescending(KEY_UPDATED_AT);
         query.findInBackground(new FindCallback<Recipe>() {

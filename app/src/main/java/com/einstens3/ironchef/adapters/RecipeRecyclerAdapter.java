@@ -3,8 +3,11 @@ package com.einstens3.ironchef.adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
+import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
 import android.text.Spanned;
@@ -16,11 +19,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.activities.ActivityNavigation;
 import com.einstens3.ironchef.activities.RecipeDetailActivity;
 import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
+import com.einstens3.ironchef.utilities.GravatarUtils;
 import com.parse.CountCallback;
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -36,19 +41,20 @@ import butterknife.ButterKnife;
  */
 public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private Context mContext;
-    private ArrayList<Recipe> mRecipe;
     public static final String TAG = RecipeRecyclerAdapter.class.getName();
     public static final int HOME_RECIPE = 0;
     public static final int MYLIST_RECIPE = 1;
-    private int mRecipeType;
 
+    private Context mContext;
+    private ArrayList<Recipe> mRecipe;
+    private int mRecipeType;
 
     public class BasicViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.ivPhoto)
         ImageView ivPhoto;
         @BindView(R.id.tvDescription)
         TextView tvRecipeDescription;
+
         private int mPosition;
 
         public BasicViewHolder(final View view) {
@@ -85,12 +91,16 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         TextView tvLike;
         @BindView(R.id.image_action_like)
         ImageView ivLike;
+        @BindView(R.id.ivAuthor)
+        ImageView ivAuthor;
+        @BindView(R.id.tvAuthor)
+        TextView tvAuthor;
+
 
         public HomeViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
-
     }
 
     public class MyListViewHolder extends BasicViewHolder {
@@ -143,7 +153,6 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
 
                 try {
-
                     if (r.getPhoto() != null) {
                         Glide.with(mContext).load(Uri.fromFile(r.getPhoto().getFile())).into(basicViewHolder.ivPhoto);
                     }
@@ -152,8 +161,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 }
             }
             if (holder instanceof HomeViewHolder) {
-                final HomeViewHolder homeViewHolder = (HomeViewHolder) holder;
-                homeViewHolder.tvLike.setText(Integer.toString(0));
+                final HomeViewHolder homeVH = (HomeViewHolder) holder;
+                homeVH.tvLike.setText(Integer.toString(0));
 
                 // Set number of likes
                 // call count likes asynchronously to improve performance.
@@ -161,9 +170,9 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     @Override
                     public void done(int count, ParseException e) {
                         if (e == null)
-                            homeViewHolder.tvLike.setText(Integer.toString(count));
+                            homeVH.tvLike.setText(Integer.toString(count));
                         else
-                            homeViewHolder.tvLike.setText(0);
+                            homeVH.tvLike.setText(0);
                     }
                 });
 
@@ -173,11 +182,36 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                     @Override
                     public void done(ParseUser object, ParseException e) {
                         if (object != null)
-                            homeViewHolder.ivLike.setImageResource(R.drawable.filled_heart);
+                            homeVH.ivLike.setImageResource(R.drawable.filled_heart);
                         else
-                            homeViewHolder.ivLike.setImageResource(R.drawable.heart);
+                            homeVH.ivLike.setImageResource(R.drawable.heart);
                     }
                 });
+
+                // Author of Recipe
+                if (r.getAuthor() != null) {
+                    r.getAuthor().fetchIfNeededInBackground(new GetCallback<ParseUser>() {
+                        @Override
+                        public void done(ParseUser user, ParseException e) {
+                            if (user != null) {
+                                if (user.getUsername() != null)
+                                    homeVH.tvAuthor.setText(user.getUsername());
+                                if (user.getEmail() != null) {
+                                    Glide.with(mContext).load(GravatarUtils.url(user.getEmail(), 200)).asBitmap()
+                                            .into(new BitmapImageViewTarget(homeVH.ivAuthor) {
+                                                @Override
+                                                protected void setResource(Bitmap resource) {
+                                                    RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                                                    circularBitmapDrawable.setCircular(true);
+                                                    homeVH.ivAuthor.setImageDrawable(circularBitmapDrawable);
+                                                }
+                                            });
+                                }
+                            }
+                        }
+                    });
+                }
+
 
             } else {
                 final MyListViewHolder myListViewHolder = (MyListViewHolder) holder;

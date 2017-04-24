@@ -162,22 +162,23 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
             if (holder instanceof HomeViewHolder) {
                 final HomeViewHolder homeVH = (HomeViewHolder) holder;
-                homeVH.tvLike.setText(Integer.toString(0));
 
                 // Set number of likes
                 // call count likes asynchronously to improve performance.
+                homeVH.tvLike.setText("0");
                 r.countLikes(new CountCallback() {
                     @Override
                     public void done(int count, ParseException e) {
                         if (e == null)
                             homeVH.tvLike.setText(Integer.toString(count));
                         else
-                            homeVH.tvLike.setText(0);
+                            homeVH.tvLike.setText("");
                     }
                 });
 
                 // Set colored heart if current loggedin user likes the recipe.
                 // Does current logged in user like the recipe?
+                homeVH.ivLike.setImageResource(0);
                 r.doesCurrentUserLikeRecipe(new GetCallback<ParseUser>() {
                     @Override
                     public void done(ParseUser object, ParseException e) {
@@ -189,6 +190,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 });
 
                 // Author of Recipe
+                homeVH.tvAuthor.setText("");
+                homeVH.ivAuthor.setImageResource(0);
                 if (r.getAuthor() != null) {
                     r.getAuthor().fetchIfNeededInBackground(new GetCallback<ParseUser>() {
                         @Override

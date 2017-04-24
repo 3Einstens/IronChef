@@ -50,13 +50,10 @@
                 android:id="@+id/image_action_like"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-
                 android:layout_alignTop="@+id/tvLike"
                 android:layout_alignBottom="@+id/tvLike"
-
                 android:scaleType="fitCenter"
                 tools:src="@drawable/heart"
                 tools:srcCompat="@drawable/heart"/>
@@ -65,41 +62,31 @@
                 android:id="@+id/tvLike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-
                 android:layout_toRightOf="@+id/image_action_like"
-
                 android:layout_alignParentTop="true"
-
                 android:layout_marginLeft="5dp"
                 tools:text="0"/>
-
-            <TextView
-                android:id="@+id/tvAuthor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-
-                android:layout_toLeftOf="@+id/ivAuthor"
-
-                android:layout_alignParentTop="true"
-
-
-                android:layout_marginRight="5dp"
-                tools:text="Tom Brady"/>
 
             <ImageView
                 android:id="@+id/ivAuthor"
                 android:layout_width="15dp"
                 android:layout_height="15dp"
-
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
                 android:layout_alignTop="@+id/tvAuthor"
                 android:layout_alignBottom="@+id/tvAuthor"
-
+                android:layout_toLeftOf="@+id/tvAuthor"
+                android:layout_marginRight="5dp"
                 android:scaleType="fitCenter"
                 tools:src="@drawable/heart"
                 tools:srcCompat="@drawable/heart"/>
 
+            <TextView
+                android:id="@+id/tvAuthor"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                tools:text="Tom Brady"/>
         </RelativeLayout>
     </LinearLayout>
 

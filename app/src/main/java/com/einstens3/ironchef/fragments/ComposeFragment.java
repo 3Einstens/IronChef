@@ -60,14 +60,12 @@ public class ComposeFragment extends Fragment {
 
     View view;
     Button btnPublish;
-    Button btnSave;
     Button btnCancel;
     ImageView ivUploadPhoto;
     ImageButton ibUploadPhoto;
     EditText etTitle;
     EditText etDescription;
     EditText etCategories;
-    EditText etIngredients;
     EditText etPrepTime;
     EditText etServing;
     ImageButton ibAddSteps;
@@ -109,7 +107,6 @@ public class ComposeFragment extends Fragment {
     private void bindControls() {
 
         btnPublish = (Button) view.findViewById(R.id.btnPublish);
-        //btnSave = (Button) view.findViewById(R.id.btnSave);
         btnCancel = (Button) view.findViewById(R.id.btnCancel);
 
         ivUploadPhoto = (ImageView) view.findViewById(R.id.ivUploadPhoto);
@@ -120,13 +117,9 @@ public class ComposeFragment extends Fragment {
         etCategories = (EditText) view.findViewById(R.id.etCategories);
         etPrepTime = (EditText) view.findViewById(R.id.etPrepTime);
         etServing = (EditText) view.findViewById(R.id.etServing);
-        //etStep2 = (EditText) view.findViewById(R.id.etStep2);
-        //etStep3 = (EditText) view.findViewById(R.id.etStep3);
 
         ibAddSteps = (ImageButton) view.findViewById(R.id.ibAddSteps);
         ibAddIngridient = (ImageButton) view.findViewById(R.id.ibAddIngridients);
-        //ibStep2 = (ImageButton) view.findViewById(R.id.ibStep2);
-        //ibStep3 = (ImageButton) view.findViewById(R.id.ibStep3);
 
         tvChallengeStatus = (TextView)view.findViewById(R.id.tvChallengeStatus);
     }
@@ -152,6 +145,22 @@ public class ComposeFragment extends Fragment {
                 public void success(Recipe recipe) {
                     etTitle.setText(recipe.getName());
                     etCategories.setText(StringUtils.fromList(recipe.getCategories()));
+                    etDescription.setText(recipe.getDescription());
+                    etPrepTime.setText(String.valueOf(recipe.getCookingTime()));
+                    etServing.setText(String.valueOf(recipe.getServing()));
+                    if(recipe.getSteps()!=null) {
+                        for (String step : recipe.getSteps()) {
+                            EditText et = addDynamicEditTexts(R.id.llStepListCompose, "Add Step");
+                            et.setText(step);
+                        }
+                    }
+                    if(recipe.getIngredients()!=null) {
+                        for (String ingredient : recipe.getIngredients()) {
+                            EditText et = addDynamicEditTexts(R.id.llIngridentsCompose, "Add Step");
+                            et.setText(ingredient);
+                        }
+                    }
+
                     etTitle.setEnabled(false);
                     etCategories.setEnabled(false);
                 }
@@ -274,9 +283,8 @@ public class ComposeFragment extends Fragment {
         });
     }
     
-    public void addDynamicEditTexts(int linearLayoutResourceId,String hint){
+    public EditText addDynamicEditTexts(int linearLayoutResourceId,String hint){
         LinearLayout linearLayout = (LinearLayout) view.findViewById(linearLayoutResourceId);
-
 
         LinearLayout ll = new LinearLayout(getContext());
         LinearLayout.LayoutParams llparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
@@ -310,6 +318,8 @@ public class ComposeFragment extends Fragment {
         ll.addView(editTextView);
         ll.addView(removeButton);
         linearLayout.addView(ll);
+
+        return editTextView;
     }
 
     public ArrayList<String> getDataFromDynamicEditText(int llResourceId){
@@ -346,13 +356,6 @@ public class ComposeFragment extends Fragment {
             etDescription.setError("Description is required");
             isValid = true;
         }
-
-//        ParseFile photo = null;
-//        File photoFile = getPhotoFile(PHOTO_NAME);
-//        if(!photoFile.exists()) {
-//            return true;
-//        }
-
 
         return isValid;
 
@@ -442,6 +445,4 @@ public class ComposeFragment extends Fragment {
     private static String getStepPhotoName(int index) {
         return String.format(Locale.ENGLISH, STEP_PHOTO_NAME, index);
     }
-
-
 }

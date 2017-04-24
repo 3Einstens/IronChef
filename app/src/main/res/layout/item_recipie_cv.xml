@@ -23,7 +23,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <ImageView
+            <com.einstens3.ironchef.utilities.DynamicHeightImageView
                 android:id="@+id/ivPhoto"
                 android:transitionName="recipeDetail"
                 android:layout_width="match_parent"

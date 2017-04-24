@@ -19,12 +19,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.BitmapImageViewTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.activities.ActivityNavigation;
 import com.einstens3.ironchef.activities.RecipeDetailActivity;
 import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
+import com.einstens3.ironchef.utilities.DynamicHeightImageView;
 import com.einstens3.ironchef.utilities.GravatarUtils;
 import com.parse.CountCallback;
 import com.parse.GetCallback;
@@ -51,7 +55,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public class BasicViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.ivPhoto)
-        ImageView ivPhoto;
+        DynamicHeightImageView ivPhoto;
         @BindView(R.id.tvDescription)
         TextView tvRecipeDescription;
 
@@ -147,14 +151,34 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             final Recipe r = mRecipe.get(position);
             ((BasicViewHolder) holder).mPosition = position;
             if (holder instanceof BasicViewHolder) {
-                BasicViewHolder basicViewHolder = (BasicViewHolder) holder;
+                final BasicViewHolder basicViewHolder = (BasicViewHolder) holder;
                 if (r!=null) {
                     basicViewHolder.tvRecipeDescription.setText(r.getName());
                 }
 
                 try {
                     if (r.getPhoto() != null) {
-                        Glide.with(mContext).load(Uri.fromFile(r.getPhoto().getFile())).into(basicViewHolder.ivPhoto);
+
+                        Glide.with(mContext)
+                                .load(Uri.fromFile(r.getPhoto().getFile()))
+                                .asBitmap()
+                                .dontAnimate()
+                                .fitCenter()
+                                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                                .into(new SimpleTarget<Bitmap>() {
+                                    @Override
+                                    public void onResourceReady(Bitmap bitmap, GlideAnimation anim) {
+
+                                        if (bitmap != null)
+                                        {
+                                            basicViewHolder.ivPhoto.setHeightRatio(bitmap.getHeight()/bitmap.getWidth());
+                                            basicViewHolder.ivPhoto.setImageBitmap(bitmap);
+                                        }
+                                    }
+                                });
+
+
+                       // Glide.with(mContext).load(Uri.fromFile(r.getPhoto().getFile())).into(basicViewHolder.ivPhoto);
                     }
                 } catch (ParseException e) {
                     Log.d(TAG, "parse exception: " + e.getMessage());

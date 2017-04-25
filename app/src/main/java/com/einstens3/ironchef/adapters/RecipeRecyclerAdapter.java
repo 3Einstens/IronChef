@@ -224,11 +224,11 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                 if (user.getUsername() != null)
                                     homeVH.tvAuthor.setText(user.getUsername());
                                 if (user.getEmail() != null) {
-                                    Glide.with(mContext).load(GravatarUtils.url(user.getEmail(), 200)).asBitmap()
+                                    Glide.with(homeVH.ivAuthor.getContext()).load(GravatarUtils.url(user.getEmail(), 200)).asBitmap()
                                             .into(new BitmapImageViewTarget(homeVH.ivAuthor) {
                                                 @Override
                                                 protected void setResource(Bitmap resource) {
-                                                    RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(mContext.getResources(), resource);
+                                                    RoundedBitmapDrawable circularBitmapDrawable = RoundedBitmapDrawableFactory.create(homeVH.ivAuthor.getContext().getResources(), resource);
                                                     circularBitmapDrawable.setCircular(true);
                                                     homeVH.ivAuthor.setImageDrawable(circularBitmapDrawable);
                                                 }

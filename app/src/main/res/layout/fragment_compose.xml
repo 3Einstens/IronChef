@@ -117,16 +117,8 @@
                             android:layout_alignParentTop="@id/ivUploadPhoto3"
                             app:srcCompat="@android:drawable/ic_menu_camera"/>
                     </RelativeLayout>
-
-
                 </LinearLayout>
-
-
-
             </RelativeLayout>
-
-
-
         </LinearLayout>
 
 
@@ -136,6 +128,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
@@ -268,21 +261,57 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/llPrepServing"
+            android:layout_marginTop="10dp"
+            android:background="@color/colorPrimary"
+            android:textSize="20sp"
             android:text="Steps"/>
 
         <LinearLayout
             android:id="@+id/llStepListCompose"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/lblStep"
             android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/text_input_layout_addSteps"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:background="@color/white">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:hint="Step(s)"
+                        android:paddingRight="10dp"
+                        />
+                </android.support.design.widget.TextInputLayout>
+
+                <ImageButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:id="@+id/ibAddSteps"
+                    android:background="@drawable/addfilled"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="-50dp"/>
+
+            </LinearLayout>
+
         </LinearLayout>
 
-        <ImageButton
+        <!--ImageButton
             android:id="@+id/ibAddSteps"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -291,7 +320,7 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/llStepListCompose"
-            android:background="@drawable/add"/>
+            android:background="@drawable/add"/-->
 
 
         <TextView
@@ -304,8 +333,11 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
-            android:layout_below="@+id/ibAddSteps"
-            android:layout_marginTop="5dp"
+            android:layout_below="@+id/llStepListCompose"
+            android:layout_marginTop="10dp"
+            android:textSize="20sp"
+            android:background="@color/colorPrimary"
+            android:gravity="center_vertical"
             android:text="Ingredient"/>
 
         <LinearLayout
@@ -314,13 +346,45 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_below="@+id/lbIngrident"
             android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/text_input_layout_addIngridents"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:background="@color/white">
+
+                <android.support.design.widget.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:hint="Ingridient(s)"
+                    android:paddingRight="10dp"
+                    />
+            </android.support.design.widget.TextInputLayout>
+
+            <ImageButton
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:id="@+id/ibAddIngridients"
+                android:background="@drawable/addfilled"
+                android:layout_gravity="center"
+                android:layout_marginLeft="-50dp"/>
+            </LinearLayout>
+
+
         </LinearLayout>
 
-        <ImageButton
+        <!--ImageButton
             android:id="@+id/ibAddIngridients"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -329,13 +393,13 @@
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/llIngridentsCompose"
-            android:background="@drawable/add"/>
+            android:background="@drawable/add"/-->
 
         <View
             android:id="@+id/vBorder"
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_below="@+id/ibAddIngridients"
+            android:layout_below="@+id/llIngridentsCompose"
             android:layout_marginBottom="20dp"
             />
 

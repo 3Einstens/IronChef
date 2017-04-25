@@ -7,10 +7,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.TextInputEditText;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,7 +133,10 @@ public class ComposeFragment extends Fragment {
         etServing = (EditText) view.findViewById(R.id.etServing);
 
         ibAddSteps = (ImageButton) view.findViewById(R.id.ibAddSteps);
+        ibAddSteps.setTag(1);
+
         ibAddIngridient = (ImageButton) view.findViewById(R.id.ibAddIngridients);
+        ibAddIngridient.setTag(1);
 
         tvChallengeStatus = (TextView)view.findViewById(R.id.tvChallengeStatus);
     }
@@ -213,14 +216,34 @@ public class ComposeFragment extends Fragment {
             public void onClick(View v) {
 
                 //todo Dynamically add new editText
-                addDynamicEditTexts(R.id.llStepListCompose,"Add Step");
+                if(Integer.parseInt(v.getTag().toString()) == 1){
+                    Toast.makeText(getContext(),"ADD",Toast.LENGTH_SHORT).show();
+                    v.setTag(2);
+                    addDynamicEditTexts(R.id.llStepListCompose,"Step(s)");
+                    v.setBackgroundResource(R.drawable.cancel);
+                }else{
+                    LinearLayout linearParent =  (LinearLayout) v.getParent().getParent();
+                    LinearLayout linearChild = (LinearLayout) v.getParent();
+                    linearParent.removeView(linearChild);
+                }
+
             }
         });
+
 
         ibAddIngridient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addDynamicEditTexts(R.id.llIngridentsCompose,"Add Ingridient");
+                if(Integer.parseInt(v.getTag().toString()) == 1){
+                    v.setTag(2);
+                    addDynamicEditTexts(R.id.llIngridentsCompose,"Ingridient(s)");
+                    v.setBackgroundResource(R.drawable.cancel);
+                }else{
+                    LinearLayout linearParent =  (LinearLayout) v.getParent().getParent();
+                    LinearLayout linearChild = (LinearLayout) v.getParent();
+                    linearParent.removeView(linearChild);
+                }
+
             }
         });
 
@@ -270,6 +293,12 @@ public class ComposeFragment extends Fragment {
                 if(photo!=null)
                     recipe.setPhoto(photo);
 
+                if(photo2!=null)
+                    recipe.setPhoto2(photo);
+
+                if(photo3!=null)
+                    recipe.setPhoto3(photo);
+
                 // challengeTo
                 if (challengeTo != null)
                     recipe.setChallengeTo(Recipe.createWithoutData(Recipe.class, challengeTo));
@@ -314,43 +343,113 @@ public class ComposeFragment extends Fragment {
         });
     }
     
-    public EditText addDynamicEditTexts(int linearLayoutResourceId,String hint){
+    public TextInputEditText addDynamicEditTexts(int linearLayoutResourceId,String hint){
         LinearLayout linearLayout = (LinearLayout) view.findViewById(linearLayoutResourceId);
 
-        LinearLayout ll = new LinearLayout(getContext());
+//        LinearLayout ll = new LinearLayout(getContext());
+//        LinearLayout.LayoutParams llparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+//        llparams.setMargins(0,5,0,0);
+//        ll.setLayoutParams(llparams);
+//        ll.setOrientation(LinearLayout.HORIZONTAL);
+//
+//        ImageButton removeButton = new ImageButton(getContext());
+//        LinearLayout.LayoutParams rbparams = new LinearLayout.LayoutParams(100, 100);
+//
+//        rbparams.gravity = Gravity.CENTER;
+//        removeButton.setLayoutParams(rbparams);
+//
+//        removeButton.setBackgroundResource(R.drawable.cancel);
+//        removeButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                LinearLayout linearParent =  (LinearLayout) v.getParent().getParent();
+//                LinearLayout linearChild = (LinearLayout) v.getParent();
+//                linearParent.removeView(linearChild);
+//            }
+//        });
+//        EditText editTextView = new EditText(getContext());
+//
+//        editTextView.setHint(hint);
+//        editTextView.setBackgroundResource(R.drawable.compose_edittext);
+//        editTextView.setPadding(10,0,0,0);
+//
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 100, 1);
+//        editTextView.setLayoutParams(params);
+//        ll.addView(editTextView);
+//        ll.addView(removeButton);
+//        linearLayout.addView(ll);
+
+
+//        final float scale = getContext().getResources().getDisplayMetrics().density;
+//
+//        LinearLayout ll = new LinearLayout(getContext());
+//        LinearLayout.LayoutParams llparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
+//        int ll_margin = (int) (8 * scale + 0.5f);
+//        llparams.setMargins(ll_margin,0,ll_margin,0);
+//        ll.setLayoutParams(llparams);
+//        ll.setOrientation(LinearLayout.HORIZONTAL);
+//
+//        TextInputLayout tl = new TextInputLayout(getContext());
+//        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+//                ViewGroup.LayoutParams.WRAP_CONTENT, 1);
+//
+//        tl.setLayoutParams(params);
+//
+//        TextInputEditText te = new TextInputEditText(getContext());
+//        int height = (int) (50 * scale + 0.5f);
+//        params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+//                height, 1);
+//        te.setLayoutParams(params);
+//        te.setBackgroundColor(getResources().getColor(R.color.white));
+//        te.setHint("Step(s)");
+//        tl.addView(te);
+//
+//
+//        ImageButton addButton = new ImageButton(getContext());
+//        int btn_height_weight = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics());
+//        LinearLayout.LayoutParams rbparams = new LinearLayout.LayoutParams(btn_height_weight, btn_height_weight);
+//
+//        int btn_margin = (int) (50 * scale + 0.5f);
+//        rbparams.setMargins(-btn_margin,0,0,0);
+//        rbparams.gravity = Gravity.CENTER;
+//        addButton.setLayoutParams(rbparams);
+//        addButton.setBackgroundResource(R.drawable.addfilled);
+//
+//        ll.addView(tl);
+//        ll.addView(addButton);
+//
+//        linearLayout.addView(ll);
+
+        final float scale = getContext().getResources().getDisplayMetrics().density;
+
+        LinearLayout ll = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.layout_dyanmic_edittext, null);
         LinearLayout.LayoutParams llparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
-        llparams.setMargins(0,5,0,0);
+        int marginTop = (int) (10 * scale + 0.5f);
+        llparams.setMargins(0,marginTop,0,0);
         ll.setLayoutParams(llparams);
-        ll.setOrientation(LinearLayout.HORIZONTAL);
-
-        ImageButton removeButton = new ImageButton(getContext());
-        LinearLayout.LayoutParams rbparams = new LinearLayout.LayoutParams(100, 100);
-
-        rbparams.gravity = Gravity.CENTER;
-        removeButton.setLayoutParams(rbparams);
-
-        removeButton.setBackgroundResource(R.drawable.cancel);
-        removeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LinearLayout linearParent =  (LinearLayout) v.getParent().getParent();
-                LinearLayout linearChild = (LinearLayout) v.getParent();
-                linearParent.removeView(linearChild);
-            }
-        });
-        EditText editTextView = new EditText(getContext());
-
-        editTextView.setHint(hint);
-        editTextView.setBackgroundResource(R.drawable.compose_edittext);
-        editTextView.setPadding(10,0,0,0);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 100, 1);
-        editTextView.setLayoutParams(params);
-        ll.addView(editTextView);
-        ll.addView(removeButton);
         linearLayout.addView(ll);
 
-        return editTextView;
+        TextInputEditText te = (TextInputEditText) ll.findViewById(R.id.dynamic_text_input_edittext);
+        te.setHint(hint);
+        ImageButton dyn_ib = (ImageButton) ll.findViewById(R.id.ib_dyn);
+        dyn_ib.setTag(1);
+        dyn_ib.setOnClickListener(new DynamicEditText(linearLayoutResourceId,hint) {
+            @Override
+            public void onClick(View v) {
+                if(Integer.parseInt(v.getTag().toString()) == 1){
+                    addDynamicEditTexts(this.resourceId,this.hint);
+                    v.setBackgroundResource(R.drawable.cancel);
+                    v.setTag(2);
+                }else{
+                    LinearLayout linearParent =  (LinearLayout) v.getParent().getParent();
+                    LinearLayout linearChild = (LinearLayout) v.getParent();
+                    linearParent.removeView(linearChild);
+                }
+
+            }
+        });
+
+        return te;
     }
 
     public ArrayList<String> getDataFromDynamicEditText(int llResourceId){
@@ -484,4 +583,22 @@ public class ComposeFragment extends Fragment {
     private static String getStepPhotoName(int index) {
         return String.format(Locale.ENGLISH, STEP_PHOTO_NAME, index);
     }
+
+    public class DynamicEditText implements View.OnClickListener
+    {
+
+        String hint;
+        int resourceId;
+        public DynamicEditText(int resourceId,String hint) {
+            this.hint = hint;
+            this.resourceId = resourceId;
+        }
+
+        @Override
+        public void onClick(View v)
+        {
+            //read your lovely variable
+        }
+
+    };
 }

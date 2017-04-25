@@ -53,6 +53,10 @@ public class HomeFragment extends Fragment implements FragmentRefresh {
 
         mArrayAdapter = new RecipeRecyclerAdapter(getActivity(), mArrayList, layoutType);
         rvRecipies.setAdapter(mArrayAdapter);
+        rvRecipies.setHasFixedSize(true);
+        rvRecipies.setItemViewCacheSize(20);
+        rvRecipies.setDrawingCacheEnabled(true);
+        rvRecipies.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
         //layoutManager = new GridLayoutManager(getContext(),layoutType == RecipeRecyclerAdapter.HOME_RECIPE ? 2 : 1) ;
         layoutManager = new StaggeredGridLayoutManager(layoutType == RecipeRecyclerAdapter.HOME_RECIPE ? 2 : 1, StaggeredGridLayoutManager.VERTICAL);
         rvRecipies.setLayoutManager(layoutManager);

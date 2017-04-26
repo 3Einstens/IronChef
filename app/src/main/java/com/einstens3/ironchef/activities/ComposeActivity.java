@@ -10,6 +10,8 @@ import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.fragments.ComposeFragment;
 
 public class ComposeActivity extends AppCompatActivity implements ActivityResult{
+    ComposeFragment fragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,7 +27,7 @@ public class ComposeActivity extends AppCompatActivity implements ActivityResult
         if (findViewById(R.id.fragment_container) != null) {
             if (savedInstanceState != null)
                 return;
-            ComposeFragment fragment = ComposeFragment.newInstance(challengeTo, challengeId);
+            fragment = ComposeFragment.newInstance(challengeTo, challengeId);
             getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, fragment).commit();
         }
     }
@@ -45,8 +47,13 @@ public class ComposeActivity extends AppCompatActivity implements ActivityResult
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            supportFinishAfterTransition();
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                supportFinishAfterTransition();
+                return true;
+            case R.id.menuPublish:
+                fragment.clickPublishButton();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

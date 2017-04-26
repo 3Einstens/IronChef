@@ -127,6 +127,10 @@ public class ComposeFragment extends Fragment {
         return view;
     }
 
+    public void clickPublishButton(){
+        btnPublish.performClick();
+    }
+
     private void bindControls() {
 
         btnPublish = (Button) view.findViewById(R.id.btnPublish);

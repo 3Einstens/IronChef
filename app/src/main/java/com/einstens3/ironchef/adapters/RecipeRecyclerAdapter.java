@@ -110,6 +110,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public class MyListViewHolder extends BasicViewHolder {
+        @BindView(R.id.tvBanner)
+        TextView tvBanner;
         @BindView(R.id.ivAction)
         ImageView ivAction;
 
@@ -247,14 +249,14 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 final MyListViewHolder myListViewHolder = (MyListViewHolder) holder;
                 if (r.isOwnRecipe()) {
                     myListViewHolder.ivAction.setImageResource(R.drawable.ic_toque);
-                    //myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.created));
+                    myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.created));
                 } else {
                     r.getOwnChallenge(new GetCallback<Challenge>() {
                         @Override
                         public void done(final Challenge challenge, ParseException e) {
                             if (e == null && challenge != null) {
                                 if (challenge.getState() == Challenge.STATE_ACCEPTED) {
-                                    //myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.accepted));
+                                    myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.accepted));
                                     myListViewHolder.ivAction.setImageResource(R.drawable.ic_knives);
                                     myListViewHolder.ivPhoto.setOnClickListener(new View.OnClickListener() {
                                         @Override
@@ -266,12 +268,12 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                     });
                                 } else if (challenge.getState() == Challenge.STATE_COMPLETED) {
                                     myListViewHolder.ivAction.setImageResource(R.drawable.ic_check);
-                                    //myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.completed));
+                                    myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.completed));
                                 } else {
                                    // myListViewHolder.ivAction.setVisibility(View.GONE);
                                 }
                             } else { //it is showing up here because the user liked this
-                               // myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.liked));
+                                myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.liked));
                                 myListViewHolder.ivAction.setImageResource(R.drawable.ic_heart);
                             }
                         }

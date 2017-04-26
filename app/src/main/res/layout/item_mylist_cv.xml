@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView
+    android:id="@+id/card_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/card_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="8dp"
     app:cardElevation="6dp"
     app:cardPreventCornerOverlap="false"
     app:cardUseCompatPadding="true"
-    app:contentPadding="10dp"
-    android:clickable="true"
-    android:foreground="?android:attr/selectableItemBackground">
+    app:contentPadding="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <RelativeLayout
             android:id="@+id/rlImageContainer"
@@ -22,11 +27,11 @@
 
             <com.einstens3.ironchef.utilities.DynamicHeightImageView
                 android:id="@+id/ivPhoto"
-                android:transitionName="recipeDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:scaleType="fitCenter"
+                android:transitionName="recipeDetail"
                 app:srcCompat="@android:color/holo_blue_light"/>
 
 
@@ -35,38 +40,51 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
-                android:orientation="vertical"
                 android:layout_marginBottom="@dimen/cv_text_margin_image"
-                >
-                <ImageView
-                    android:id="@+id/ivAction"
-                    android:layout_width="50dp"
-                    android:background="@color/whiteBackdrop"
-                    android:tint="@color/colorPrimaryDark"
-                    android:layout_marginBottom="10dp"
-                    android:layout_height="50dp"
-                    android:layout_marginRight="10dp"
-                    android:scaleType="fitCenter"
-                    android:src="@color/black"
-                    android:visibility="visible"
-                    android:layout_gravity="right"
-                />
+                android:orientation="vertical"
+            >
+
+
+                <TextView
+                    android:id="@+id/tvDescription"
+                    style="@style/titleBold"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:padding="8dp"
+                    android:transitionName="recipeDetail"/>
+
+
+            </LinearLayout>
+
+        </RelativeLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/layer_banner"
+        >
 
             <TextView
-                android:id="@+id/tvDescription"
-                android:transitionName="recipeDetail"
-                style="@style/titleBold"
+                android:id="@+id/tvBanner"
+                style="@style/titleBanner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:padding="8dp"/>
+                android:layout_gravity="center"
+                android:gravity="center"
+                tools:text="0 likes"/>
 
-
-
-
-    </LinearLayout>>
-        </RelativeLayout>
-
-
+            <ImageView
+                android:id="@+id/ivAction"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="center_vertical|right"
+                android:layout_marginRight="10dp"
+                android:gravity="right"
+                android:scaleType="fitCenter"
+                android:tint="@color/white"
+                android:visibility="visible"
+            />
+        </FrameLayout>
+    </LinearLayout>
 
 </android.support.v7.widget.CardView>

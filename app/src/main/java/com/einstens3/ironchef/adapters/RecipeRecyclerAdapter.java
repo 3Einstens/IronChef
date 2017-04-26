@@ -256,7 +256,7 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                 if (challenge.getState() == Challenge.STATE_ACCEPTED) {
                                     //myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.accepted));
                                     myListViewHolder.ivAction.setImageResource(R.drawable.ic_knives);
-                                    myListViewHolder.ivAction.setOnClickListener(new View.OnClickListener() {
+                                    myListViewHolder.ivPhoto.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             if(mContext instanceof ActivityNavigation){

@@ -36,7 +36,6 @@
                 android:background="@color/white"
                 android:textColor="@color/colorAccent"
                 app:pstsIndicatorColor="@color/colorPrimary"
-                app:pstsUnderlineColor="@color/colorAccent"
                 app:pstsDividerPadding="5dp"
                 app:pstsShouldExpand="true"
                 app:pstsTextAllCaps="true"/>

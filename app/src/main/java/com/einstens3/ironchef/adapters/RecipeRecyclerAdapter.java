@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v7.widget.RecyclerView;
@@ -108,8 +110,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public class MyListViewHolder extends BasicViewHolder {
-        @BindView(R.id.tvBanner)
-        TextView tvBanner;
+        @BindView(R.id.ivAction)
+        ImageView ivAction;
 
         public MyListViewHolder(View view) {
             super(view);
@@ -159,10 +161,10 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 try {
                     if (r.getPhoto() != null) {
 
-                        Glide.with(mContext)
+                        Glide.with(basicViewHolder.ivPhoto.getContext())
                                 .load(Uri.fromFile(r.getPhoto().getFile()))
                                 .asBitmap()
-                                .dontAnimate()
+                                .placeholder(R.mipmap.ic_launcher)
                                 .fitCenter()
                                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                                 .into(new SimpleTarget<Bitmap>() {
@@ -224,7 +226,8 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                 if (user.getUsername() != null)
                                     homeVH.tvAuthor.setText(user.getUsername());
                                 if (user.getEmail() != null) {
-                                    Glide.with(homeVH.ivAuthor.getContext()).load(GravatarUtils.url(user.getEmail(), 200)).asBitmap()
+                                    Glide.with(homeVH.ivAuthor.getContext())
+                                            .load(GravatarUtils.url(user.getEmail(), 200)).asBitmap()
                                             .into(new BitmapImageViewTarget(homeVH.ivAuthor) {
                                                 @Override
                                                 protected void setResource(Bitmap resource) {
@@ -243,15 +246,17 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             } else {
                 final MyListViewHolder myListViewHolder = (MyListViewHolder) holder;
                 if (r.isOwnRecipe()) {
-                    myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.created));
+                    myListViewHolder.ivAction.setImageResource(R.drawable.ic_toque);
+                    //myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.created));
                 } else {
                     r.getOwnChallenge(new GetCallback<Challenge>() {
                         @Override
                         public void done(final Challenge challenge, ParseException e) {
                             if (e == null && challenge != null) {
                                 if (challenge.getState() == Challenge.STATE_ACCEPTED) {
-                                    myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.accepted));
-                                    myListViewHolder.tvBanner.setOnClickListener(new View.OnClickListener() {
+                                    //myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.accepted));
+                                    myListViewHolder.ivAction.setImageResource(R.drawable.ic_knives);
+                                    myListViewHolder.ivAction.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
                                             if(mContext instanceof ActivityNavigation){
@@ -260,12 +265,14 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                                         }
                                     });
                                 } else if (challenge.getState() == Challenge.STATE_COMPLETED) {
-                                    myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.completed));
+                                    myListViewHolder.ivAction.setImageResource(R.drawable.ic_check);
+                                    //myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.completed));
                                 } else {
-                                    myListViewHolder.tvBanner.setVisibility(View.GONE);
+                                   // myListViewHolder.ivAction.setVisibility(View.GONE);
                                 }
                             } else { //it is showing up here because the user liked this
-                                myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.liked));
+                               // myListViewHolder.tvBanner.setText(mContext.getResources().getString(R.string.liked));
+                                myListViewHolder.ivAction.setImageResource(R.drawable.ic_heart);
                             }
                         }
                     });

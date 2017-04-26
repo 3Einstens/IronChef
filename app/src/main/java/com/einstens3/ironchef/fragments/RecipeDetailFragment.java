@@ -176,7 +176,7 @@ public class RecipeDetailFragment extends Fragment {
                         tvCategory.setText(StringUtils.fromList(recipe.getCategories()));
                     if (recipe.getPhoto() != null){
                         //ivPhoto.setImageURI(Uri.fromFile(recipe.getPhoto().getFile()));
-                        Glide.with(getContext()).load(Uri.fromFile(recipe.getPhoto().getFile())).into(ivPhoto);
+                        Glide.with(ivPhoto.getContext()).load(Uri.fromFile(recipe.getPhoto().getFile())).into(ivPhoto);
                     }
 
                     if(recipe.getSteps() != null) {

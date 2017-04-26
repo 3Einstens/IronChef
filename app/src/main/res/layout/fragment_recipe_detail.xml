@@ -19,9 +19,11 @@
             android:layout_height="match_parent"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
-            app:expandedTitleTextAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            app:expandedTitleMarginEnd="24dp"
+            app:expandedTitleMarginStart="24dp"
+            app:expandedTitleMarginBottom="12dp"
+            app:expandedTitleTextAppearance="@style/DetailUI.Title"
+            app:collapsedTitleTextAppearance="@style/DetailUI.Title"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView

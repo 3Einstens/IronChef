@@ -1,6 +1,9 @@
 package com.einstens3.ironchef.activities;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -36,6 +39,15 @@ public class ComposeActivity extends AppCompatActivity implements ActivityResult
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_compose, menu);
+
+        for (int i = 0; i < menu.size(); i++) {
+            Drawable drawable = menu.getItem(i).getIcon();
+            if (drawable != null) {
+                drawable.mutate();
+                drawable.setColorFilter(ContextCompat.getColor(this, R.color.white), PorterDuff.Mode.SRC_ATOP);
+            }
+
+        }
         return true;
     }
 
@@ -50,9 +62,6 @@ public class ComposeActivity extends AppCompatActivity implements ActivityResult
         switch (item.getItemId()) {
             case android.R.id.home:
                 supportFinishAfterTransition();
-                return true;
-            case R.id.menuPublish:
-                fragment.clickPublishButton();
                 return true;
         }
         return super.onOptionsItemSelected(item);

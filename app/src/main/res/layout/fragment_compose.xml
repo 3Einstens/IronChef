@@ -455,7 +455,7 @@
             android:layout_below="@+id/vBorder"
             android:background="@color/colorPrimary"
             android:text="Cancel"/>
-        -->
+
         <Button
             android:id="@+id/btnPublish"
             android:layout_width="wrap_content"
@@ -474,7 +474,7 @@
             android:textSize="20sp"
             />
 
-        <!--
+
         <TextView
             android:id="@+id/tvChallengeStatus"
             android:layout_width="wrap_content"

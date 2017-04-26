@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -15,6 +17,8 @@ import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +75,7 @@ public class ComposeFragment extends Fragment {
     String challengeId;
 
     View view;
-    Button btnPublish;
+
     //Button btnCancel;
 
     ScrollView svCompose;
@@ -117,6 +121,7 @@ public class ComposeFragment extends Fragment {
             challengeId = getArguments().getString(ARG_PARAM_CHALLENGE_ID);
             Log.e(TAG, "challengeId -> " + challengeId + ", challengeTo -> " + challengeTo);
         }
+        setHasOptionsMenu(true);
     }
 
     @Override
@@ -129,13 +134,10 @@ public class ComposeFragment extends Fragment {
         return view;
     }
 
-    public void clickPublishButton(){
-        btnPublish.performClick();
-    }
 
     private void bindControls() {
 
-        btnPublish = (Button) view.findViewById(R.id.btnPublish);
+
         //btnCancel = (Button) view.findViewById(R.id.btnCancel);
 
         svCompose = (ScrollView)view.findViewById(R.id.svCompose);
@@ -327,95 +329,98 @@ public class ComposeFragment extends Fragment {
 //                getActivity().supportFinishAfterTransition();
 //            }
 //        });
-
-        btnPublish.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: Required field value check
-
-                if (validateFields(llStepListCompose)) {
-                    return;
-                }
-
-                // Save photo images
-                ParseFile photo = getParseFile(PHOTO_NAME, true);
-                ParseFile photo2 = getParseFile(PHOTO_NAME2, true);
-                ParseFile photo3 = getParseFile(PHOTO_NAME3, true);
-
-                //  Save Recipe
-                final Recipe recipe = new Recipe();
-                recipe.setAuthor(ParseUser.getCurrentUser());
-                recipe.setName(getText(etTitle));
-                recipe.setDescription(getText(etDescription));
-                recipe.setCookingTime(getLong(etPrepTime));
-                recipe.setServing(getLong(etServing));
-                recipe.setCategories(getList(etCategories));
-
-                //iterarte over the linear layout and get steps added
-
-
-                ArrayList<String> steps = getDataFromDynamicEditText(llStepListCompose);
-                ArrayList<String> ingridients = getDataFromDynamicEditText(R.id.llIngridentsCompose);
-
-                recipe.setSteps(steps);
-                recipe.setIngredients(ingridients);
-
-                Log.d("STEPS", steps.toString());
-                Log.d("INGRIDIENTS", ingridients.toString());
-                Toast.makeText(getContext(), steps.toString(), Toast.LENGTH_SHORT);
-
-                if (photo != null)
-                    recipe.setPhoto(photo);
-
-                if (photo2 != null)
-                    recipe.setPhoto2(photo);
-
-                if (photo3 != null)
-                    recipe.setPhoto3(photo);
-
-                // challengeTo
-                if (challengeTo != null)
-                    recipe.setChallengeTo(Recipe.createWithoutData(Recipe.class, challengeTo));
-
-                recipe.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if (e == null) {
-                            Log.i(TAG, "Succeeded to save the Recipe");
-                            if (challengeId != null) {
-                                ChallengeService.getChallenge(challengeId, new GetCallback<Challenge>() {
-                                    @Override
-                                    public void done(Challenge challenge, ParseException e) {
-                                        if (challenge != null) {
-                                            challenge.setState(Challenge.STATE_COMPLETED);
-                                            challenge.setMyRecipe(recipe);
-                                            challenge.saveInBackground(new SaveCallback() {
-                                                @Override
-                                                public void done(ParseException e) {
-                                                    if (e == null)
-                                                        Log.i(TAG, "successfully update challenge");
-                                                    else
-                                                        Log.e(TAG, "Failed to update challenge.");
-                                                }
-                                            });
-                                        }
-                                    }
-                                });
-                            }
-                        } else {
-                            Log.e(TAG, "Failed to save the Recipe:" + e, e);
-                        }
-                    }
-                });
-
-                if (getActivity() instanceof ActivityResult) {
-                    ((ActivityResult) getActivity()).submit();
-                } else {
-                    getActivity().supportFinishAfterTransition();
-                }
-            }
-        });
     }
+
+
+    private void publish(){
+
+        {
+            if (validateFields(llStepListCompose)) {
+                return;
+            }
+
+            // Save photo images
+            ParseFile photo = getParseFile(PHOTO_NAME, true);
+            ParseFile photo2 = getParseFile(PHOTO_NAME2, true);
+            ParseFile photo3 = getParseFile(PHOTO_NAME3, true);
+
+            //  Save Recipe
+            final Recipe recipe = new Recipe();
+            recipe.setAuthor(ParseUser.getCurrentUser());
+            recipe.setName(getText(etTitle));
+            recipe.setDescription(getText(etDescription));
+            recipe.setCookingTime(getLong(etPrepTime));
+            recipe.setServing(getLong(etServing));
+            recipe.setCategories(getList(etCategories));
+
+            //iterarte over the linear layout and get steps added
+
+
+            ArrayList<String> steps = getDataFromDynamicEditText(llStepListCompose);
+            ArrayList<String> ingridients = getDataFromDynamicEditText(R.id.llIngridentsCompose);
+
+            recipe.setSteps(steps);
+            recipe.setIngredients(ingridients);
+
+            Log.d("STEPS", steps.toString());
+            Log.d("INGRIDIENTS", ingridients.toString());
+            Toast.makeText(getContext(), steps.toString(), Toast.LENGTH_SHORT);
+
+            if (photo != null)
+                recipe.setPhoto(photo);
+
+            if (photo2 != null)
+                recipe.setPhoto2(photo);
+
+            if (photo3 != null)
+                recipe.setPhoto3(photo);
+
+            // challengeTo
+            if (challengeTo != null)
+                recipe.setChallengeTo(Recipe.createWithoutData(Recipe.class, challengeTo));
+
+            recipe.saveInBackground(new SaveCallback() {
+                @Override
+                public void done(ParseException e) {
+                    if (e == null) {
+                        Log.i(TAG, "Succeeded to save the Recipe");
+                        if (challengeId != null) {
+                            ChallengeService.getChallenge(challengeId, new GetCallback<Challenge>() {
+                                @Override
+                                public void done(Challenge challenge, ParseException e) {
+                                    if (challenge != null) {
+                                        challenge.setState(Challenge.STATE_COMPLETED);
+                                        challenge.setMyRecipe(recipe);
+                                        challenge.saveInBackground(new SaveCallback() {
+                                            @Override
+                                            public void done(ParseException e) {
+                                                if (e == null)
+                                                    Log.i(TAG, "successfully update challenge");
+                                                else
+                                                    Log.e(TAG, "Failed to update challenge.");
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    } else {
+                        Log.e(TAG, "Failed to save the Recipe:" + e, e);
+                    }
+                }
+            });
+
+            if (getActivity() instanceof ActivityResult) {
+                ((ActivityResult) getActivity()).submit();
+            } else {
+                getActivity().supportFinishAfterTransition();
+            }
+
+
+        }
+    }
+
+
 
     public TextInputEditText addDynamicEditTexts(int linearLayoutResourceId, String hint) {
         LinearLayout linearLayout = (LinearLayout) view.findViewById(linearLayoutResourceId);
@@ -598,4 +603,16 @@ public class ComposeFragment extends Fragment {
         }
 
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId()) {
+            case R.id.menuPublish:
+               publish();
+        }
+        return false;
+    }
+
+
+
 }

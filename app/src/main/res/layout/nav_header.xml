@@ -41,5 +41,22 @@
             android:textStyle="bold"
             android:textSize="20sp"
             tools:text="Tom Brady"/>
+
     </LinearLayout>
+
+    <TextView
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/rank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="15sp"
+        tools:text="Rank: Sous Chef"/>
+
 </RelativeLayout>

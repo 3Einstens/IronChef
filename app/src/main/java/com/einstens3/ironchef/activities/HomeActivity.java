@@ -1,5 +1,6 @@
 package com.einstens3.ironchef.activities;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
@@ -14,12 +15,14 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawable;
 import android.support.v4.graphics.drawable.RoundedBitmapDrawableFactory;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
@@ -145,6 +148,10 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
                         ivProfile.setImageDrawable(circularBitmapDrawable);
                     }
                 });
+
+        TextView tvRank = (TextView) header.findViewById(R.id.rank);
+        tvRank.setText(getResources().getString(R.string.rank));
+
     }
 
     private void setupDrawerContent(NavigationView navigationView) {
@@ -296,4 +303,31 @@ public class HomeActivity extends AppCompatActivity implements ActivityNavigatio
             }, 500);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        int imageResource = android.R.drawable.ic_dialog_alert;
+        Drawable image = ContextCompat.getDrawable(getApplicationContext() , imageResource);
+
+        builder.setTitle(R.string.exit).setMessage(R.string.exitmsg).setIcon(image).setCancelable(false).setPositiveButton("yes", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                finish();
+            }
+        }).setNegativeButton("no", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+            }
+        });
+
+        AlertDialog alert = builder.create();
+        alert.setCancelable(false);
+        alert.show();
+
+    }
+
+
+
 }

@@ -17,6 +17,9 @@ public class ComposeActivity extends AppCompatActivity implements ActivityResult
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(getApplicationContext().getResources().getString(R.string.add_recipe));
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         String challengeTo = getIntent().getStringExtra("challengeTo");
         String challengeId = getIntent().getStringExtra("challengeId");
         if (findViewById(R.id.fragment_container) != null) {

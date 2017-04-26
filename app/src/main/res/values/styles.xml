@@ -75,7 +75,11 @@
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
     </style>
 
-
+    <style name="DetailUI.Title" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+    </style>
 
 
 </resources>

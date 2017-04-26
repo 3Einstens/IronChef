@@ -301,10 +301,11 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentStart="true"
             android:layout_below="@+id/llPrepServing"
+            android:padding="5dp"
             android:layout_marginTop="10dp"
             android:background="@color/colorPrimary"
-            android:textSize="20sp"
-            android:text="Steps"/>
+            android:textAppearance="@style/titleCompose"
+            android:text="@string/steps"/>
 
         <LinearLayout
             android:id="@+id/llStepListCompose"
@@ -334,7 +335,7 @@
                     <android.support.design.widget.TextInputEditText
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:hint="Step(s)"
+                        android:hint="@string/steps"
                         android:paddingRight="10dp"
                         />
                 </android.support.design.widget.TextInputLayout>
@@ -375,10 +376,11 @@
             android:layout_alignParentStart="true"
             android:layout_below="@+id/llStepListCompose"
             android:layout_marginTop="10dp"
-            android:textSize="20sp"
+            android:padding="5dp"
+            android:textAppearance="@style/titleCompose"
             android:background="@color/colorPrimary"
             android:gravity="center_vertical"
-            android:text="Ingredient"/>
+            android:text="@string/ingridient_s" />
 
         <LinearLayout
             android:id="@+id/llIngridentsCompose"
@@ -407,7 +409,7 @@
                 <android.support.design.widget.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
-                    android:hint="Ingridient(s)"
+                    android:hint="@string/ingridient_s"
                     android:paddingRight="10dp"
                     />
             </android.support.design.widget.TextInputLayout>

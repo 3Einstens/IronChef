@@ -312,7 +312,7 @@ public class ComposeFragment extends Fragment {
             public void onClick(View v) {
                 if (Integer.parseInt(v.getTag().toString()) == 1) {
                     v.setTag(2);
-                    addDynamicEditTexts(R.id.llIngridentsCompose, "Ingridient(s)");
+                    addDynamicEditTexts(R.id.llIngridentsCompose, getActivity().getResources().getString(R.string.ingridient_s));
                     v.setBackgroundResource(R.drawable.cancel);
                 } else {
                     LinearLayout linearParent = (LinearLayout) v.getParent().getParent();

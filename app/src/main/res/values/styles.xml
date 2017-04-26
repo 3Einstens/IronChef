@@ -48,6 +48,13 @@
         <item name="android:textAppearance">@android:style/TextAppearance.Small</item>
     </style>
 
+    <style name="titleCompose">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAppearance">@android:style/TextAppearance.Large</item>
+    </style>
+
     <style name="titleBold">
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>

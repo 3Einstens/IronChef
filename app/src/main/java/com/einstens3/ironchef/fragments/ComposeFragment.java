@@ -193,7 +193,9 @@ public class ComposeFragment extends Fragment {
             ChallengeService.getChallenge(challengeId, new GetCallback<Challenge>() {
                 @Override
                 public void done(Challenge challenge, ParseException e) {
-                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Challenge Recipe");
+                    if (getActivity() != null &&  ((AppCompatActivity) getActivity()).getSupportActionBar() != null ) {
+                        ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Challenge Recipe");
+                    }
                 }
             });
         }

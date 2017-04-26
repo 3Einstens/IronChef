@@ -19,6 +19,6 @@
     <string name="ingridient_s">Ingredients</string>
     <string name="steps">Steps</string>
     <string name="rank">Rank: Sous Chef</string>
-    <string name="exitmsg">Do you want to exit?</string>
+    <string name="exitmsg">We will miss you! Are you sure you want to exit?</string>
     <string name="exit">Exit</string>
 </resources>

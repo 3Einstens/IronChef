@@ -55,8 +55,8 @@
                 android:layout_alignTop="@+id/tvLike"
                 android:layout_alignBottom="@+id/tvLike"
                 android:scaleType="fitCenter"
-                tools:src="@drawable/heart"
-                tools:srcCompat="@drawable/heart"/>
+                android:tint="@color/colorLightAccent"
+                tools:srcCompat="@drawable/ic_heart"/>
 
             <TextView
                 android:id="@+id/tvLike"
@@ -76,8 +76,8 @@
                 android:layout_toLeftOf="@+id/tvAuthor"
                 android:layout_marginRight="5dp"
                 android:scaleType="fitCenter"
-                tools:src="@drawable/heart"
-                tools:srcCompat="@drawable/heart"/>
+
+                />
 
             <TextView
                 android:id="@+id/tvAuthor"

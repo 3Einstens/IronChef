@@ -42,6 +42,8 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+import static com.einstens3.ironchef.R.id.btnAccept;
+
 /**
  * Created by raprasad on 4/8/17.
  */
@@ -210,10 +212,14 @@ public class RecipeRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
                 r.doesCurrentUserLikeRecipe(new GetCallback<ParseUser>() {
                     @Override
                     public void done(ParseUser object, ParseException e) {
-                        if (object != null)
-                            homeVH.ivLike.setImageResource(R.drawable.filled_heart);
-                        else
-                            homeVH.ivLike.setImageResource(R.drawable.heart);
+                        if (object != null) {
+                            homeVH.ivLike.setImageResource(R.drawable.ic_heart);
+                            homeVH.ivLike.setColorFilter(ContextCompat.getColor(homeVH.ivLike.getContext(), R.color.colorPrimary));
+                        }
+                        else {
+                            homeVH.ivLike.setImageResource(R.drawable.ic_heart);
+                            homeVH.ivLike.setColorFilter(ContextCompat.getColor(homeVH.ivLike.getContext(), R.color.colorLightAccent));
+                        }
                     }
                 });
 

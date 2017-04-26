@@ -73,7 +73,8 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:src="@drawable/heart"/>
+                    android:tint="@color/colorLightAccent"
+                    android:src="@drawable/ic_heart"/>
 
                 <View
                     android:layout_width="1dp"
@@ -86,7 +87,8 @@
                     android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:src="@drawable/challenge"/>
+                    android:tint="@color/colorLightAccent"
+                    android:src="@drawable/ic_knives"/>
             </LinearLayout>
 
             <LinearLayout

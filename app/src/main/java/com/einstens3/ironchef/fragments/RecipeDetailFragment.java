@@ -1,5 +1,7 @@
 package com.einstens3.ironchef.fragments;
 
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -188,7 +190,8 @@ public class RecipeDetailFragment extends Fragment {
                         @Override
                         public void done(int count, ParseException e) {
                             if(count>0){
-                                ivLike.setImageResource(R.drawable.filled_heart);
+                                ivLike.setImageResource(R.drawable.ic_heart);
+                                ivLike.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorPrimary));
                             }
                         }
                     });
@@ -199,7 +202,9 @@ public class RecipeDetailFragment extends Fragment {
 
                             if(object != null){
                                 if(object.getState() == Challenge.STATE_ACCEPTED){
-                                    btnAccept.setImageResource(R.drawable.challenge_accepted);
+                                    btnAccept.setImageResource(R.drawable.ic_knives);
+                                    btnAccept.setColorFilter(ContextCompat.getColor(getContext(), R.color.colorPrimary));
+
                                 }
                                 if(object.getState() == Challenge.STATE_COMPLETED){
                                     btnAccept.setImageResource(R.drawable.ic_check);
@@ -235,7 +240,8 @@ public class RecipeDetailFragment extends Fragment {
         ivLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ivLike.setImageResource(R.drawable.filled_heart);
+                ivLike.setImageResource(R.drawable.ic_heart);
+                ivLike.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorPrimary));
                 RecipeDetailFragment.this.recipe.like();
                 Toast.makeText(getContext(), "Liked Recipe", Toast.LENGTH_LONG).show();
             }
@@ -243,7 +249,8 @@ public class RecipeDetailFragment extends Fragment {
         btnAccept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btnAccept.setImageResource(R.drawable.challenge_accepted);
+                btnAccept.setImageResource(R.drawable.ic_knives);
+                btnAccept.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorPrimary));
                 Challenge.acceptChallenge(RecipeDetailFragment.this.recipe);
                 Toast.makeText(getContext(), "Challenge Accepted", Toast.LENGTH_LONG).show();
             }

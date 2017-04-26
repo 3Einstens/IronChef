@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.app.AppCompatActivity;
@@ -199,6 +200,10 @@ public class RecipeDetailFragment extends Fragment {
                             if(object != null){
                                 if(object.getState() == Challenge.STATE_ACCEPTED){
                                     btnAccept.setImageResource(R.drawable.challenge_accepted);
+                                }
+                                if(object.getState() == Challenge.STATE_COMPLETED){
+                                    btnAccept.setImageResource(R.drawable.ic_check);
+                                    btnAccept.setColorFilter(ContextCompat.getColor(getContext(),R.color.colorPrimary));
                                 }
                             }
                         }

@@ -1,50 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main_content"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true">
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 xmlns:tools="http://schemas.android.com/tools"
+                                                 android:id="@+id/main_content"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="256dp"
-
         android:fitsSystemWindows="true">
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
-            app:expandedTitleMarginStart="48dp"
             app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleTextAppearance="@android:style/TextAppearance.DeviceDefault.Medium">
+            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleTextAppearance="@android:style/TextAppearance.DeviceDefault.Medium"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <ImageView
                 android:id="@+id/ivPhoto"
-                android:transitionName="recipeDetail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:scaleType="centerCrop"
                 android:fitsSystemWindows="true"
-                app:layout_collapseMode="parallax" />
+                android:scaleType="centerCrop"
+                android:transitionName="recipeDetail"
+                app:layout_collapseMode="parallax"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/frRecipieDetailtoolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
         </android.support.design.widget.CollapsingToolbarLayout>
 
     </android.support.design.widget.AppBarLayout>
-
 
     <android.support.v4.widget.NestedScrollView
         android:id="@+id/nest_scrollview"
@@ -52,178 +50,123 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
         <RelativeLayout
             xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
-
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context="com.einstens3.ironchef.fragments.RecipeDetailFragment"
-            >
-
-
-            <!--ImageView
-                android:id="@+id/ivPhoto"
-                android:layout_width="match_parent"
-                android:layout_height="225dp"
-                android:scaleType="centerCrop"
-                android:adjustViewBounds="true"
-                app:srcCompat="@drawable/com_parse_ui_facebook_login_button_background_selector"
-                / -->
-
-            <!--TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:textAlignment="center"
-                android:textColor="@color/black"
-                android:textSize="24sp"
-                android:paddingTop="10dp"
-                tools:text="Beefy Backed Raviloli"/ -->
+            tools:context="com.einstens3.ironchef.fragments.RecipeDetailFragment">
 
             <LinearLayout
                 android:id="@+id/llActionIcons"
-                android:paddingTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:divider="@color/black"
                 android:orientation="horizontal"
-                android:divider="@color/black">
-
+                android:paddingTop="10dp">
 
                 <ImageView
                     android:id="@+id/ivLike"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
                     android:layout_weight="1"
-                    android:src="@drawable/heart"
-                    />
+                    android:src="@drawable/heart"/>
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="match_parent"
-                    android:background="@color/gray" />
+                    android:background="@color/gray"/>
 
                 <ImageView
                     android:id="@+id/btnAccept"
-                    android:layout_weight="1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:src="@drawable/challenge"/>
-
             </LinearLayout>
-
 
             <LinearLayout
                 android:id="@+id/llAuthorCategory"
-                android:paddingTop="5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@+id/llActionIcons"
                 android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true">
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/llActionIcons"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/lblAuthor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="right"
                         android:layout_weight="1"
+                        android:gravity="right"
                         android:text="Recipe by:"/>
 
                     <TextView
                         android:id="@+id/tvAuthor"
-                        android:layout_weight="1"
-                        android:gravity="left"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        tools:text="ROGUE34"
+                        android:layout_weight="1"
+                        android:gravity="left"
                         android:paddingLeft="5dp"
                         android:textColor="@color/black"
-                        android:textStyle="bold"/>
-
+                        android:textStyle="bold"
+                        tools:text="ROGUE34"/>
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_weight="1">
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
                     <TextView
                         android:id="@+id/lblCategory"
-                        android:layout_weight="1"
-                        android:gravity="right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
                         android:text="Category:"/>
 
                     <TextView
                         android:id="@+id/tvCategory"
-                        android:layout_weight="1"
-                        android:gravity="left"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="left"
                         android:textColor="@color/black"
                         tools:text="Italian"/>
                 </LinearLayout>
-
-
             </LinearLayout>
-
-
-            <!--ImageButton
-                android:id="@+id/ivLike"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/like"
-                android:layout_marginBottom="20dp"
-                android:text="LIKE"/>
-
-            <ImageButton
-                android:id="@+id/btnAccept"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginBottom="20dp"
-                android:layout_above="@+id/ivLike"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:background="@drawable/accept"
-                android:text="Accept"/-->
 
             <TextView
                 android:id="@+id/tvDescription"
-                android:paddingTop="5dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/llAuthorCategory"
+                android:paddingLeft="10dp"
+                android:paddingRight="5dp"
+                android:paddingTop="5dp"
                 android:textColor="@color/black"
                 tools:text="A terrific blend of sweet, tangy, fruity, and zesty. An old family recipe that never fails to please. This is an easy, fail-safe recipe that anyone can make or adjust according to their own likes."/>
 
-
             <LinearLayout
+                android:id="@+id/llRDCookingServing"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/llRDCookingServing"
-                android:orientation="horizontal"
-                android:layout_below="@+id/tvDescription">
+                android:layout_below="@+id/tvDescription"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:layout_width="40dp"
@@ -235,8 +178,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:paddingLeft="10dp"
                     android:gravity="center"
+                    android:paddingLeft="10dp"
                     >
 
                     <TextView
@@ -245,7 +188,7 @@
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:gravity="center|right"
-                        android:text="Prep Time:" />
+                        android:text="Prep Time:"/>
 
                     <TextView
                         android:id="@+id/tvCookingTime"
@@ -254,15 +197,15 @@
                         android:layout_weight="1"
                         android:gravity="center|left"
                         android:textColor="@color/black"
-                        tools:text="1h 25m" />
+                        tools:text="1h 25m"/>
 
                 </LinearLayout>
-
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1">
+
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -273,9 +216,9 @@
                         android:id="@+id/lblServing"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:paddingLeft="10dp"
                         android:gravity="center|left"
-                        android:text="Serving: " />
+                        android:paddingLeft="10dp"
+                        android:text="Serving: "/>
 
                     <TextView
                         android:id="@+id/tvServing"
@@ -284,33 +227,30 @@
 
                         android:gravity="center|start"
                         android:textColor="@color/black"
-                        tools:text="8" />
+                        tools:text="8"/>
 
                 </LinearLayout>
 
             </LinearLayout>
 
-
             <com.astuetz.PagerSlidingTabStrip
-                android:layout_below="@id/llRDCookingServing"
                 android:id="@+id/pstRecipeDetailTabs"
-                app:pstsShouldExpand="true"
-                app:pstsTextAllCaps="true"
-                app:pstsIndicatorColor="@color/colorAccent"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:textColor="@color/colorAccent"/>
+                android:layout_below="@id/llRDCookingServing"
+                android:textColor="@color/colorAccent"
+                app:pstsIndicatorColor="@color/colorAccent"
+                app:pstsShouldExpand="true"
+                app:pstsTextAllCaps="true"/>
 
             <android.support.v4.view.ViewPager
-                android:layout_below="@+id/pstRecipeDetailTabs"
                 android:id="@+id/recipeDetailviewpager"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                />
+                android:layout_below="@+id/pstRecipeDetailTabs"
+                android:background="@android:color/white"/>
 
         </RelativeLayout>
-
 
     </android.support.v4.widget.NestedScrollView>
 

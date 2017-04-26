@@ -49,6 +49,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+import static com.einstens3.ironchef.R.id.llStepListCompose;
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -215,7 +217,7 @@ public class ComposeFragment extends Fragment {
                     etServing.setText(String.valueOf(recipe.getServing()));
                     if (recipe.getSteps() != null) {
                         for (String step : recipe.getSteps()) {
-                            EditText et = addDynamicEditTexts(R.id.llStepListCompose, "Add Step");
+                            EditText et = addDynamicEditTexts(llStepListCompose, "Add Step");
                             et.setText(step);
                         }
                     }
@@ -289,7 +291,7 @@ public class ComposeFragment extends Fragment {
                 if (Integer.parseInt(v.getTag().toString()) == 1) {
                     Toast.makeText(getContext(), "ADD", Toast.LENGTH_SHORT).show();
                     v.setTag(2);
-                    addDynamicEditTexts(R.id.llStepListCompose, "Step(s)");
+                    addDynamicEditTexts(llStepListCompose, "Step(s)");
                     v.setBackgroundResource(R.drawable.cancel);
                 } else {
                     LinearLayout linearParent = (LinearLayout) v.getParent().getParent();
@@ -329,7 +331,7 @@ public class ComposeFragment extends Fragment {
             public void onClick(View v) {
                 // TODO: Required field value check
 
-                if (validateFields(R.id.llStepListCompose)) {
+                if (validateFields(llStepListCompose)) {
                     return;
                 }
 
@@ -350,7 +352,7 @@ public class ComposeFragment extends Fragment {
                 //iterarte over the linear layout and get steps added
 
 
-                ArrayList<String> steps = getDataFromDynamicEditText(R.id.llStepListCompose);
+                ArrayList<String> steps = getDataFromDynamicEditText(llStepListCompose);
                 ArrayList<String> ingridients = getDataFromDynamicEditText(R.id.llIngridentsCompose);
 
                 recipe.setSteps(steps);
@@ -450,19 +452,18 @@ public class ComposeFragment extends Fragment {
     }
 
     public ArrayList<String> getDataFromDynamicEditText(int llResourceId) {
-
-        ArrayList<String> steps = new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
         LinearLayout ll = (LinearLayout) view.findViewById(llResourceId);
         for (int i = 0; i < ll.getChildCount(); i++) {
             View llView = ll.getChildAt(i);
             if (llView instanceof LinearLayout) {
-                EditText et = (EditText) ((LinearLayout) llView).getChildAt(0);
+                TextInputLayout til = (TextInputLayout) ((LinearLayout) llView).getChildAt(0);
+                EditText et = til.getEditText();
                 if (et != null && !et.getText().toString().isEmpty())
-                    steps.add(et.getText().toString());
+                    list.add(et.getText().toString());
             }
         }
-
-        return steps;
+        return list;
     }
 
     public boolean validateFields(int linearLayoutResourceId) {

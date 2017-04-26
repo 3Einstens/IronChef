@@ -443,6 +443,7 @@
             android:layout_marginBottom="20dp"
             />
 
+        <!--
         <Button
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
@@ -454,20 +455,25 @@
             android:layout_below="@+id/vBorder"
             android:background="@color/colorPrimary"
             android:text="Cancel"/>
-
+        -->
         <Button
             android:id="@+id/btnPublish"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:layout_alignBottom="@+id/btnCancel"
+            android:layout_marginBottom="10dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/btnCancel"
             android:layout_below="@+id/vBorder"
             android:background="@color/colorPrimary"
-            android:text="Publish"/>
+            android:text="Publish"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            />
 
         <!--
         <TextView

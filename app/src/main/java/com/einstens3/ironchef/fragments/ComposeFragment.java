@@ -70,7 +70,7 @@ public class ComposeFragment extends Fragment {
 
     View view;
     Button btnPublish;
-    Button btnCancel;
+    //Button btnCancel;
 
     ScrollView svCompose;
 
@@ -130,7 +130,7 @@ public class ComposeFragment extends Fragment {
     private void bindControls() {
 
         btnPublish = (Button) view.findViewById(R.id.btnPublish);
-        btnCancel = (Button) view.findViewById(R.id.btnCancel);
+        //btnCancel = (Button) view.findViewById(R.id.btnCancel);
 
         svCompose = (ScrollView)view.findViewById(R.id.svCompose);
 
@@ -313,12 +313,12 @@ public class ComposeFragment extends Fragment {
             }
         });
 
-        btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().supportFinishAfterTransition();
-            }
-        });
+//        btnCancel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                getActivity().supportFinishAfterTransition();
+//            }
+//        });
 
         btnPublish.setOnClickListener(new View.OnClickListener() {
             @Override

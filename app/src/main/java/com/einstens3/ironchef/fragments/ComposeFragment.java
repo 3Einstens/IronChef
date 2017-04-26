@@ -8,10 +8,14 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.design.widget.TextInputEditText;
+import android.support.design.widget.TextInputLayout;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -19,11 +23,15 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.einstens3.ironchef.R;
 import com.einstens3.ironchef.activities.ActivityResult;
+import com.einstens3.ironchef.activities.RecipeDetailActivity;
 import com.einstens3.ironchef.models.Challenge;
 import com.einstens3.ironchef.models.Recipe;
 import com.einstens3.ironchef.services.ChallengeService;
@@ -63,14 +71,18 @@ public class ComposeFragment extends Fragment {
     View view;
     Button btnPublish;
     Button btnCancel;
+
+    ScrollView svCompose;
+
+    LinearLayout llImages;
     ImageView ivUploadPhoto;
     ImageButton ibUploadPhoto;
-
     ImageView ivUploadPhoto2;
     ImageButton ibUploadPhoto2;
-
     ImageView ivUploadPhoto3;
     ImageButton ibUploadPhoto3;
+
+    TextInputLayout title_text_input_layout;
     EditText etTitle;
     EditText etDescription;
     EditText etCategories;
@@ -78,7 +90,10 @@ public class ComposeFragment extends Fragment {
     EditText etServing;
     ImageButton ibAddSteps;
     ImageButton ibAddIngridient;
-    TextView tvChallengeStatus;
+
+    RelativeLayout rlChallenge;
+    ImageView ivChallengePhoto;
+    TextView tvChallengeRecipeName;
 
     public ComposeFragment() {
     }
@@ -98,7 +113,7 @@ public class ComposeFragment extends Fragment {
         if (getArguments() != null) {
             challengeTo = getArguments().getString(ARG_PARAM_CHALLENGE_TO);
             challengeId = getArguments().getString(ARG_PARAM_CHALLENGE_ID);
-            Log.e(TAG, "challengeId -> " + challengeId +", challengeTo -> "+challengeTo);
+            Log.e(TAG, "challengeId -> " + challengeId + ", challengeTo -> " + challengeTo);
         }
     }
 
@@ -117,6 +132,9 @@ public class ComposeFragment extends Fragment {
         btnPublish = (Button) view.findViewById(R.id.btnPublish);
         btnCancel = (Button) view.findViewById(R.id.btnCancel);
 
+        svCompose = (ScrollView)view.findViewById(R.id.svCompose);
+
+        llImages = (LinearLayout)view.findViewById(R.id.llImages);
         ivUploadPhoto = (ImageView) view.findViewById(R.id.ivUploadPhoto);
         ibUploadPhoto = (ImageButton) view.findViewById(R.id.ibUploadPhoto);
 
@@ -126,6 +144,7 @@ public class ComposeFragment extends Fragment {
         ivUploadPhoto3 = (ImageView) view.findViewById(R.id.ivUploadPhoto3);
         ibUploadPhoto3 = (ImageButton) view.findViewById(R.id.ibUploadPhoto3);
 
+        title_text_input_layout = (TextInputLayout)view.findViewById(R.id.title_text_input_layout) ;
         etTitle = (EditText) view.findViewById(R.id.etTitle);
         etDescription = (EditText) view.findViewById(R.id.etDescription);
         etCategories = (EditText) view.findViewById(R.id.etCategories);
@@ -138,45 +157,92 @@ public class ComposeFragment extends Fragment {
         ibAddIngridient = (ImageButton) view.findViewById(R.id.ibAddIngridients);
         ibAddIngridient.setTag(1);
 
-        tvChallengeStatus = (TextView)view.findViewById(R.id.tvChallengeStatus);
+        rlChallenge = (RelativeLayout)view.findViewById(R.id.rlChallenge);
+        ivChallengePhoto= (ImageView)view.findViewById(R.id.ivChallengePhoto);
+        tvChallengeRecipeName = (TextView)view.findViewById(R.id.tvChallengeRecipeName);
     }
 
+    // To prevent auto scroll to EditText in ScrollView.
+    // http://stackoverflow.com/questions/8100831/stop-scrollview-from-setting-focus-on-edittext
+    private void scrollViewHack(){
+        svCompose.setDescendantFocusability(ViewGroup.FOCUS_BEFORE_DESCENDANTS);
+        svCompose.setFocusable(true);
+        svCompose.setFocusableInTouchMode(true);
+        svCompose.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.requestFocusFromTouch();
+                return false;
+            }
+        });
+    }
     private void updateControlStates() {
         ibUploadPhoto.setVisibility(View.VISIBLE);
         ivUploadPhoto.setVisibility(View.INVISIBLE);
 
+        scrollViewHack();
+
         // update if challenge
-        if(challengeId != null){
+        if (challengeId != null) {
             ChallengeService.getChallenge(challengeId, new GetCallback<Challenge>() {
                 @Override
                 public void done(Challenge challenge, ParseException e) {
-                    tvChallengeStatus.setText("Challenge Recipe");
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Challenge Recipe");
                 }
             });
-        }else{
-            tvChallengeStatus.setVisibility(View.GONE);
         }
-        if(challengeTo != null){
-            RecipeService.queryRecipe(challengeTo, new RecipeService.QueryRecipeCallback(){
+        if (challengeTo != null) {
+            RecipeService.queryRecipe(challengeTo, new RecipeService.QueryRecipeCallback() {
                 @Override
-                public void success(Recipe recipe) {
+                public void success(final Recipe recipe) {
+
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Challenge Recipe");
+
+                    rlChallenge.setVisibility(View.VISIBLE);
+                    title_text_input_layout.setVisibility(View.GONE);
+                    RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) llImages.getLayoutParams();
+                    params.addRule(RelativeLayout.BELOW, R.id.rlChallenge);
+
+                    tvChallengeRecipeName.setText(recipe.getName());
                     etTitle.setText(recipe.getName());
                     etCategories.setText(StringUtils.fromList(recipe.getCategories()));
                     etDescription.setText(recipe.getDescription());
                     etPrepTime.setText(String.valueOf(recipe.getCookingTime()));
                     etServing.setText(String.valueOf(recipe.getServing()));
-                    if(recipe.getSteps()!=null) {
+                    if (recipe.getSteps() != null) {
                         for (String step : recipe.getSteps()) {
                             EditText et = addDynamicEditTexts(R.id.llStepListCompose, "Add Step");
                             et.setText(step);
                         }
                     }
-                    if(recipe.getIngredients()!=null) {
+                    if (recipe.getIngredients() != null) {
                         for (String ingredient : recipe.getIngredients()) {
                             EditText et = addDynamicEditTexts(R.id.llIngridentsCompose, "Add Step");
                             et.setText(ingredient);
                         }
                     }
+
+                    try {
+                        Glide.with(getContext()).load(Uri.fromFile(recipe.getPhoto().getFile())).into(ivChallengePhoto);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    ivChallengePhoto.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            /**
+                             * Show Recipe Detail UI with Recipe.objectID.
+                             */
+                            Intent intent = new Intent(getContext(), RecipeDetailActivity.class);
+                            intent.putExtra("objectId", recipe.getObjectId());
+                            ActivityOptionsCompat options = ActivityOptionsCompat.
+                                    makeSceneTransitionAnimation((Activity) getContext(), ivChallengePhoto, "recipeDetail");
+                            getContext().startActivity(intent, options.toBundle());
+
+                        }
+                    });
+
 
                     etTitle.setEnabled(false);
                     etCategories.setEnabled(false);
@@ -216,13 +282,13 @@ public class ComposeFragment extends Fragment {
             public void onClick(View v) {
 
                 //todo Dynamically add new editText
-                if(Integer.parseInt(v.getTag().toString()) == 1){
-                    Toast.makeText(getContext(),"ADD",Toast.LENGTH_SHORT).show();
+                if (Integer.parseInt(v.getTag().toString()) == 1) {
+                    Toast.makeText(getContext(), "ADD", Toast.LENGTH_SHORT).show();
                     v.setTag(2);
-                    addDynamicEditTexts(R.id.llStepListCompose,"Step(s)");
+                    addDynamicEditTexts(R.id.llStepListCompose, "Step(s)");
                     v.setBackgroundResource(R.drawable.cancel);
-                }else{
-                    LinearLayout linearParent =  (LinearLayout) v.getParent().getParent();
+                } else {
+                    LinearLayout linearParent = (LinearLayout) v.getParent().getParent();
                     LinearLayout linearChild = (LinearLayout) v.getParent();
                     linearParent.removeView(linearChild);
                 }
@@ -234,12 +300,12 @@ public class ComposeFragment extends Fragment {
         ibAddIngridient.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(Integer.parseInt(v.getTag().toString()) == 1){
+                if (Integer.parseInt(v.getTag().toString()) == 1) {
                     v.setTag(2);
-                    addDynamicEditTexts(R.id.llIngridentsCompose,"Ingridient(s)");
+                    addDynamicEditTexts(R.id.llIngridentsCompose, "Ingridient(s)");
                     v.setBackgroundResource(R.drawable.cancel);
-                }else{
-                    LinearLayout linearParent =  (LinearLayout) v.getParent().getParent();
+                } else {
+                    LinearLayout linearParent = (LinearLayout) v.getParent().getParent();
                     LinearLayout linearChild = (LinearLayout) v.getParent();
                     linearParent.removeView(linearChild);
                 }
@@ -259,7 +325,7 @@ public class ComposeFragment extends Fragment {
             public void onClick(View v) {
                 // TODO: Required field value check
 
-                if(validateFields(R.id.llStepListCompose)){
+                if (validateFields(R.id.llStepListCompose)) {
                     return;
                 }
 
@@ -286,17 +352,17 @@ public class ComposeFragment extends Fragment {
                 recipe.setSteps(steps);
                 recipe.setIngredients(ingridients);
 
-                Log.d("STEPS",steps.toString());
-                Log.d("INGRIDIENTS",ingridients.toString());
-                Toast.makeText(getContext(),steps.toString(),Toast.LENGTH_SHORT);
+                Log.d("STEPS", steps.toString());
+                Log.d("INGRIDIENTS", ingridients.toString());
+                Toast.makeText(getContext(), steps.toString(), Toast.LENGTH_SHORT);
 
-                if(photo!=null)
+                if (photo != null)
                     recipe.setPhoto(photo);
 
-                if(photo2!=null)
+                if (photo2 != null)
                     recipe.setPhoto2(photo);
 
-                if(photo3!=null)
+                if (photo3 != null)
                     recipe.setPhoto3(photo);
 
                 // challengeTo
@@ -312,13 +378,13 @@ public class ComposeFragment extends Fragment {
                                 ChallengeService.getChallenge(challengeId, new GetCallback<Challenge>() {
                                     @Override
                                     public void done(Challenge challenge, ParseException e) {
-                                        if(challenge!=null){
+                                        if (challenge != null) {
                                             challenge.setState(Challenge.STATE_COMPLETED);
                                             challenge.setMyRecipe(recipe);
                                             challenge.saveInBackground(new SaveCallback() {
                                                 @Override
                                                 public void done(ParseException e) {
-                                                    if(e==null)
+                                                    if (e == null)
                                                         Log.i(TAG, "successfully update challenge");
                                                     else
                                                         Log.e(TAG, "Failed to update challenge.");
@@ -342,8 +408,8 @@ public class ComposeFragment extends Fragment {
             }
         });
     }
-    
-    public TextInputEditText addDynamicEditTexts(int linearLayoutResourceId,String hint){
+
+    public TextInputEditText addDynamicEditTexts(int linearLayoutResourceId, String hint) {
         LinearLayout linearLayout = (LinearLayout) view.findViewById(linearLayoutResourceId);
 
 //        LinearLayout ll = new LinearLayout(getContext());
@@ -425,7 +491,7 @@ public class ComposeFragment extends Fragment {
         LinearLayout ll = (LinearLayout) getActivity().getLayoutInflater().inflate(R.layout.layout_dyanmic_edittext, null);
         LinearLayout.LayoutParams llparams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT, 1);
         int marginTop = (int) (10 * scale + 0.5f);
-        llparams.setMargins(0,marginTop,0,0);
+        llparams.setMargins(0, marginTop, 0, 0);
         ll.setLayoutParams(llparams);
         linearLayout.addView(ll);
 
@@ -433,15 +499,15 @@ public class ComposeFragment extends Fragment {
         te.setHint(hint);
         ImageButton dyn_ib = (ImageButton) ll.findViewById(R.id.ib_dyn);
         dyn_ib.setTag(1);
-        dyn_ib.setOnClickListener(new DynamicEditText(linearLayoutResourceId,hint) {
+        dyn_ib.setOnClickListener(new DynamicEditText(linearLayoutResourceId, hint) {
             @Override
             public void onClick(View v) {
-                if(Integer.parseInt(v.getTag().toString()) == 1){
-                    addDynamicEditTexts(this.resourceId,this.hint);
+                if (Integer.parseInt(v.getTag().toString()) == 1) {
+                    addDynamicEditTexts(this.resourceId, this.hint);
                     v.setBackgroundResource(R.drawable.cancel);
                     v.setTag(2);
-                }else{
-                    LinearLayout linearParent =  (LinearLayout) v.getParent().getParent();
+                } else {
+                    LinearLayout linearParent = (LinearLayout) v.getParent().getParent();
                     LinearLayout linearChild = (LinearLayout) v.getParent();
                     linearParent.removeView(linearChild);
                 }
@@ -452,15 +518,15 @@ public class ComposeFragment extends Fragment {
         return te;
     }
 
-    public ArrayList<String> getDataFromDynamicEditText(int llResourceId){
+    public ArrayList<String> getDataFromDynamicEditText(int llResourceId) {
 
         ArrayList<String> steps = new ArrayList<>();
         LinearLayout ll = (LinearLayout) view.findViewById(llResourceId);
         for (int i = 0; i < ll.getChildCount(); i++) {
             View llView = ll.getChildAt(i);
-            if(llView instanceof LinearLayout){
+            if (llView instanceof LinearLayout) {
                 EditText et = (EditText) ((LinearLayout) llView).getChildAt(0);
-                if(et != null && !et.getText().toString().isEmpty())
+                if (et != null && !et.getText().toString().isEmpty())
                     steps.add(et.getText().toString());
             }
         }
@@ -468,21 +534,21 @@ public class ComposeFragment extends Fragment {
         return steps;
     }
 
-    public boolean validateFields(int linearLayoutResourceId){
+    public boolean validateFields(int linearLayoutResourceId) {
         // edit text
 
         boolean isValid = false;
-        if(etTitle.getText().toString().isEmpty()){
+        if (etTitle.getText().toString().isEmpty()) {
             etTitle.setError("Title is required");
             isValid = true;
         }
 
-        if(etCategories.getText().toString().isEmpty()){
+        if (etCategories.getText().toString().isEmpty()) {
             etCategories.setError("Category is required");
             isValid = true;
         }
 
-        if(etDescription.getText().toString().isEmpty()){
+        if (etDescription.getText().toString().isEmpty()) {
             etDescription.setError("Description is required");
             isValid = true;
         }
@@ -491,12 +557,12 @@ public class ComposeFragment extends Fragment {
 
     }
 
-    private ParseFile getParseFile(String name, boolean withSave){
+    private ParseFile getParseFile(String name, boolean withSave) {
         ParseFile photo = null;
         File photoFile = getPhotoFile(name);
-        if(photoFile.exists()) {
+        if (photoFile.exists()) {
             photo = new ParseFile(photoFile);
-            if(withSave)
+            if (withSave)
                 photo.saveInBackground();
         }
         return photo;
@@ -509,7 +575,7 @@ public class ComposeFragment extends Fragment {
     private long getLong(EditText et) {
         try {
             return Long.valueOf(getText(et));
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return 0;
         }
     }
@@ -518,7 +584,7 @@ public class ComposeFragment extends Fragment {
         return et.getText().toString().trim();
     }
 
-    private void displayImage(Bitmap photo,ImageButton ibUploadPhoto,ImageView ivUploadPhoto) {
+    private void displayImage(Bitmap photo, ImageButton ibUploadPhoto, ImageView ivUploadPhoto) {
         ibUploadPhoto.setVisibility(View.INVISIBLE);
         ivUploadPhoto.setVisibility(View.VISIBLE);
         ivUploadPhoto.setImageBitmap(photo);
@@ -547,15 +613,13 @@ public class ComposeFragment extends Fragment {
             // main photo
             if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
                 Bitmap takenImage = BitmapFactory.decodeFile(getPhotoFile(PHOTO_NAME).getPath());
-                displayImage(takenImage,ibUploadPhoto,ivUploadPhoto);
-            }
-            else if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE+1) {
-                    Bitmap takenImage = BitmapFactory.decodeFile(getPhotoFile(PHOTO_NAME).getPath());
-                    displayImage(takenImage,ibUploadPhoto2,ivUploadPhoto2);
-            }
-            else if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE+2) {
+                displayImage(takenImage, ibUploadPhoto, ivUploadPhoto);
+            } else if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE + 1) {
                 Bitmap takenImage = BitmapFactory.decodeFile(getPhotoFile(PHOTO_NAME).getPath());
-                displayImage(takenImage,ibUploadPhoto3,ivUploadPhoto3);
+                displayImage(takenImage, ibUploadPhoto2, ivUploadPhoto2);
+            } else if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE + 2) {
+                Bitmap takenImage = BitmapFactory.decodeFile(getPhotoFile(PHOTO_NAME).getPath());
+                displayImage(takenImage, ibUploadPhoto3, ivUploadPhoto3);
             }
             // step photo
             else if (requestCode > CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE && requestCode <= CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE_MAX) {
@@ -584,21 +648,20 @@ public class ComposeFragment extends Fragment {
         return String.format(Locale.ENGLISH, STEP_PHOTO_NAME, index);
     }
 
-    public class DynamicEditText implements View.OnClickListener
-    {
+    public class DynamicEditText implements View.OnClickListener {
 
         String hint;
         int resourceId;
-        public DynamicEditText(int resourceId,String hint) {
+
+        public DynamicEditText(int resourceId, String hint) {
             this.hint = hint;
             this.resourceId = resourceId;
         }
 
         @Override
-        public void onClick(View v)
-        {
+        public void onClick(View v) {
             //read your lovely variable
         }
 
-    };
+    }
 }
